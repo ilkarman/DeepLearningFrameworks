@@ -1,6 +1,10 @@
+## Notes
+
 **The notebooks assume we receive data in the form of a generator function that yields mini-batches of numpy arrays**
 
 **The notebooks are not specifically written for speed, instead they aim to create an easy comparison between the frameworks. However, any suggestions on improving the training-time are welcome**
+
+**Notebooks are run on [Microsoft Azure Data Science Virtual Machine for Linux (Ubuntu)](https://azuremarketplace.microsoft.com/en-us/marketplace/apps/microsoft-ads.linux-data-science-vm-ubuntu?tab=Overview), where frameworks have been updated to the latest version**
 
 ## Goal
 
