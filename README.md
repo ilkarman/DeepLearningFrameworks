@@ -35,6 +35,7 @@ Since we are essentially comparing a series of deterministic mathematical operat
 | [Keras (2.0.6) (TF)](Keras_TF_CIFAR.ipynb) | 77                | 408               |
 | [Keras (2.0.6) (CNTK)](Keras_CNTK_CIFAR.ipynb) | 76                | 588               |
 | [Caffe2](Caffe2_CIFAR.ipynb)             | 75                | 312               |
+| [Lasagne (0.2.dev1) (Theano 0.10.0beta1) ](Theano_Lasagne_CIFAR.ipynb)             | 73                | 416               |
 
 **EDIT: I received some comments that perhaps that reason MXNet is so much faster than the others is because I use its own custom generator. Below is a notebook where I use the same generator as with other frameworks and the result does not change**
 
