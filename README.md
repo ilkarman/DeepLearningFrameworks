@@ -30,15 +30,17 @@ Since we are essentially comparing a series of deterministic mathematical operat
 | [Tensorflow (1.2.1)](Tensorflow_CIFAR.ipynb) | 72                | 300               |
 | [CNTK (2.1)](CNTK_CIFAR.ipynb)           | 77                | 168               |
 | [MXNet (0.11.0)](MXNet_CIFAR.ipynb)      | 75                | 153               |
-| [PyTorch (0.2.0_1)](PyTorch_CIFAR.ipynb) | 73                | 351               |
+| [PyTorch (0.2.0_1)](PyTorch_CIFAR.ipynb) | 73                | 165               |
 | [Chainer (2.0.2)](Chainer_CIFAR.ipynb)   | 78                | 256               |
 | [Keras (2.0.6) (TF)](Keras_TF_CIFAR.ipynb) | 77                | 408               |
 | [Keras (2.0.6) (CNTK)](Keras_CNTK_CIFAR.ipynb) | 76                | 588               |
 | [Caffe2](Caffe2_CIFAR.ipynb)             | 75                | 312               |
-| [Lasagne (0.2.dev1) (Theano 0.10.0beta1) ](Theano_Lasagne_CIFAR.ipynb)             | 73                | 416               |
+| [Lasagne (0.2.dev1) (Theano 0.10.0beta1) ](Theano_Lasagne_CIFAR.ipynb) | 73                | 416               |
 
-**EDIT: I received some comments that perhaps that reason MXNet is so much faster than the others is because I use its own custom generator. Below is a notebook where I use the same generator as with other frameworks and the result does not change**
+**EDIT 2: Enabling cudnn's auto-tuner for PyTorch as suggested by sousmith almost halved the time from 351 to 165s. Thanks to [botev](https://github.com/botev) for adding the theano + lasagne notebook**
+
+**EDIT 1: I received some comments that perhaps that reason MXNet is so much faster than the others is because I use its own custom generator. Below is a notebook where I use the same generator as with other frameworks and the result does not change**
 
 | DL Library                               | Test Accuracy (%) | Training Time (s) |
 | ---------------------------------------- | ----------------- | ----------------- |
-| [MXNet Custom Generator](MXNet_CIFAR_CustomG.ipynb)      | 77                | 159               |
+| [MXNet Custom Generator](MXNet_CIFAR_CustomG.ipynb) | 77                | 159               |
