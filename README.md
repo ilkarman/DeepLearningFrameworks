@@ -1,10 +1,10 @@
 ## Notes
 
-**The notebooks assume we receive data in the form of a generator function that yields mini-batches of numpy arrays**
+**Curious to see all the traction this has received. I wanted to empthasise again that the intention here was not a speed-comparison but a Rosetta Stone of deep-learning frameworks. This example repo looks at small-dataset in RAM (generator function that yields mini-batches of numpy arrays, with no pre-processing or data manipulation) and applies a standard CNN to it. Results may drastically vary once we have more advanced pipelines.**
 
 **The notebooks are not specifically written for speed, instead they aim to create an easy comparison between the frameworks. However, any suggestions on improving the training-time are welcome**
 
-**Notebooks are run on [Microsoft Azure Data Science Virtual Machine for Linux (Ubuntu)](https://azuremarketplace.microsoft.com/en-us/marketplace/apps/microsoft-ads.linux-data-science-vm-ubuntu?tab=Overview), where frameworks have been updated to the latest version**
+**Notebooks are run on Nvidia K80 GPU, on [Microsoft Azure Data Science Virtual Machine for Linux (Ubuntu)](https://azuremarketplace.microsoft.com/en-us/marketplace/apps/microsoft-ads.linux-data-science-vm-ubuntu?tab=Overview), where frameworks have been updated to the latest version**
 
 ## Goal
 
@@ -36,4 +36,8 @@ Since we are essentially comparing a series of deterministic mathematical operat
 | [Keras (2.0.6) (CNTK)](Keras_CNTK_CIFAR.ipynb) | 76                | 588               |
 | [Caffe2](Caffe2_CIFAR.ipynb)             | 75                | 312               |
 
+**EDIT: I received some comments that perhaps that reason MXNet is so much faster than the others is because I use its own custom generator. Below is a notebook where I use the same generator as with other frameworks and the result does not change**
 
+| DL Library                               | Test Accuracy (%) | Training Time (s) |
+| ---------------------------------------- | ----------------- | ----------------- |
+| [MXNet Custom Generator](MXNet_CIFAR_CustomG.ipynb)      | 77                | 159               |
