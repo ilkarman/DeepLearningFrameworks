@@ -6,6 +6,8 @@ import numpy as np
 import os
 import tarfile
 import pickle
+import subprocess
+
 
 def read_batch(src):
     '''Unpack the pickle files
@@ -80,3 +82,12 @@ def yield_mb(X, y, batchsize=64, shuffle=False):
     # Only complete batches are submitted
     for i in range(len(X)//batchsize):
         yield X[i*batchsize:(i+1)*batchsize], y[i*batchsize:(i+1)*batchsize]
+        
+def get_gpu_name():
+    try:
+        out_str = subprocess.run(["nvidia-smi", "--query-gpu=gpu_name", "--format=csv"], stdout=subprocess.PIPE).stdout
+        out_list = out_str.decode("utf-8").split('\n')
+        out_list = out_list[1:-1]
+        return out_list
+    except Exception as e:
+        print(e)
