@@ -1,17 +1,29 @@
 from sklearn.datasets import fetch_mldata
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.model_selection import train_test_split
-from urllib.request import urlretrieve
+
 import numpy as np
 import os
 import tarfile
 import pickle
 
+import sys
+if sys.version_info.major == 2:
+    # Backward compatibility with python 2.
+    from six.moves import urllib
+    urlretrieve = urllib.request.urlretrieve
+else:
+    from urllib.request import urlretrieve
+
+
 def read_batch(src):
     '''Unpack the pickle files
     '''
     with open(src, 'rb') as f:
-        data = pickle.load(f, encoding='latin1')
+        if sys.version_info.major == 2:
+            data = pickle.load(f)
+        else:
+            data = pickle.load(f, encoding='latin1')
     return data
 
 def download_cifar(src="http://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz"):
