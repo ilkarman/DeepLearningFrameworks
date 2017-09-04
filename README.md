@@ -33,7 +33,7 @@ Since we are essentially comparing a series of deterministic mathematical operat
 | [Keras (2.0.8) (CNTK)](Keras_CNTK_CIFAR.ipynb) | 78          | 200               |
 | [Keras (2.0.8) (TF)](Keras_TF_CIFAR.ipynb) | 77                | 252               |
 | [Chainer (2.0.2)](Chainer_CIFAR.ipynb)   | 78                | 256               |
-| [Lasagne (0.2.dev1) (Theano 0.10.0beta1) ](Theano_Lasagne_CIFAR.ipynb) | 73                | 262               |                 
+| [Lasagne (0.2.dev1) (Theano 0.10.0beta1) ](Theano_Lasagne_CIFAR.ipynb) | 77                | 253               |                 
 
 
 ### LSTM on IMDB
@@ -44,7 +44,7 @@ Since we are essentially comparing a series of deterministic mathematical operat
 
 The below offers some insights I gained after trying to match test-accuracy across frameworks and from all the GitHub issues/PRs raised.
 
-1. The above examples (except for Keras), for ease of comparison, try to use the same level of API and so all use the same generator-function. For MXNet and CNTK I have experimented with a higher-level API, where I use the framework's training generator function. The speed improvement is neglible in this example because the whole dataset is loaded as NumPy array in RAM and the only processing done each epoch is a shuffle. I suspect the framework's generators perform the shuffle asynchronously. Curiously, it seems that the frameworks shuffle on a batch-level, rather than on an observation level, and thus every so slightly decreases the test-accuracy (at least after 10 epochs). For scenarios where we have IO activity and perhaps pre-processing and data-augmentation on the fly, custom generators would have a much bigger impact on performance.
+1. The above examples (except for Keras), for ease of comparison, try to use the same level of API and so all use the same generator-function. For MXNet and CNTK I have experimented with a higher-level API, where I use the framework's training generator function. The speed improvement is neglible in this example because the whole dataset is loaded as NumPy array in RAM and the only processing done each epoch is a shuffle. I suspect the framework's generators perform the shuffle asynchronously. Curiously, it seems that the frameworks shuffle on a batch-level, rather than on an observation level, and thus ever so slightly decreases the test-accuracy (at least after 10 epochs). For scenarios where we have IO activity and perhaps pre-processing and data-augmentation on the fly, custom generators would have a much bigger impact on performance.
 
 
 | DL Library                               | Test Accuracy (%) | Training Time (s) |
@@ -56,9 +56,9 @@ The below offers some insights I gained after trying to match test-accuracy acro
 
 3. When using Keras it's important to choose the [NCHW] ordering that matches the back-end framework. CNTK operates with channels first and by mistake I had Keras configured to expect channels last. It then must have changed the order at each batch which degraded performance severely.
 
-4. Tensorflow and PyTorch required a boolean supplied to the pooling-layer indicating whether we were training or not (this had a huge impact on test-accuracy, 72 vs 77%)
+4. Tensorflow, PyTorch and Theano required a boolean supplied to the pooling-layer indicating whether we were training or not (this had a huge impact on test-accuracy, 72 vs 77%)
 
-5. Tensorflow was a bit annoying and required two more changes: speed was improved a lot by enabling TF_ENABLE_WINOGRAD_NONFUSED (export TF_ENABLE_WINOGRAD_NONFUSED=1) and also changing the dimensions supplied as channel first rather than last (data_format='channels_first')
+5. Tensorflow was a bit annoying and required two more changes: speed was improved a lot by enabling TF_ENABLE_WINOGRAD_NONFUSED (export TF_ENABLE_WINOGRAD_NONFUSED=1) and also changing the dimensions supplied as channel first rather than last (data_format='channels_first'). Enabling the WINOGRAD for convolutions also improved Keras with TF as a backend
 
 6. Softmax is usually bundled with cross_entropy_loss() for most functions and it's worth checking if you need an activation on your final fully-connected layer to save time applying it twice
 
