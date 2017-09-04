@@ -25,8 +25,8 @@ Since we are essentially comparing a series of deterministic mathematical operat
 
 | DL Library                               | Test Accuracy (%) | Training Time (s) |
 | ---------------------------------------- | ----------------- | ----------------- |
+| [Caffe2](Caffe2_CIFAR.ipynb)             | 79                | 149               | 
 | [MXNet](MXNet_CIFAR.ipynb)      | 77                | 152               |   
-| [Caffe2](Caffe2_CIFAR.ipynb)             | 76                | 155               | 
 | [CNTK](CNTK_CIFAR.ipynb)           | 78                | 166              |  
 | [PyTorch](PyTorch_CIFAR.ipynb) | 78                | 168              |    
 | [Tensorflow](Tensorflow_CIFAR.ipynb) | 78                | 175               |
@@ -56,7 +56,7 @@ The below offers some insights I gained after trying to match test-accuracy acro
 
 3. When using Keras it's important to choose the [NCHW] ordering that matches the back-end framework. CNTK operates with channels first and by mistake I had Keras configured to expect channels last. It then must have changed the order at each batch which degraded performance severely.
 
-4. Tensorflow, PyTorch and Theano required a boolean supplied to the pooling-layer indicating whether we were training or not (this had a huge impact on test-accuracy, 72 vs 77%)
+4. Tensorflow, PyTorch and Theano required a boolean supplied to the pooling-layer indicating whether we were training or not (this had a huge impact on test-accuracy, 72 vs 77%). Caffe2 was similar and performance improved after passing: test_arg_scope = {'is_test': True}
 
 5. Tensorflow was a bit annoying and required two more changes: speed was improved a lot by enabling TF_ENABLE_WINOGRAD_NONFUSED (export TF_ENABLE_WINOGRAD_NONFUSED=1) and also changing the dimensions supplied as channel first rather than last (data_format='channels_first'). Enabling the WINOGRAD for convolutions also improved Keras with TF as a backend
 
@@ -66,4 +66,6 @@ The below offers some insights I gained after trying to match test-accuracy acro
 
 8. Type of momentum implemented for SGD-momentum; I had to turn off unit_gain (which was on by default in CNTK) to match other frameworks' implementations
 
-9. Some **further checks** which may be useful: specifying kernel as (3) becomes a symmetric tuple (3, 3) or 1D convolution (3, 1)?, strides (for max-pooling) are (1, 1) by default or equal to kernel (Keras does this)? default padding is usually off (0, 0)/valid but useful to check it's not on/'same', the bias initializer may vary (sometimes no bias is included), gradient clipping and treatment of inifinty/NaNs may differ across frameworks, some frameworks support sparse labels instead of one-hot (which I use if available, e.g. Tensorflow has f.nn.sparse_softmax_cross_entropy_with_logits), data-type assumptions may be different - I try to use float32 and int32 for X and y but, for example, torch needs double for y (to be coerced into torch.LongTensor(y).cuda), if the framework has a slightly lower-level API make sure during testing you don't compute the gradient by setting something like training=False, I have been told that applying an activation after max-pooling is faster than before it (although haven't been able to replicate)
+9. Caffe2 has an extra optimisation for the first layer of a network (no_gradient_to_input=1) that produces a small speed-boost.
+
+10. Some **further checks** which may be useful: specifying kernel as (3) becomes a symmetric tuple (3, 3) or 1D convolution (3, 1)?, strides (for max-pooling) are (1, 1) by default or equal to kernel (Keras does this)? default padding is usually off (0, 0)/valid but useful to check it's not on/'same', the bias initializer may vary (sometimes no bias is included), gradient clipping and treatment of inifinty/NaNs may differ across frameworks, some frameworks support sparse labels instead of one-hot (which I use if available, e.g. Tensorflow has f.nn.sparse_softmax_cross_entropy_with_logits), data-type assumptions may be different - I try to use float32 and int32 for X and y but, for example, torch needs double for y (to be coerced into torch.LongTensor(y).cuda), if the framework has a slightly lower-level API make sure during testing you don't compute the gradient by setting something like training=False, I have been told that applying an activation after max-pooling is faster than before it (although haven't been able to replicate)
