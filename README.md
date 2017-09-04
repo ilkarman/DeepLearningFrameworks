@@ -27,13 +27,13 @@ Since we are essentially comparing a series of deterministic mathematical operat
 | ---------------------------------------- | ----------------- | ----------------- |
 | [MXNet (0.11.0)](MXNet_CIFAR.ipynb)      | 77                | 152               |   
 | [Caffe2](Caffe2_CIFAR.ipynb)             | 76                | 155               | 
-| [PyTorch (0.2.0_1)](PyTorch_CIFAR.ipynb) | 72                | 162               |    
-| [CNTK (2.1)](CNTK_CIFAR.ipynb)           | 78                | 166               |  
-| [Keras (2.0.6) (CNTK)](Keras_CNTK_CIFAR.ipynb) | 78          | 200               |
+| [CNTK (2.1)](CNTK_CIFAR.ipynb)           | 78                | 166              |  
+| [PyTorch (0.2.0_1)](PyTorch_CIFAR.ipynb) | 78                | 168              |    
+| [Keras (2.0.8) (CNTK)](Keras_CNTK_CIFAR.ipynb) | 78          | 200               |
 | [Chainer (2.0.2)](Chainer_CIFAR.ipynb)   | 78                | 256               |
 | [Lasagne (0.2.dev1) (Theano 0.10.0beta1) ](Theano_Lasagne_CIFAR.ipynb) | 73                | 262               |                 
 | [Tensorflow (1.3.0)](Tensorflow_CIFAR.ipynb) | 77                | 300               |
-| [Keras (2.0.6) (TF)](Keras_TF_CIFAR.ipynb) | 78                | 385               |
+| [Keras (2.0.8) (TF)](Keras_TF_CIFAR.ipynb) | 78                | 385               |
 
 ### LSTM on IMDB
 
@@ -49,13 +49,13 @@ The below offers some insights I gained after trying to match test-accuracy acro
 | DL Library                               | Test Accuracy (%) | Training Time (s) |
 | ---------------------------------------- | ----------------- | ----------------- |
 | [MXNet w/Generator](MXNet_CIFAR_highAPI.ipynb) | 77                | 151               |
-| [CNTK w/Generator](MXNet_CIFAR_highAPI.ipynb) | 77                | 153               |
+| [CNTK w/Generator](CNTK_CIFAR_highAPI.ipynb) | 77                | 153               |
 
 2. Enabling CuDNN's auto-tune/exhaustive search paramater (which selects the most efficient CNN algorithm for images of fixed-size) has a huge performance boost. This had to be manually enabled for Caffe2, PyTorch and Theano. It appears CNTK, MXNet and Tensorflow have this enabled by default. I'm not sure about Chainer.
 
 3. When using Keras it's important to choose the [NCHW] ordering that matches the back-end framework. CNTK operates with channels first and by mistake I had Keras configured to expect channels last. It then must have changed the order at each batch which degraded performance severely.
 
-4. Tensorflow required a boolean supplied to the pooling-layer indicating whether we were training or not (this had a huge impact on test-accuracy)
+4. Tensorflow and PyTorch required a boolean supplied to the pooling-layer indicating whether we were training or not (this had a huge impact on test-accuracy, 72 vs 77%)
 
 5. Softmax is usually bundled with cross_entropy_loss() for most functions and it's worth checking if you need an activation on your final fully-connected layer to save time applying it twice
 
