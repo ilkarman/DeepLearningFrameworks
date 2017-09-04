@@ -25,15 +25,15 @@ Since we are essentially comparing a series of deterministic mathematical operat
 
 | DL Library                               | Test Accuracy (%) | Training Time (s) |
 | ---------------------------------------- | ----------------- | ----------------- |
-| [MXNet (0.11.0)](MXNet_CIFAR.ipynb)      | 77                | 152               |   
+| [MXNet](MXNet_CIFAR.ipynb)      | 77                | 152               |   
 | [Caffe2](Caffe2_CIFAR.ipynb)             | 76                | 155               | 
-| [CNTK (2.1)](CNTK_CIFAR.ipynb)           | 78                | 166              |  
-| [PyTorch (0.2.0_1)](PyTorch_CIFAR.ipynb) | 78                | 168              |    
-| [Tensorflow (1.3.0)](Tensorflow_CIFAR.ipynb) | 78                | 175               |
-| [Keras (2.0.8) (CNTK)](Keras_CNTK_CIFAR.ipynb) | 78          | 200               |
-| [Keras (2.0.8) (TF)](Keras_TF_CIFAR.ipynb) | 77                | 252               |
-| [Chainer (2.0.2)](Chainer_CIFAR.ipynb)   | 78                | 256               |
-| [Lasagne (0.2.dev1) (Theano 0.10.0beta1) ](Theano_Lasagne_CIFAR.ipynb) | 77                | 253               |                 
+| [CNTK](CNTK_CIFAR.ipynb)           | 78                | 166              |  
+| [PyTorch](PyTorch_CIFAR.ipynb) | 78                | 168              |    
+| [Tensorflow](Tensorflow_CIFAR.ipynb) | 78                | 175               |
+| [Keras(CNTK)](Keras_CNTK_CIFAR.ipynb) | 78          | 200               |
+| [Keras(TF)](Keras_TF_CIFAR.ipynb) | 77                | 252               |
+| [Chainer](Chainer_CIFAR.ipynb)   | 78                | 256               |
+| [Lasagne(Theano)](Theano_Lasagne_CIFAR.ipynb) | 77                | 253               |                 
 
 
 ### LSTM on IMDB
