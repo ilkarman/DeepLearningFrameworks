@@ -29,10 +29,10 @@ Since we are essentially comparing a series of deterministic mathematical operat
 | [Caffe2](Caffe2_CIFAR.ipynb)             | 76                | 155               | 
 | [CNTK (2.1)](CNTK_CIFAR.ipynb)           | 78                | 166              |  
 | [PyTorch (0.2.0_1)](PyTorch_CIFAR.ipynb) | 78                | 168              |    
+| [Tensorflow (1.3.0)](Tensorflow_CIFAR.ipynb) | 78                | 175               |
 | [Keras (2.0.8) (CNTK)](Keras_CNTK_CIFAR.ipynb) | 78          | 200               |
 | [Chainer (2.0.2)](Chainer_CIFAR.ipynb)   | 78                | 256               |
 | [Lasagne (0.2.dev1) (Theano 0.10.0beta1) ](Theano_Lasagne_CIFAR.ipynb) | 73                | 262               |                 
-| [Tensorflow (1.3.0)](Tensorflow_CIFAR.ipynb) | 77                | 300               |
 | [Keras (2.0.8) (TF)](Keras_TF_CIFAR.ipynb) | 78                | 385               |
 
 ### LSTM on IMDB
@@ -57,10 +57,12 @@ The below offers some insights I gained after trying to match test-accuracy acro
 
 4. Tensorflow and PyTorch required a boolean supplied to the pooling-layer indicating whether we were training or not (this had a huge impact on test-accuracy, 72 vs 77%)
 
-5. Softmax is usually bundled with cross_entropy_loss() for most functions and it's worth checking if you need an activation on your final fully-connected layer to save time applying it twice
+5. Tensorflow's speed was improved a lot by enabling TF_ENABLE_WINOGRAD_NONFUSED (export TF_ENABLE_WINOGRAD_NONFUSED=1) and also changing the dimensions supplied as channel first rather than last (data_format='channels_first')
 
-6. Kernel initializer for different frameworks can vary (I've found this to have +/- 1% effect on accuracy) and I try to specify xavier/glorot uniform whenever possible/not too verbose
+6. Softmax is usually bundled with cross_entropy_loss() for most functions and it's worth checking if you need an activation on your final fully-connected layer to save time applying it twice
 
-7. Type of momentum implemented for SGD-momentum; I had to turn off unit_gain (which was on by default in CNTK) to match other frameworks' implementations
+7. Kernel initializer for different frameworks can vary (I've found this to have +/- 1% effect on accuracy) and I try to specify xavier/glorot uniform whenever possible/not too verbose
 
-8. Some **further checks** which may be useful: specifying kernel as (3) becomes a symmetric tuple (3, 3) or 1D convolution (3, 1)?, strides (for max-pooling) are (1, 1) by default or equal to kernel (Keras does this)? default padding is usually off (0, 0)/valid but useful to check it's not on/'same', the bias initializer may vary (sometimes no bias is included), gradient clipping and treatment of inifinty/NaNs may differ across frameworks, some frameworks support sparse labels instead of one-hot (which I use if available, e.g. Tensorflow has f.nn.sparse_softmax_cross_entropy_with_logits), data-type assumptions may be different - I try to use float32 and int32 for X and y but, for example, torch needs double for y (to be coerced into torch.LongTensor(y).cuda), if the framework has a slightly lower-level API make sure during testing you don't compute the gradient by setting something like training=False, I have been told that applying an activation after max-pooling is faster than before it (although haven't been able to replicate)
+8. Type of momentum implemented for SGD-momentum; I had to turn off unit_gain (which was on by default in CNTK) to match other frameworks' implementations
+
+9. Some **further checks** which may be useful: specifying kernel as (3) becomes a symmetric tuple (3, 3) or 1D convolution (3, 1)?, strides (for max-pooling) are (1, 1) by default or equal to kernel (Keras does this)? default padding is usually off (0, 0)/valid but useful to check it's not on/'same', the bias initializer may vary (sometimes no bias is included), gradient clipping and treatment of inifinty/NaNs may differ across frameworks, some frameworks support sparse labels instead of one-hot (which I use if available, e.g. Tensorflow has f.nn.sparse_softmax_cross_entropy_with_logits), data-type assumptions may be different - I try to use float32 and int32 for X and y but, for example, torch needs double for y (to be coerced into torch.LongTensor(y).cuda), if the framework has a slightly lower-level API make sure during testing you don't compute the gradient by setting something like training=False, I have been told that applying an activation after max-pooling is faster than before it (although haven't been able to replicate)
