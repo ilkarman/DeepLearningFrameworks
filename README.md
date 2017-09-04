@@ -31,9 +31,10 @@ Since we are essentially comparing a series of deterministic mathematical operat
 | [PyTorch (0.2.0_1)](PyTorch_CIFAR.ipynb) | 78                | 168              |    
 | [Tensorflow (1.3.0)](Tensorflow_CIFAR.ipynb) | 78                | 175               |
 | [Keras (2.0.8) (CNTK)](Keras_CNTK_CIFAR.ipynb) | 78          | 200               |
+| [Keras (2.0.8) (TF)](Keras_TF_CIFAR.ipynb) | 77                | 252               |
 | [Chainer (2.0.2)](Chainer_CIFAR.ipynb)   | 78                | 256               |
 | [Lasagne (0.2.dev1) (Theano 0.10.0beta1) ](Theano_Lasagne_CIFAR.ipynb) | 73                | 262               |                 
-| [Keras (2.0.8) (TF)](Keras_TF_CIFAR.ipynb) | 78                | 385               |
+
 
 ### LSTM on IMDB
 
@@ -57,7 +58,7 @@ The below offers some insights I gained after trying to match test-accuracy acro
 
 4. Tensorflow and PyTorch required a boolean supplied to the pooling-layer indicating whether we were training or not (this had a huge impact on test-accuracy, 72 vs 77%)
 
-5. Tensorflow's speed was improved a lot by enabling TF_ENABLE_WINOGRAD_NONFUSED (export TF_ENABLE_WINOGRAD_NONFUSED=1) and also changing the dimensions supplied as channel first rather than last (data_format='channels_first')
+5. Tensorflow was a bit annoying and required two more changes: speed was improved a lot by enabling TF_ENABLE_WINOGRAD_NONFUSED (export TF_ENABLE_WINOGRAD_NONFUSED=1) and also changing the dimensions supplied as channel first rather than last (data_format='channels_first')
 
 6. Softmax is usually bundled with cross_entropy_loss() for most functions and it's worth checking if you need an activation on your final fully-connected layer to save time applying it twice
 
