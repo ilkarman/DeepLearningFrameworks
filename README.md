@@ -52,13 +52,13 @@ The below offers some insights I gained after trying to match test-accuracy acro
 | [MXNet w/Generator](MXNet_CIFAR_highAPI.ipynb) | 77                | 151               |
 | [CNTK w/Generator](CNTK_CIFAR_highAPI.ipynb) | 77                | 153               |
 
-2. Enabling CuDNN's auto-tune/exhaustive search paramater (which selects the most efficient CNN algorithm for images of fixed-size) has a huge performance boost. This had to be manually enabled for Caffe2, PyTorch and Theano. It appears CNTK, MXNet and Tensorflow have this enabled by default. I'm not sure about Chainer.
+2. Enabling CuDNN's auto-tune/exhaustive search paramater (which selects the most efficient CNN algorithm for images of fixed-size) has a huge performance boost. This had to be manually enabled for Caffe2, PyTorch and Theano. It appears CNTK, MXNet and Tensorflow have this enabled by default. I'm not sure about Chainer. Yangqing mentions that the performance boost between cudnnGet (default) and cudnnFind is, however, much smaller on the Titan X GPU; it seems that the K80 + new cudnn makes the problem more promininet in this case. Running cudnnFind for every combination of size in object detection has serious performance regressions, however, so exhaustive_search should be disabled for object detection
 
 3. When using Keras it's important to choose the [NCHW] ordering that matches the back-end framework. CNTK operates with channels first and by mistake I had Keras configured to expect channels last. It then must have changed the order at each batch which degraded performance severely.
 
-4. Tensorflow, PyTorch and Theano required a boolean supplied to the pooling-layer indicating whether we were training or not (this had a huge impact on test-accuracy, 72 vs 77%). Caffe2 was similar and performance improved after passing: test_arg_scope = {'is_test': True}
+4. Tensorflow, PyTorch, Caffe2 and Theano required a boolean supplied to the pooling-layer indicating whether we were training or not (this had a huge impact on test-accuracy, 72 vs 77%).
 
-5. Tensorflow was a bit annoying and required two more changes: speed was improved a lot by enabling TF_ENABLE_WINOGRAD_NONFUSED (export TF_ENABLE_WINOGRAD_NONFUSED=1) and also changing the dimensions supplied as channel first rather than last (data_format='channels_first'). Enabling the WINOGRAD for convolutions also improved Keras with TF as a backend
+5. Tensorflow was a bit annoying and required two more changes: speed was improved a lot by enabling TF_ENABLE_WINOGRAD_NONFUSED and also changing the dimensions supplied to channel first rather than last (data_format='channels_first'). Enabling the WINOGRAD for convolutions also, naturally, improved Keras with TF as a backend
 
 6. Softmax is usually bundled with cross_entropy_loss() for most functions and it's worth checking if you need an activation on your final fully-connected layer to save time applying it twice
 
@@ -66,6 +66,16 @@ The below offers some insights I gained after trying to match test-accuracy acro
 
 8. Type of momentum implemented for SGD-momentum; I had to turn off unit_gain (which was on by default in CNTK) to match other frameworks' implementations
 
-9. Caffe2 has an extra optimisation for the first layer of a network (no_gradient_to_input=1) that produces a small speed-boost.
+9. Caffe2 has an extra optimisation for the first layer of a network (no_gradient_to_input=1) that produces a small speed-boost by not computing gradients for input. It's possible that Tensorflow and MXNet already enable this by default. Computing this gradient could be useful for research purposes and for networks like deep-dream
 
-10. Some **further checks** which may be useful: specifying kernel as (3) becomes a symmetric tuple (3, 3) or 1D convolution (3, 1)?, strides (for max-pooling) are (1, 1) by default or equal to kernel (Keras does this)? default padding is usually off (0, 0)/valid but useful to check it's not on/'same', the bias initializer may vary (sometimes no bias is included), gradient clipping and treatment of inifinty/NaNs may differ across frameworks, some frameworks support sparse labels instead of one-hot (which I use if available, e.g. Tensorflow has f.nn.sparse_softmax_cross_entropy_with_logits), data-type assumptions may be different - I try to use float32 and int32 for X and y but, for example, torch needs double for y (to be coerced into torch.LongTensor(y).cuda), if the framework has a slightly lower-level API make sure during testing you don't compute the gradient by setting something like training=False, I have been told that applying an activation after max-pooling is faster than before it (although haven't been able to replicate)
+10. Some **further checks** which may be useful: 
+	* specifying kernel as (3) becomes a symmetric tuple (3, 3) or 1D convolution (3, 1)?
+	* strides (for max-pooling) are (1, 1) by default or equal to kernel (Keras does this)? 
+	* default padding is usually off (0, 0)/valid but useful to check it's not on/'same'
+	* is the default activation on a convolutional layer 'None' or 'ReLu' (Lasagne)
+	* the bias initializer may vary (sometimes no bias is included)
+	* gradient clipping and treatment of inifinty/NaNs may differ across frameworks
+	* some frameworks support sparse labels instead of one-hot (which I use if available, e.g. Tensorflow has f.nn.sparse_softmax_cross_entropy_with_logits)
+	* data-type assumptions may be different - I try to use float32 and int32 for X and y but, for example, torch needs double for y (to be coerced into torch.LongTensor(y).cuda)
+	* if the framework has a slightly lower-level API make sure during testing you don't compute the gradient by setting something like training=False
+	* I have been told that applying an activation after max-pooling is faster than before it (although haven't been able to replicate)
