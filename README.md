@@ -41,6 +41,11 @@ Since we are essentially comparing a series of deterministic mathematical operat
 
 (Work In Progress)
 
+| DL Library                               | Test Accuracy (%) | Training Time (s) |
+| ---------------------------------------- | ----------------- | ----------------- |
+| [Keras(CNTK)](Keras_CNTK_IMDB.ipynb) | 83          | 36               |
+
+
 ### Lessons Learned
 
 The below offers some insights I gained after trying to match test-accuracy across frameworks and from all the GitHub issues/PRs raised.
