@@ -31,9 +31,10 @@ Since we are essentially comparing a series of deterministic mathematical operat
 | [PyTorch](PyTorch_CIFAR.ipynb) | 78                | 168              |    
 | [Tensorflow](Tensorflow_CIFAR.ipynb) | 78                | 175               |
 | [Keras(CNTK)](Keras_CNTK_CIFAR.ipynb) | 78          | 200               |
+| [Chainer](Chainer_CIFAR.ipynb)   | 79                | 240               |
 | [Keras(TF)](Keras_TF_CIFAR.ipynb) | 77                | 252               |
-| [Chainer](Chainer_CIFAR.ipynb)   | 78                | 256               |
 | [Lasagne(Theano)](Theano_Lasagne_CIFAR.ipynb) | 77                | 253               |                 
+| [Keras(Theano)](Keras_Theano_CIFAR.ipynb) | 78          | 269               |
 
 
 ### LSTM on IMDB
@@ -79,3 +80,4 @@ The below offers some insights I gained after trying to match test-accuracy acro
 	* data-type assumptions may be different - I try to use float32 and int32 for X and y but, for example, torch needs double for y (to be coerced into torch.LongTensor(y).cuda)
 	* if the framework has a slightly lower-level API make sure during testing you don't compute the gradient by setting something like training=False
 	* I have been told that applying an activation after max-pooling is faster than before it (although haven't been able to replicate)
+
