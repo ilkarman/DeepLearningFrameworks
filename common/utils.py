@@ -120,7 +120,7 @@ def cifar_for_library(channel_first=True, one_hot=False):
     y_test = y_test.astype(np.int32)
     return x_train, x_test, y_train, y_test
      
-def imdb_for_library(seq_len=100, max_features=20000):
+def imdb_for_library(seq_len=100, max_features=20000, one_hot=False):
     ''' Replicates same pre-processing as:
     https://github.com/fchollet/keras/blob/master/keras/datasets/imdb.py
     
@@ -155,6 +155,14 @@ def imdb_for_library(seq_len=100, max_features=20000):
         for i_idx in range(len(obs)):
             if i_idx < seq_len:
                 xs[o_idx][i_idx] = obs[i_idx]
+    # One-hot
+    if one_hot:
+        y_train = np.expand_dims(y_train, axis=-1)
+        y_test = np.expand_dims(y_test, axis=-1)
+        enc = OneHotEncoder(categorical_features='all')
+        fit = enc.fit(y_train)
+        y_train = fit.transform(y_train).toarray()
+        y_test = fit.transform(y_test).toarray()
     # dtypes
     x_train = np.array(xs[:idx]).astype(np.int32)
     x_test = np.array(xs[idx:]).astype(np.int32)
