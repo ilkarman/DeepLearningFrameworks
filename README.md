@@ -27,6 +27,7 @@ Since we are essentially comparing a series of deterministic mathematical operat
 | ---------------------------------------- | ----------------- | ----------------- |
 | [Caffe2](Caffe2_CIFAR.ipynb)             | 79                | 149               | 
 | [MXNet](MXNet_CIFAR.ipynb)      | 77                | 149               |   
+| [Gluon](Gluon_CIFAR.ipynb)      | 77                | 157               |   
 | [CNTK](CNTK_CIFAR.ipynb)           | 78                | 166              |  
 | [PyTorch](PyTorch_CIFAR.ipynb) | 78                | 168              |    
 | [Tensorflow](Tensorflow_CIFAR.ipynb) | 78                | 175               |
