@@ -30,7 +30,7 @@ Since we are essentially comparing a series of deterministic mathematical operat
 | [Gluon](Gluon_CIFAR.ipynb)      | 77                | 157               |   
 | [CNTK](CNTK_CIFAR.ipynb)           | 78                | 166              |  
 | [PyTorch](PyTorch_CIFAR.ipynb) | 78                | 168              |    
-| [Tensorflow](Tensorflow_CIFAR.ipynb) | 78                | 175               |
+| [Tensorflow](Tensorflow_CIFAR.ipynb) | 78                | 173               |
 | [Keras(CNTK)](Keras_CNTK_CIFAR.ipynb) | 78          | 200               |
 | [Chainer](Chainer_CIFAR.ipynb)   | 79                | 240               |
 | [Keras(TF)](Keras_TF_CIFAR.ipynb) | 77                | 252               |
@@ -83,4 +83,21 @@ The below offers some insights I gained after trying to match test-accuracy acro
 	* data-type assumptions may be different - I try to use float32 and int32 for X and y but, for example, torch needs double for y (to be coerced into torch.LongTensor(y).cuda)
 	* if the framework has a slightly lower-level API make sure during testing you don't compute the gradient by setting something like training=False
 
-
+12. Installing Caffe2 for python 3.5 proved a bit difficult so I wanted to share the process:
+	```
+	# build as root
+	sudo -s
+	cd /opt/caffe2
+	make clean
+	git pull
+	git checkout v0.8.1
+	git submodule update
+	export CPLUS_INCLUDE_PATH=/anaconda/envs/py35/include/python3.5m
+	mkdir build
+	cd build
+	echo $PATH
+	# CONFIRM that Anaconda is not in the path
+	cmake .. -DBLAS=MKL -DPYTHON_INCLUDE_DIR=/anaconda/envs/py35/include/python3.5m -DPYTHON_LIBRARY=/anaconda/envs/py35/lib/libpython3.5m.so -DPYTHON_EXECUTABLE=/anaconda/envs/py35/bin/python
+	make -j$(nproc)
+	make install
+	```
