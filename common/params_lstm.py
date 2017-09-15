@@ -9,5 +9,5 @@ BETA_1=0.9
 BETA_2=0.999
 EPS=1e-08
 MAXLEN=150 #maximum size of the word sequence
-MAXFEATURES=200000 #vocabulary size
+MAXFEATURES=150000 #vocabulary size
 GPU=True
