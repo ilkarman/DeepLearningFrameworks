@@ -42,11 +42,11 @@ Since we are essentially comparing a series of deterministic mathematical operat
 
 | DL Library                               | Test Accuracy (%) | Training Time (s) |
 | ---------------------------------------- | ----------------- | ----------------- |
-| [MXNet](https://github.com/ilkarman/DeepLearningFrameworks/blob/lstm/LSTM_MXNet_IMDB.ipynb)      | 88                | 12               |  
-| [Pytorch](https://github.com/ilkarman/DeepLearningFrameworks/blob/lstm/LSTM_PyTorch_IMDB.ipynb)      | 87                | 36               |  
-| [CNTK](https://github.com/ilkarman/DeepLearningFrameworks/blob/lstm/CNTK_IMDB.ipynb) | 82		| 59 |
-| [Tensorflow](https://github.com/ilkarman/DeepLearningFrameworks/blob/lstm/LSTM_Tensorflow_IMDB.ipynb)      | 86                | 79               |   
-| [Keras(CNTK)](https://github.com/ilkarman/DeepLearningFrameworks/blob/lstm/LSTM_Keras_CNTK_IMDB.ipynb)             | 86                | 223               | 
+| [MXNet](MXNet_IMDB.ipynb)      | 88                | 12               |  
+| [Pytorch](PyTorch_IMDB.ipynb)      | 87                | 36               |  
+| [CNTK](CNTK_IMDB.ipynb) | 82		| 59 |
+| [Tensorflow](Tensorflow_IMDB.ipynb)      | 86                | 79               |   
+| [Keras(CNTK)](Keras_CNTK_IMDB.ipynb)             | 86                | 223               | 
 
 **Note: LSTM examples are very draft and subject to change. Input data is currently IMDB data fixed at MAXLEN word-indexes and 0 padded. Certain frameworks like CNTK support variable length sequences**
 
