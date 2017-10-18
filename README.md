@@ -25,34 +25,34 @@ Since we are essentially comparing a series of deterministic mathematical operat
 
 | DL Library                               | Test Accuracy (%) | Training Time (s) |
 | ---------------------------------------- | ----------------- | ----------------- |
-| [Caffe2](Caffe2_CNN.ipynb)             | 79                | 149               | 
-| [MXNet](MXNet_CNN.ipynb)      | 77                | 149               |   
-| [Gluon](Gluon_CNN.ipynb)      | 77                | 157               |   
-| [CNTK](CNTK_CNN.ipynb)           | 78                | 166              |  
-| [PyTorch](PyTorch_CNN.ipynb) | 78                | 168              |    
-| [Tensorflow](Tensorflow_CNN.ipynb) | 78                | 173               |
-| [Keras(CNTK)](Keras_CNTK_CNN.ipynb) | 78          | 200               |
-| [Chainer](Chainer_CNN.ipynb)   | 79                | 240               |
-| [Keras(TF)](Keras_TF_CNN.ipynb) | 77                | 252               |
-| [Lasagne(Theano)](Theano_Lasagne_CNN.ipynb) | 77                | 253               |                 
-| [Keras(Theano)](Keras_Theano_CNN.ipynb) | 78          | 269               |
+| [Caffe2](Caffe2_CNN.ipynb)               | 79                | 149               |
+| [MXNet](MXNet_CNN.ipynb)                 | 77                | 149               |
+| [Gluon](Gluon_CNN.ipynb)                 | 77                | 157               |
+| [CNTK](CNTK_CNN.ipynb)                   | 78                | 166               |
+| [PyTorch](PyTorch_CNN.ipynb)             | 78                | 168               |
+| [Tensorflow](Tensorflow_CNN.ipynb)       | 78                | 173               |
+| [Keras(CNTK)](Keras_CNTK_CNN.ipynb)      | 78                | 200               |
+| [Chainer](Chainer_CNN.ipynb)             | 79                | 240               |
+| [Keras(TF)](Keras_TF_CNN.ipynb)          | 77                | 252               |
+| [Lasagne(Theano)](Theano_Lasagne_CNN.ipynb) | 77                | 253               |
+| [Keras(Theano)](Keras_Theano_CNN.ipynb)  | 78                | 269               |
 
 Input for this model is the standard [CIFAR-10 dataset](http://www.cs.toronto.edu/~kriz/cifar.html) containing 50k training images and 10k test images, uniformly split across 10 classes. Each 32 by 32 px image is supplied as a tensor of shape (3, 32, 32) with pixel intensity re-scaled from 0-255 to 0-1. For example: ![automobile](common/automobile10.PNG) with corresponding y=(0, 1, 0, 0, 0, 0, 0, 0, 0, 0) where labels=[airplane, automobile, bird, cat, deer, dog, frog, horse, ship, truck]
 
 ### RNN (GRU) on IMDB - Natural Language Processing (Sentiment Analysis)
 
-| DL Library                               | Test Accuracy (%) | Training Time (s) |
-| ---------------------------------------- | ----------------- | ----------------- |
-| [Pytorch](PyTorch_RNN.ipynb)      | 85                | 32               |  
-| [CNTK](CNTK_RNN.ipynb)             | 86                | 66               | 
-| [Tensorflow](Tensorflow_RNN.ipynb)      | 85                | 77               |   
-| [MXNet](MXNet_RNN.ipynb)      | 86                | 87               |  
-| [Keras(TF)](Keras_TF_RNN.ipynb)             | 85                | 205               | 
-| [Keras(CNTK)](Keras_CNTK_RNN.ipynb)             | 86                | 215               | 
+| DL Library                          | Test Accuracy (%) | Training Time (s) |
+| ----------------------------------- | ----------------- | ----------------- |
+| [CNTK](CNTK_RNN.ipynb)              | 86                | 29                |
+| [Pytorch](PyTorch_RNN.ipynb)        | 85                | 32                |
+| [Tensorflow](Tensorflow_RNN.ipynb)  | 85                | 77                |
+| [MXNet](MXNet_RNN.ipynb)            | 86                | 87                |
+| [Keras(TF)](Keras_TF_RNN.ipynb)     | 85                | 205               |
+| [Keras(CNTK)](Keras_CNTK_RNN.ipynb) | 86                | 215               |
 
 Input for this model is the standard [IMDB movie review dataset](http://ai.stanford.edu/~amaas/data/sentiment/) containing 25k training reviews and 25k test reviews, uniformly split across 2 classes (positive/negative). Reviews are already downloaded as a tensor of word indexes e.g. (If you like adult comedy cartoons, like South Park) is received as (1 2 3 4 5 6 3 7 8). Processing follows [Keras](https://github.com/fchollet/keras/blob/master/keras/datasets/imdb.py) approach where start-character is set as 1, out-of-vocab (vocab size of 30k is used) represented as 2 and thus word-index starts from 3. Zero-padded / truncated to fixed axis of 150 words per review.
 
-*Note: Dynamix axes*
+*Note: For CNTK I use optimized_rnnstack instead of Recurrence(LSTM()), since we have a vanilla RNN that can be easily reduced to CuDNN level. For more complicated variants (e.g. Layer Normalisation) one cannot use this. CNTK also supports [dynamic axes](https://cntk.ai/pythondocs/sequence.html) which means we don't need to pad the input to 150 words and can consume as-is, however since I could not find a way to do this with other frameworks I have fallen back to padding - which is a bit unfair on CNTK and understates its capabilities*
 
 The classification model creates an embedding matrix of size (150x125) and then applies 100 gated recurrent units and takes as output the final output (not sequence of outputs and not hidden state). Any suggestions on alterations to this are welcome.
 
@@ -87,31 +87,31 @@ The below offers some insights I gained after trying to match test-accuracy acro
 10. Applying the ReLU activation after max-pooling (insteaad of before) means you perform a calculation after dimensionality-reduction and thus shave off a few seconds. This helped reduce MXNet time by 3 seconds
 
 11. Some **further checks** which may be useful: 
-	* specifying kernel as (3) becomes a symmetric tuple (3, 3) or 1D convolution (3, 1)?
-	* strides (for max-pooling) are (1, 1) by default or equal to kernel (Keras does this)? 
-	* default padding is usually off (0, 0)/valid but useful to check it's not on/'same'
-	* is the default activation on a convolutional layer 'None' or 'ReLu' (Lasagne)
-	* the bias initializer may vary (sometimes no bias is included)
-	* gradient clipping and treatment of inifinty/NaNs may differ across frameworks
-	* some frameworks support sparse labels instead of one-hot (which I use if available, e.g. Tensorflow has f.nn.sparse_softmax_cross_entropy_with_logits)
-	* data-type assumptions may be different - I try to use float32 and int32 for X and y but, for example, torch needs double for y (to be coerced into torch.LongTensor(y).cuda)
-	* if the framework has a slightly lower-level API make sure during testing you don't compute the gradient by setting something like training=False
+   * specifying kernel as (3) becomes a symmetric tuple (3, 3) or 1D convolution (3, 1)?
+   * strides (for max-pooling) are (1, 1) by default or equal to kernel (Keras does this)? 
+   * default padding is usually off (0, 0)/valid but useful to check it's not on/'same'
+   * is the default activation on a convolutional layer 'None' or 'ReLu' (Lasagne)
+   * the bias initializer may vary (sometimes no bias is included)
+   * gradient clipping and treatment of inifinty/NaNs may differ across frameworks
+   * some frameworks support sparse labels instead of one-hot (which I use if available, e.g. Tensorflow has f.nn.sparse_softmax_cross_entropy_with_logits)
+   * data-type assumptions may be different - I try to use float32 and int32 for X and y but, for example, torch needs double for y (to be coerced into torch.LongTensor(y).cuda)
+   * if the framework has a slightly lower-level API make sure during testing you don't compute the gradient by setting something like training=False
 
 12. Installing Caffe2 for python 3.5 proved a bit difficult so I wanted to share the process:
-	```
-	# build as root
-	sudo -s
-	cd /opt/caffe2
-	make clean
-	git pull
-	git checkout v0.8.1
-	git submodule update
-	export CPLUS_INCLUDE_PATH=/anaconda/envs/py35/include/python3.5m
-	mkdir build
-	cd build
-	echo $PATH
-	# CONFIRM that Anaconda is not in the path
-	cmake .. -DBLAS=MKL -DPYTHON_INCLUDE_DIR=/anaconda/envs/py35/include/python3.5m -DPYTHON_LIBRARY=/anaconda/envs/py35/lib/libpython3.5m.so -DPYTHON_EXECUTABLE=/anaconda/envs/py35/bin/python
-	make -j$(nproc)
-	make install
-	```
+   ```
+   # build as root
+   sudo -s
+   cd /opt/caffe2
+   make clean
+   git pull
+   git checkout v0.8.1
+   git submodule update
+   export CPLUS_INCLUDE_PATH=/anaconda/envs/py35/include/python3.5m
+   mkdir build
+   cd build
+   echo $PATH
+   # CONFIRM that Anaconda is not in the path
+   cmake .. -DBLAS=MKL -DPYTHON_INCLUDE_DIR=/anaconda/envs/py35/include/python3.5m -DPYTHON_LIBRARY=/anaconda/envs/py35/lib/libpython3.5m.so -DPYTHON_EXECUTABLE=/anaconda/envs/py35/bin/python
+   make -j$(nproc)
+   make install
+   ```
