@@ -44,9 +44,9 @@ Input for this model is the standard [CIFAR-10 dataset](http://www.cs.toronto.ed
 | DL Library                          | Test Accuracy (%) | Training Time (s) |
 | ----------------------------------- | ----------------- | ----------------- |
 | [CNTK](CNTK_RNN.ipynb)              | 86                | 29                |
+| [MXNet](MXNet_RNN.ipynb)            | 86                | 29                |
 | [Pytorch](PyTorch_RNN.ipynb)        | 85                | 32                |
 | [Tensorflow](Tensorflow_RNN.ipynb)  | 85                | 77                |
-| [MXNet](MXNet_RNN.ipynb)            | 86                | 87                |
 | [Keras(TF)](Keras_TF_RNN.ipynb)     | 85                | 205               |
 | [Keras(CNTK)](Keras_CNTK_RNN.ipynb) | 86                | 215               |
 
