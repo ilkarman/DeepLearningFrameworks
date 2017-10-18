@@ -11,7 +11,7 @@ Create a Rosetta Stone of deep-learning frameworks to allow data-scientists to e
 A lot of online tutorials use very-low level APIs, which are very verbose, and don't make much sense (given higher-level helpers being available) for most use-cases unless one plans to create new layers. Here we try to apply the highest-level API possible, conditional on being to override conflicting defaults, to allow an easier comparison between frameworks. It will demonstrated that the code structure becomes very similar once higher-level APIs are used and can be roughly represented as:
 
 - Load data; x_train, x_test, y_train, y_test = cifar_for_library(channel_first=?, one_hot=?)
-- Generate CNN symbol (usually no activation on final dense-layer)
+- Generate CNN/RNN symbol (usually no activation on final dense-layer)
 - Specify loss (cross-entropy comes bundles with softmax), optimiser and initialise weights + sessions
 - Train on mini-batches from train-set using custom iterator (common data-source for all frameworks)
 - Predict on fresh mini-batches from test-set
@@ -21,34 +21,40 @@ Since we are essentially comparing a series of deterministic mathematical operat
 
 ## Results
 
-### VGG-style CNN on CIFAR-10
+### CNN (VGG-style) on CIFAR-10 - Image Recognition
 
 | DL Library                               | Test Accuracy (%) | Training Time (s) |
 | ---------------------------------------- | ----------------- | ----------------- |
-| [Caffe2](Caffe2_CIFAR.ipynb)             | 79                | 149               | 
-| [MXNet](MXNet_CIFAR.ipynb)      | 77                | 149               |   
-| [Gluon](Gluon_CIFAR.ipynb)      | 77                | 157               |   
-| [CNTK](CNTK_CIFAR.ipynb)           | 78                | 166              |  
-| [PyTorch](PyTorch_CIFAR.ipynb) | 78                | 168              |    
-| [Tensorflow](Tensorflow_CIFAR.ipynb) | 78                | 173               |
-| [Keras(CNTK)](Keras_CNTK_CIFAR.ipynb) | 78          | 200               |
-| [Chainer](Chainer_CIFAR.ipynb)   | 79                | 240               |
-| [Keras(TF)](Keras_TF_CIFAR.ipynb) | 77                | 252               |
-| [Lasagne(Theano)](Theano_Lasagne_CIFAR.ipynb) | 77                | 253               |                 
-| [Keras(Theano)](Keras_Theano_CIFAR.ipynb) | 78          | 269               |
+| [Caffe2](Caffe2_CNN.ipynb)             | 79                | 149               | 
+| [MXNet](MXNet_CNN.ipynb)      | 77                | 149               |   
+| [Gluon](Gluon_CNN.ipynb)      | 77                | 157               |   
+| [CNTK](CNTK_CNN.ipynb)           | 78                | 166              |  
+| [PyTorch](PyTorch_CNN.ipynb) | 78                | 168              |    
+| [Tensorflow](Tensorflow_CNN.ipynb) | 78                | 173               |
+| [Keras(CNTK)](Keras_CNTK_CNN.ipynb) | 78          | 200               |
+| [Chainer](Chainer_CNN.ipynb)   | 79                | 240               |
+| [Keras(TF)](Keras_TF_CNN.ipynb) | 77                | 252               |
+| [Lasagne(Theano)](Theano_Lasagne_CNN.ipynb) | 77                | 253               |                 
+| [Keras(Theano)](Keras_Theano_CNN.ipynb) | 78          | 269               |
 
+Input for this model is the standard [CIFAR-10 dataset](http://www.cs.toronto.edu/~kriz/cifar.html) containing 50k training images and 10k test images, uniformly split across 10 classes. Each 32 by 32 px image is supplied as a tensor of shape (3, 32, 32) with pixel intensity re-scaled from 0-255 to 0-1. For example: ![automobile](common/automobile10.PNG) with corresponding y=(0, 1, 0, 0, 0, 0, 0, 0, 0, 0) where labels=[airplane, automobile, bird, cat, deer, dog, frog, horse, ship, truck]
 
-### LSTM(GRU) on IMDB
+### RNN (GRU) on IMDB - Natural Language Processing (Sentiment Analysis)
 
 | DL Library                               | Test Accuracy (%) | Training Time (s) |
 | ---------------------------------------- | ----------------- | ----------------- |
-| [MXNet](MXNet_IMDB.ipynb)      | 88                | 12               |  
-| [Pytorch](PyTorch_IMDB.ipynb)      | 87                | 36               |  
-| [CNTK](CNTK_IMDB.ipynb) | 82		| 59 |
-| [Tensorflow](Tensorflow_IMDB.ipynb)      | 86                | 79               |   
-| [Keras(CNTK)](Keras_CNTK_IMDB.ipynb)             | 86                | 223               | 
+| [Pytorch](https://github.com/ilkarman/DeepLearningFrameworks/blob/lstm/PyTorch_RNN.ipynb)      | 85                | 32               |  
+| [CNTK](https://github.com/ilkarman/DeepLearningFrameworks/blob/lstm/CNTK_RNN.ipynb)             | 86                | 66               | 
+| [Tensorflow](https://github.com/ilkarman/DeepLearningFrameworks/blob/lstm/Tensorflow_RNN.ipynb)      | 85                | 77               |   
+| [MXNet](https://github.com/ilkarman/DeepLearningFrameworks/blob/lstm/MXNet_RNN.ipynb)      | 86                | 87               |  
+| [Keras(TF)](https://github.com/ilkarman/DeepLearningFrameworks/blob/lstm/Keras_TF_RNN.ipynb)             | 85                | 205               | 
+| [Keras(CNTK)](https://github.com/ilkarman/DeepLearningFrameworks/blob/lstm/Keras_CNTK_RNN.ipynb)             | 86                | 215               | 
 
-**Note: LSTM examples are very draft and subject to change. Input data is currently IMDB data fixed at MAXLEN word-indexes and 0 padded. Certain frameworks like CNTK support variable length sequences**
+Input for this model is the standard [IMDB movie review dataset](http://ai.stanford.edu/~amaas/data/sentiment/) containing 25k training reviews and 25k test reviews, uniformly split across 2 classes (positive/negative). Reviews are already downloaded as a tensor of word indexes e.g. (If you like adult comedy cartoons, like South Park) is received as (1 2 3 4 5 6 3 7 8). Processing follows [Keras](https://github.com/fchollet/keras/blob/master/keras/datasets/imdb.py) approach where start-character is set as 1, out-of-vocab (vocab size of 30k is used) represented as 2 and thus word-index starts from 3. Zero-padded / truncated to fixed axis of 150 words per review.
+
+*Note: Dynamix axes*
+
+The classification model creates an embedding matrix of size (150x125) and then applies 100 gated recurrent units and takes as output the final output (not sequence of outputs and not hidden state). Any suggestions on alterations to this are welcome.
 
 ### Lessons Learned
 
@@ -59,8 +65,8 @@ The below offers some insights I gained after trying to match test-accuracy acro
 
 | DL Library                               | Test Accuracy (%) | Training Time (s) |
 | ---------------------------------------- | ----------------- | ----------------- |
-| [MXNet w/Generator](MXNet_CIFAR_highAPI.ipynb) | 77                | 147               |
-| [CNTK w/Generator](CNTK_CIFAR_highAPI.ipynb) | 77                | 153               |
+| [MXNet w/Generator](MXNet_CNN_highAPI.ipynb) | 77                | 147               |
+| [CNTK w/Generator](CNTK_CNN_highAPI.ipynb) | 77                | 153               |
 
 2. Enabling CuDNN's auto-tune/exhaustive search paramater (which selects the most efficient CNN algorithm for images of fixed-size) has a huge performance boost. This had to be manually enabled for Caffe2, PyTorch and Theano. It appears CNTK, MXNet and Tensorflow have this enabled by default. I'm not sure about Chainer. Yangqing mentions that the performance boost between cudnnGet (default) and cudnnFind is, however, much smaller on the Titan X GPU; it seems that the K80 + new cudnn makes the problem more promininet in this case. Running cudnnFind for every combination of size in object detection has serious performance regressions, however, so exhaustive_search should be disabled for object detection
 
