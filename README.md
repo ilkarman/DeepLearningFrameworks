@@ -41,18 +41,18 @@ Input for this model is the standard [CIFAR-10 dataset](http://www.cs.toronto.ed
 
 ### RNN (GRU) on IMDB - Natural Language Processing (Sentiment Analysis)
 
-| DL Library                          | Test Accuracy (%) | Training Time (s) |
-| ----------------------------------- | ----------------- | ----------------- |
-| [CNTK](CNTK_RNN.ipynb)              | 86                | 29                |
-| [MXNet](MXNet_RNN.ipynb)            | 86                | 29                |
-| [Pytorch](PyTorch_RNN.ipynb)        | 85                | 32                |
-| [Tensorflow](Tensorflow_RNN.ipynb)  | 85                | 77                |
-| [Keras(TF)](Keras_TF_RNN.ipynb)     | 85                | 205               |
-| [Keras(CNTK)](Keras_CNTK_RNN.ipynb) | 86                | 215               |
+| DL Library                          | Test Accuracy (%) | Training Time (s) | Using CuDNN? |
+| ----------------------------------- | ----------------- | ----------------- | ------------ |
+| [CNTK](CNTK_RNN.ipynb)              | 86                | 29                | Yes          |
+| [MXNet](MXNet_RNN.ipynb)            | 86                | 29                | Yes          |
+| [Pytorch](PyTorch_RNN.ipynb)        | 85                | 32                | Yes          |
+| [Keras(TF)](Keras_TF_RNN.ipynb)     | 86                | 33                | Yes          |
+| [Tensorflow](Tensorflow_RNN.ipynb)  | 85                | 77                | No           |
+| [Keras(CNTK)](Keras_CNTK_RNN.ipynb) | 86                | 206               | No           |
 
 Input for this model is the standard [IMDB movie review dataset](http://ai.stanford.edu/~amaas/data/sentiment/) containing 25k training reviews and 25k test reviews, uniformly split across 2 classes (positive/negative). Reviews are already downloaded as a tensor of word indexes e.g. (If you like adult comedy cartoons, like South Park) is received as (1 2 3 4 5 6 3 7 8). Processing follows [Keras](https://github.com/fchollet/keras/blob/master/keras/datasets/imdb.py) approach where start-character is set as 1, out-of-vocab (vocab size of 30k is used) represented as 2 and thus word-index starts from 3. Zero-padded / truncated to fixed axis of 150 words per review.
 
-Where possible I try to use the cudnn-optimised RNN, since we have a vanilla RNN that can be easily reduced to the CuDNN level. For example with CNTK we use optimized_rnnstack instead of Recurrence(LSTM()). This is much faster but less flexible and, for example, with CNTK we can no longer use more complicated variants like Layer Normalisation, etc. It appears in PyTorch this is enabled by default. For MXNet I could not find this and instead use the slightly slower Fused RNN. Keras has just very recently received [cudnn support](https://twitter.com/fchollet/status/918170264608817152), so it will be interesting to compare this in a few days. Tensorflow has many RNN variants (including their own custom kernel) and there is a nice benchmark [here](http://returnn.readthedocs.io/en/latest/tf_lstm_benchmark.html), I will try to update the example to use CudnnLSTM instead of the current method.
+Where possible I try to use the cudnn-optimised RNN (noted by the CUDNN=True switch), since we have a vanilla RNN that can be easily reduced to the CuDNN level. For example with CNTK we use optimized_rnnstack instead of Recurrence(LSTM()). This is much faster but less flexible and, for example, with CNTK we can no longer use more complicated variants like Layer Normalisation, etc. It appears in PyTorch this is enabled by default. For MXNet I could not find this and instead use the slightly slower Fused RNN. Keras has just very recently received [cudnn support](https://twitter.com/fchollet/status/918170264608817152), however only for the Tensorflow backend (not CNTK). Tensorflow has many RNN variants (including their own custom kernel) and there is a nice benchmark [here](http://returnn.readthedocs.io/en/latest/tf_lstm_benchmark.html), I will try to update the example to use CudnnLSTM instead of the current method.
 
 *Note: CNTK  supports [dynamic axes](https://cntk.ai/pythondocs/sequence.html) which means we don't need to pad the input to 150 words and can consume as-is, however since I could not find a way to do this with other frameworks I have fallen back to padding - which is a bit unfair on CNTK and understates its capabilities*
 
