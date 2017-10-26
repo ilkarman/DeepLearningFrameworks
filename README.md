@@ -43,11 +43,11 @@ Input for this model is the standard [CIFAR-10 dataset](http://www.cs.toronto.ed
 
 | DL Library                          | Test Accuracy (%) | Training Time (s) | Using CuDNN? |
 | ----------------------------------- | ----------------- | ----------------- | ------------ |
+| [Tensorflow](Tensorflow_RNN.ipynb)  | 85                | 28                | Yes          |
 | [CNTK](CNTK_RNN.ipynb)              | 86                | 29                | Yes          |
 | [MXNet](MXNet_RNN.ipynb)            | 86                | 29                | Yes          |
 | [Pytorch](PyTorch_RNN.ipynb)        | 85                | 32                | Yes          |
 | [Keras(TF)](Keras_TF_RNN.ipynb)     | 86                | 33                | Yes          |
-| [Tensorflow](Tensorflow_RNN.ipynb)  | 77 (...?)         | 28                | Yes          |
 | [Keras(CNTK)](Keras_CNTK_RNN.ipynb) | 86                | 206               | No Available |
 
 Input for this model is the standard [IMDB movie review dataset](http://ai.stanford.edu/~amaas/data/sentiment/) containing 25k training reviews and 25k test reviews, uniformly split across 2 classes (positive/negative). Reviews are already downloaded as a tensor of word indexes e.g. (If you like adult comedy cartoons, like South Park) is received as (1 2 3 4 5 6 3 7 8). Processing follows [Keras](https://github.com/fchollet/keras/blob/master/keras/datasets/imdb.py) approach where start-character is set as 1, out-of-vocab (vocab size of 30k is used) represented as 2 and thus word-index starts from 3. Zero-padded / truncated to fixed axis of 150 words per review.
