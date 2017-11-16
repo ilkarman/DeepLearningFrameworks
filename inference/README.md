@@ -2,7 +2,7 @@
 
 ### ResNet-50 Feature Extraction (2048D vector)
 
-| DL Library                               | Images/s CPU | Images/s CPU |
+| DL Library                               | Images/s CPU | Images/s GPU |
 | ---------------------------------------- | ----------------- | ----------------- |
 | [Caffe2](ResNet50-Caffe2.ipynb)               | 69                | 5               |
 | [MXNet](ResNet50-MXNet.ipynb)                 | 150                | 12               |
