@@ -25,6 +25,7 @@ Since we are essentially comparing a series of deterministic mathematical operat
 
 | DL Library                               | Test Accuracy (%) | Training Time (s) |
 | ---------------------------------------- | ----------------- | ----------------- |
+| [Knet](Knet_CNN.ipynb)                   | 78                | 142               |
 | [Caffe2](Caffe2_CNN.ipynb)               | 79                | 149               |
 | [MXNet](MXNet_CNN.ipynb)                 | 77                | 149               |
 | [Gluon](Gluon_CNN.ipynb)                 | 77                | 157               |
@@ -43,6 +44,7 @@ Input for this model is the standard [CIFAR-10 dataset](http://www.cs.toronto.ed
 
 | DL Library                          | Test Accuracy (%) | Training Time (s) | Using CuDNN? |
 | ----------------------------------- | ----------------- | ----------------- | ------------ |
+| [Knet](Knet_RNN.ipynb)              | 85                | 28                | Yes          |
 | [Tensorflow](Tensorflow_RNN.ipynb)  | 85                | 28                | Yes          |
 | [CNTK](CNTK_RNN.ipynb)              | 86                | 29                | Yes          |
 | [MXNet](MXNet_RNN.ipynb)            | 86                | 29                | Yes          |
