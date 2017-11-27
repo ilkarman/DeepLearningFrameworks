@@ -30,7 +30,7 @@ Since we are essentially comparing a series of deterministic mathematical operat
 | [MXNet](MXNet_CNN.ipynb)                 | 77                | 145               |
 | [Caffe2](Caffe2_CNN.ipynb)               | 79                | 148               |
 | [Gluon](Gluon_CNN.ipynb)                 | 76                | 152               |
-| [Knet(Julia)](Knet_CNN.ipynb)            | 78                | 153               |
+| [Knet(Julia)](Knet_CNN.ipynb)                   | 78                | 153               |
 | [Chainer](Chainer_CNN.ipynb)             | 79                | 162               |
 | [CNTK](CNTK_CNN.ipynb)                   | 78                | 163               |
 | [PyTorch](PyTorch_CNN.ipynb)             | 78                | 169               |
@@ -47,9 +47,9 @@ Input for this model is the standard [CIFAR-10 dataset](http://www.cs.toronto.ed
 | DL Library                          | Test Accuracy (%) | Training Time (s) | Using CuDNN? |
 | ----------------------------------- | ----------------- | ----------------- | ------------ |
 | [MXNet](MXNet_RNN.ipynb)            | 86                | 29                | Yes          |
-| [Tensorflow](Tensorflow_RNN.ipynb)  | 86                | 30                | Yes          |
-| [Knet(Julia)](Knet_RNN.ipynb)       | 85                | 30                | Yes          |
 | [Pytorch](PyTorch_RNN.ipynb)        | 86                | 31                | Yes          |
+| [Knet(Julia)](Knet_RNN.ipynb)              | 85                | 30                | Yes          |
+| [Tensorflow](Tensorflow_RNN.ipynb)  | 86                | 30                | Yes          |
 | [CNTK](CNTK_RNN.ipynb)              | 85                | 32                | Yes          |
 | [Keras(TF)](Keras_TF_RNN.ipynb)     | 86                | 35                | Yes          |
 | [Keras(CNTK)](Keras_CNTK_RNN.ipynb) | 86                | 86                | No Available |
@@ -63,9 +63,6 @@ Where possible I try to use the cudnn-optimised RNN (noted by the CUDNN=True swi
 The classification model creates an embedding matrix of size (150x125) and then applies 100 gated recurrent units and takes as output the final output (not sequence of outputs and not hidden state). Any suggestions on alterations to this are welcome.
 
 ### Inference ResNet-50 (Feature Extraction)
-Run on [Data Science Virtual Machine](https://azure.microsoft.com/en-us/services/virtual-machines/data-science-virtual-machines/) NC12
-
-### ResNet-50 Feature Extraction (2048D vector)
 
 | DL Library                                          | Images/s GPU      | Images/s CPU      |
 | ----------------------------------------            | ----------------- | ----------------- |
@@ -79,17 +76,17 @@ Run on [Data Science Virtual Machine](https://azure.microsoft.com/en-us/services
 | [ONNX_Caffe2](...)                                  |                   |                   |
 | [ONNX_MXNet](...)                                   |                   |                   |
 
-A pre-trained ResNet50 model is loaded and chopped just after the avg_pooling at the end (7, 7), which outputs a 2048D dimensional vector. This can be plugged into a softmax layer or another classifier such as a boosted tree to perform transfer learning. Allowing for a warm start; this forward-only pass to the avg_pool layer is timed on both CPU and GPU
+A pre-trained ResNet50 model is loaded and chopped just after the avg_pooling at the end (7, 7), which outputs a 2048D dimensional vector. This can be plugged into a softmax layer or another classifier such as a boosted tree to perform transfer learning. Allowing for a warm start; this forward-only pass to the avg_pool layer is timed on both CPU and GPU.
 
 ### Lessons Learned
 
-#### CNN
+####CNN
 
 The below offers some insights I gained after trying to match test-accuracy across frameworks and from all the GitHub issues/PRs raised.
 
 1. The above examples (except for Keras), for ease of comparison, try to use the same level of API and so all use the same generator-function. For MXNet and CNTK I have experimented with a higher-level API, where I use the framework's training generator function. The speed improvement is negligible in this example because the whole dataset is loaded as NumPy array in RAM and the only processing done each epoch is a shuffle. I suspect the framework's generators perform the shuffle asynchronously. Curiously, it seems that the frameworks shuffle on a batch-level, rather than on an observation level, and thus ever so slightly decreases the test-accuracy (at least after 10 epochs). For scenarios where we have IO activity and perhaps pre-processing and data-augmentation on the fly, custom generators would have a much bigger impact on performance.
 
-2. Enabling CuDNN's auto-tune/exhaustive search parameter (which selects the most efficient CNN algorithm for images of fixed-size) has a huge performance boost. This had to be manually enabled for Caffe2, PyTorch and Theano. It appears CNTK, MXNet and Tensorflow have this enabled by default. I'm not sure about Chainer. Yangqing mentions that the performance boost between cudnnGet (default) and cudnnFind is, however, much smaller on the Titan X GPU; it seems that the K80 + new cudnn makes the problem more prominent in this case. Running cudnnFind for every combination of size in object detection has serious performance regressions, however, so exhaustive_search should be disabled for object detection
+2. Enabling CuDNN's auto-tune/exhaustive search parameter (which selects the most efficient CNN algorithm for images of fixed-size) has a huge performance boost. This had to be manually enabled for Chainer, Caffe2, PyTorch and Theano. It appears CNTK, MXNet and Tensorflow have this enabled by default. Yangqing mentions that the performance boost between cudnnGet (default) and cudnnFind is, however, much smaller on the Titan X GPU; it seems that the K80 + new cudnn makes the problem more prominent in this case. Running cudnnFind for every combination of size in object detection has serious performance regressions, however, so exhaustive_search should be disabled for object detection
 
 3. When using Keras it's important to choose the [NCHW] ordering that matches the back-end framework. CNTK operates with channels first and by mistake I had Keras configured to expect channels last. It then must have changed the order at each batch which degraded performance severely. Generally, [NHWC] is the default for most frameworks (like Tensorflow) and [NCHW] is the optimal format to use when training on NVIDIA GPUs using [cuDNN](https://developer.nvidia.com/cudnn).
 
