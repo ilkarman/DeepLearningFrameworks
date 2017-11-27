@@ -70,6 +70,7 @@ The classification model creates an embedding matrix of size (150x125) and then 
 | [MXNet](inference/ResNet50-MXNet.ipynb)             | 130               | 8                 |
 | [PyTorch](inference/ResNet50-PyTorch.ipynb)         | 130               | 6                 |
 | [CNTK](inference/ResNet50-CNTK.ipynb)               | 117               | 8                 |
+| [Chainer](inference/ResNet50-Chainer.ipynb)         | 107               | 3                 |
 | [Keras(TF)](inference/ResNet50-Keras(TF).ipynb)     | 98                | 5                 |
 | [Caffe2](inference/ResNet50-Caffe2.ipynb)           | 71                | 6                 |
 | [Keras(CNTK)](inference/ResNet50-Keras(CNTK).ipynb) | 46                | 4                 |
@@ -80,7 +81,7 @@ A pre-trained ResNet50 model is loaded and chopped just after the avg_pooling at
 
 ### Lessons Learned
 
-####CNN
+#### CNN
 
 The below offers some insights I gained after trying to match test-accuracy across frameworks and from all the GitHub issues/PRs raised.
 
