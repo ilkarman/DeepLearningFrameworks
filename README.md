@@ -63,8 +63,23 @@ Where possible I try to use the cudnn-optimised RNN (noted by the CUDNN=True swi
 The classification model creates an embedding matrix of size (150x125) and then applies 100 gated recurrent units and takes as output the final output (not sequence of outputs and not hidden state). Any suggestions on alterations to this are welcome.
 
 ### Inference ResNet-50 (Feature Extraction)
+Run on [Data Science Virtual Machine](https://azure.microsoft.com/en-us/services/virtual-machines/data-science-virtual-machines/) NC12
 
-Comming soon.
+### ResNet-50 Feature Extraction (2048D vector)
+
+| DL Library                                          | Images/s GPU      | Images/s CPU      |
+| ----------------------------------------            | ----------------- | ----------------- |
+| [Tensorflow](inference/ResNet50-TF.ipynb)           | 155               | 11                |
+| [MXNet](inference/ResNet50-MXNet.ipynb)             | 130               | 8                 |
+| [PyTorch](inference/ResNet50-PyTorch.ipynb)         | 130               | 6                 |
+| [CNTK](inference/ResNet50-CNTK.ipynb)               | 117               | 8                 |
+| [Keras(TF)](inference/ResNet50-Keras(TF).ipynb)     | 98                | 5                 |
+| [Caffe2](inference/ResNet50-Caffe2.ipynb)           | 71                | 6                 |
+| [Keras(CNTK)](inference/ResNet50-Keras(CNTK).ipynb) | 46                | 4                 |
+| [ONNX_Caffe2](...)                                  |                   |                   |
+| [ONNX_MXNet](...)                                   |                   |                   |
+
+A pre-trained ResNet50 model is loaded and chopped just after the avg_pooling at the end (7, 7), which outputs a 2048D dimensional vector. This can be plugged into a softmax layer or another classifier such as a boosted tree to perform transfer learning. Allowing for a warm start; this forward-only pass to the avg_pool layer is timed on both CPU and GPU
 
 ### Lessons Learned
 
