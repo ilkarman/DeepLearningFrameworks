@@ -1,10 +1,19 @@
+## Updates
+
+#### 27/11/2017
+
+* Added [feature-extraction example](https://github.com/ilkarman/DeepLearningFrameworks/#inference-resnet-50-feature-extraction)
+* Re-ran all notebooks on latest VM version
+
 ## Notes
 
 **The notebooks are not specifically written for speed, instead they aim to create an easy comparison between the frameworks. However, any suggestions on improving the training-time are welcome!**
 
 **The rankings are almost for fun and aren't meant to suggest anything about the overall performance of the framework since they omit important comparisons such as: help&support, custom layers (can you create a capsule net?), data-loaders, debugging, different platform-support, distributed training, and much more! They are mean to show how to create the same networks across different frameworks**
 
-**Notebooks are run on Nvidia K80 GPU (and in another branch on the M60), on [Microsoft Azure Data Science Virtual Machine for Linux (Ubuntu)](https://azuremarketplace.microsoft.com/en-us/marketplace/apps/microsoft-ads.linux-data-science-vm-ubuntu?tab=Overview), where frameworks have been updated to the latest version**
+**Notebooks are run on (half) an Nvidia K80 GPU, on [Microsoft Azure Deep Learning Virtual Machine](https://azuremarketplace.microsoft.com/en-us/marketplace/apps/microsoft-ads.dsvm-deep-learning?tab=Overview), [NC6](https://azure.microsoft.com/en-gb/blog/azure-n-series-preview-availability/), where frameworks have been updated to the latest version**
+
+![info](common/info.PNG)
 
 ## Goal
 
