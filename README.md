@@ -11,6 +11,8 @@
 
 **The rankings are almost for fun and aren't meant to suggest anything about the overall performance of the framework since they omit important comparisons such as: help&support, custom layers (can you create a capsule net?), data-loaders, debugging, different platform-support, distributed training, and much more! They are mean to show how to create the same networks across different frameworks**
 
+**For example create a CNN using [Caffe2](Caffe2_CNN.ipynb) and then replicate it in [PyTorch](PyTorch_CNN.ipynb), where you can also create an [RNN](PyTorch_RNN.ipynb) and replicate it in [Tensorflow](Tensorflow_RNN.ipynb). You can do some feature-extraction in [Chainer](inference/ResNet50-Chainer.ipynb), and then replicate that in [CNTK](inference/ResNet50-CNTK.ipynb).**
+
 **Notebooks are run on (half) an Nvidia K80 GPU, on [Microsoft Azure Deep Learning Virtual Machine](https://azuremarketplace.microsoft.com/en-us/marketplace/apps/microsoft-ads.dsvm-deep-learning?tab=Overview), [NC6](https://azure.microsoft.com/en-gb/blog/azure-n-series-preview-availability/), where frameworks have been updated to the latest version**
 
 ![info](common/info.PNG)
