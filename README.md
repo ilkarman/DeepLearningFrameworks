@@ -67,6 +67,7 @@ The classification model creates an embedding matrix of size (150x125) and then 
 | DL Library                                          | Images/s GPU      | Images/s CPU      |
 | ----------------------------------------            | ----------------- | ----------------- |
 | [Tensorflow](inference/ResNet50-TF.ipynb)           | 155               | 11                |
+| [MXNet(w/mkl)](inference/ResNet50-MXNet-mkl.ipynb)  | 129               | 25                |
 | [MXNet](inference/ResNet50-MXNet.ipynb)             | 130               | 8                 |
 | [PyTorch](inference/ResNet50-PyTorch.ipynb)         | 130               | 6                 |
 | [CNTK](inference/ResNet50-CNTK.ipynb)               | 117               | 8                 |
