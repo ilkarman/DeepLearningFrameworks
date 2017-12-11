@@ -41,7 +41,7 @@ Since we are essentially comparing a series of deterministic mathematical operat
 | [MXNet](MXNet_CNN.ipynb)                 | 77                | 145               |
 | [Caffe2](Caffe2_CNN.ipynb)               | 79                | 148               |
 | [Gluon](Gluon_CNN.ipynb)                 | 76                | 152               |
-| [Knet(Julia)](Knet_CNN.ipynb)                   | 78                | 153               |
+| [Knet(Julia)](Knet_CNN.ipynb)            | 78                | 159               |
 | [Chainer](Chainer_CNN.ipynb)             | 79                | 162               |
 | [CNTK](CNTK_CNN.ipynb)                   | 78                | 163               |
 | [PyTorch](PyTorch_CNN.ipynb)             | 78                | 169               |
@@ -58,9 +58,9 @@ Input for this model is the standard [CIFAR-10 dataset](http://www.cs.toronto.ed
 | DL Library                          | Test Accuracy (%) | Training Time (s) | Using CuDNN? |
 | ----------------------------------- | ----------------- | ----------------- | ------------ |
 | [MXNet](MXNet_RNN.ipynb)            | 86                | 29                | Yes          |
-| [Pytorch](PyTorch_RNN.ipynb)        | 86                | 31                | Yes          |
-| [Knet(Julia)](Knet_RNN.ipynb)              | 85                | 30                | Yes          |
+| [Knet(Julia)](Knet_RNN.ipynb)       | 85                | 29                | Yes          |
 | [Tensorflow](Tensorflow_RNN.ipynb)  | 86                | 30                | Yes          |
+| [Pytorch](PyTorch_RNN.ipynb)        | 86                | 31                | Yes          |
 | [CNTK](CNTK_RNN.ipynb)              | 85                | 32                | Yes          |
 | [Keras(TF)](Keras_TF_RNN.ipynb)     | 86                | 35                | Yes          |
 | [Keras(CNTK)](Keras_CNTK_RNN.ipynb) | 86                | 86                | No Available |
@@ -77,10 +77,11 @@ The classification model creates an embedding matrix of size (150x125) and then 
 
 | DL Library                                          | Images/s GPU      | Images/s CPU      |
 | ----------------------------------------            | ----------------- | ----------------- |
+| [Knet(Julia)](inference/ResNet50-Knet.ipynb)        | 160               | 2                 |
 | [Tensorflow](inference/ResNet50-TF.ipynb)           | 155               | 11                |
-| [MXNet(w/mkl)](inference/ResNet50-MXNet-mkl.ipynb)  | 129               | 25                |
-| [MXNet](inference/ResNet50-MXNet.ipynb)             | 130               | 8                 |
 | [PyTorch](inference/ResNet50-PyTorch.ipynb)         | 130               | 6                 |
+| [MXNet](inference/ResNet50-MXNet.ipynb)             | 130               | 8                 |
+| [MXNet(w/mkl)](inference/ResNet50-MXNet-mkl.ipynb)  | 129               | 25                |
 | [CNTK](inference/ResNet50-CNTK.ipynb)               | 117               | 8                 |
 | [Chainer](inference/ResNet50-Chainer.ipynb)         | 107               | 3                 |
 | [Keras(TF)](inference/ResNet50-Keras(TF).ipynb)     | 98                | 5                 |
