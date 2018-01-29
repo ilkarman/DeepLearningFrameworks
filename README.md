@@ -41,34 +41,34 @@ Since we are essentially comparing a series of deterministic mathematical operat
 
 ### Training CNN (VGG-style) on CIFAR-10 - Image Recognition
 
-| DL Library                                    | Test Accuracy (%) | Training Time K80 (s) | Training Time P40 (s) | Training Time P100 (s) |
-| --------------------------------------------- | ----------------- | --------------------- | --------------------- | ---------------------- |
-| [MXNet 0.12.0](MXNet_CNN.ipynb)               | 77                | 145                   | 57.2                  | 52.2                   |
-| [Caffe2](Caffe2_CNN.ipynb)                    | 79                | 148                   |                       |                        |
-| [Gluon 0.12.0](Gluon_CNN.ipynb)               | 76                | 152                   | 71                    | 68                     |
-| [Knet(Julia)](Knet_CNN.ipynb)                 | 78                | 159                   |                       |                        |
-| [Chainer 3.1.0](Chainer_CNN.ipynb)            | 79                | 162                   | 145                   | 123                    |
-| [CNTK 2.2](CNTK_CNN.ipynb)                    | 78                | 163                   | 60                    | 54.4                   |
-| [PyTorch 0.3](PyTorch_CNN.ipynb)              | 78                | 169                   | 56.7                  | 63                     |
-| [Tensorflow 1.4](Tensorflow_CNN.ipynb)        | 78                | 173                   | 66                    | 70                     |            
-| [Keras 2.1.1(CNTK)](Keras_CNTK_CNN.ipynb)     | 77                | 194                   | 79                    | 72                     |
-| [Keras 2.1.1(TF)](Keras_TF_CNN.ipynb)         | 77                | 241                   | 100                   | 86                     |
-| [Lasagne(Theano)](Theano_Lasagne_CNN.ipynb)   | 77                | 253                   |                       |                        |
-| [Keras(Theano)](Keras_Theano_CNN.ipynb)       | 78                | 269                   |                       |                        |
+| DL Library                                     | Test Accuracy (%) | Training Time K80 (s) | Training Time M60 (s) | Training Time P40 (s) | Training Time P100 (s) |
+| ---------------------------------------------- | ----------------- | --------------------- | --------------------- | --------------------- | ---------------------- |
+| [MXNet 0.12.0](MXNet_CNN.ipynb)                | 77                | 145                   | 96                    | 57.2                  | 52.2                   |
+| [Caffe2](Caffe2_CNN.ipynb)                     | 79                | 148                   |                       |                       |                        |
+| [Gluon 0.12.0](Gluon_CNN.ipynb)                | 76                | 152                   | 112                   | 71                    | 68                     |
+| [Knet(Julia)](Knet_CNN.ipynb)                  | 78                | 159                   |                       |                       |                        |
+| [Chainer 3.1.0](Chainer_CNN.ipynb)             | 79                | 162                   | 106                   | 145                   | 123                    |
+| [CNTK 2.2](CNTK_CNN.ipynb)                     | 78                | 163                   | 116                   | 60                    | 54.4                   |
+| [PyTorch 0.3](PyTorch_CNN.ipynb)               | 78                | 169                   | 102                   | 56.7                  | 63                     |
+| [Tensorflow 1.4](Tensorflow_CNN.ipynb)         | 78                | 173                   | 115                   | 66                    | 70                     |
+| [Keras 2.1.1(CNTK)](Keras_CNTK_CNN.ipynb)      | 77                | 194                   | 157                   | 79                    | 72                     |
+| [Keras 2.1.1(TF)](Keras_TF_CNN.ipynb)          | 77                | 241                   | 171                   | 100                   | 86                     |
+| [Lasagne 0.2(Theano)](Theano_Lasagne_CNN.ipynb)| 77                | 253                   |                       |                       |                        |
+| [Keras 2.1.1(Theano)](Keras_Theano_CNN.ipynb)  | 78                | 269                   |                       |                       |                        |
 
 Input for this model is the standard [CIFAR-10 dataset](http://www.cs.toronto.edu/~kriz/cifar.html) containing 50k training images and 10k test images, uniformly split across 10 classes. Each 32 by 32 px image is supplied as a tensor of shape (3, 32, 32) with pixel intensity re-scaled from 0-255 to 0-1. For example: ![automobile](common/automobile10.PNG) with corresponding y=(0, 1, 0, 0, 0, 0, 0, 0, 0, 0) where labels=[airplane, automobile, bird, cat, deer, dog, frog, horse, ship, truck]
 
 ### Training RNN (GRU) on IMDB - Natural Language Processing (Sentiment Analysis)
 
-| DL Library                                | Test Accuracy (%) | Training Time K80 (s) | Training Time P40 (s) | Training Time P100 (s) | Using CuDNN? |
-| ----------------------------------------- | ----------------- | --------------------- | --------------------- | ---------------------- | ------------ |
-| [MXNet 0.12.0](MXNet_RNN.ipynb)           | 86                | 29                    | 22                    | 25.9                   | Yes          |   
-| [Knet(Julia)](Knet_RNN.ipynb)             | 85                | 29                    |                       |                        | Yes          |
-| [Tensorflow 1.4](Tensorflow_RNN.ipynb)    | 86                | 30                    | 23.4                  | 25.2                   | Yes          |
-| [Pytorch 0.3](PyTorch_RNN.ipynb)          | 86                | 31                    | 12.8                  | 17                     | Yes          |
-| [CNTK 2.2](CNTK_RNN.ipynb)                | 85                | 32                    | 23.3                  | 26.3                   | Yes          |
-| [Keras 2.1.1(TF)](Keras_TF_RNN.ipynb)     | 86                | 35                    | 24.3                  | 27.9                   | Yes          |
-| [Keras 2.1.1(CNTK)](Keras_CNTK_RNN.ipynb) | 86                | 86                    | 74                    | 69                     | No Available |
+| DL Library                               | Test Accuracy (%) | Training Time K80 (s) | Training Time M60 (s) | Training Time P40 (s) | Training Time P100 (s) | Using CuDNN? |
+| ---------------------------------------- | ----------------- | --------------------- | --------------------- | --------------------- | ---------------------- | ------------ |
+| [MXNet 0.12.0](MXNet_RNN.ipynb)          | 86                | 29                    | 22.9                  | 22                    | 25.9                   | Yes          |
+| [Knet(Julia)](Knet_RNN.ipynb)            | 85                | 29                    |                       |                       |                        | Yes          |
+| [Tensorflow 1.4](Tensorflow_RNN.ipynb)   | 86                | 30                    | 25.1                  | 23.4                  | 25.2                   | Yes          |
+| [Pytorch 0.3](PyTorch_RNN.ipynb)         | 86                | 31                    | 28.3                  | 12.8                  | 17                     | Yes          |
+| [CNTK 2.2](CNTK_RNN.ipynb)               | 85                | 32                    | 23.1                  | 23.3                  | 26.3                   | Yes          |
+| [Keras 2.1.1(TF)](Keras_TF_RNN.ipynb)    | 86                | 35                    | 32.7                  | 24.3                  | 27.9                   | Yes          |
+| [Keras 2.1.1(CNTK)](Keras_CNTK_RNN.ipynb)| 86                | 86                    | 73                    | 74                    | 69                     | No Available |
 
 Input for this model is the standard [IMDB movie review dataset](http://ai.stanford.edu/~amaas/data/sentiment/) containing 25k training reviews and 25k test reviews, uniformly split across 2 classes (positive/negative). Reviews are already downloaded as a tensor of word indexes e.g. (If you like adult comedy cartoons, like South Park) is received as (1 2 3 4 5 6 3 7 8). Processing follows [Keras](https://github.com/fchollet/keras/blob/master/keras/datasets/imdb.py) approach where start-character is set as 1, out-of-vocab (vocab size of 30k is used) represented as 2 and thus word-index starts from 3. Zero-padded / truncated to fixed axis of 150 words per review.
 
