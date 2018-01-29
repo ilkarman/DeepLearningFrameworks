@@ -42,7 +42,7 @@ Since we are essentially comparing a series of deterministic mathematical operat
 ### Training CNN (VGG-style) on CIFAR-10 - Image Recognition
 
 | DL Library                                     | Test Accuracy (%) | Training Time K80 (s) | Training Time M60 (s) | Training Time P40 (s) | Training Time P100 (s) |
-| ---------------------------------------------- | ----------------- | --------------------- | --------------------- | --------------------- | ---------------------- |
+| ---------------------------------------------- | :---------------: | :-------------------: | :-------------------: | :-------------------: | :--------------------: |
 | [MXNet 0.12.0](MXNet_CNN.ipynb)                | 77                | 145                   | 96                    | 57.2                  | 52.2                   |
 | [Caffe2](Caffe2_CNN.ipynb)                     | 79                | 148                   |                       |                       |                        |
 | [Gluon 0.12.0](Gluon_CNN.ipynb)                | 76                | 152                   | 112                   | 71                    | 68                     |
@@ -61,7 +61,7 @@ Input for this model is the standard [CIFAR-10 dataset](http://www.cs.toronto.ed
 ### Training RNN (GRU) on IMDB - Natural Language Processing (Sentiment Analysis)
 
 | DL Library                               | Test Accuracy (%) | Training Time K80 (s) | Training Time M60 (s) | Training Time P40 (s) | Training Time P100 (s) | Using CuDNN? |
-| ---------------------------------------- | ----------------- | --------------------- | --------------------- | --------------------- | ---------------------- | ------------ |
+| ---------------------------------------- | :---------------: | :-------------------: | :-------------------: | :-------------------: | :--------------------: | :----------: |
 | [MXNet 0.12.0](MXNet_RNN.ipynb)          | 86                | 29                    | 22.9                  | 22                    | 25.9                   | Yes          |
 | [Knet(Julia)](Knet_RNN.ipynb)            | 85                | 29                    |                       |                       |                        | Yes          |
 | [Tensorflow 1.4](Tensorflow_RNN.ipynb)   | 86                | 30                    | 25.1                  | 23.4                  | 25.2                   | Yes          |
