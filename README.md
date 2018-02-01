@@ -2,7 +2,7 @@
 
 #### 29/1/2018
 
-* Experiments on P100 and M60 NVIDIA GPUs
+* Experiments on M60, P40, P100 NVIDIA GPUs.
 
 
 #### 27/11/2017
@@ -18,7 +18,7 @@
 
 **For example, create a CNN in Python using [Caffe2](Caffe2_CNN.ipynb) and then replicate it in Julia using [KNet](Knet_CNN.ipynb), also try it in [PyTorch](PyTorch_CNN.ipynb),and then create an [RNN](PyTorch_RNN.ipynb) and replicate it in [Tensorflow](Tensorflow_RNN.ipynb). You can do some feature-extraction in [Chainer](inference/ResNet50-Chainer.ipynb), and then replicate that in [CNTK](inference/ResNet50-CNTK.ipynb).**
 
-**Notebooks are run on (half) an Nvidia K80 GPU, on [Microsoft Azure Deep Learning Virtual Machine](https://azuremarketplace.microsoft.com/en-us/marketplace/apps/microsoft-ads.dsvm-deep-learning?tab=Overview), [NC6](https://azure.microsoft.com/en-gb/blog/azure-n-series-preview-availability/), where frameworks have been updated to the latest version**
+**Notebooks are run on (half) an Nvidia K80 GPU, on [Microsoft Azure Deep Learning Virtual Machine](https://azuremarketplace.microsoft.com/en-us/marketplace/apps/microsoft-ads.dsvm-deep-learning?tab=Overview), [NC6](https://azure.microsoft.com/en-gb/blog/azure-n-series-preview-availability/), where frameworks have been updated to the latest version**. We added more experiments in M60, P40 and P100 NVIDIA GPUs, available in Azure.
 
 ![info](common/info.PNG)
 
