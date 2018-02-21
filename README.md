@@ -45,7 +45,7 @@ Since we are essentially comparing a series of deterministic mathematical operat
 | ---------------------------------------------- | :---------------: | :-------------------: | :-------------------: | :-------------------: | :--------------------: | :--:
 | [MXNet 0.12.0](MXNet_CNN.ipynb)                | 77                | 145                   | 96                    | 57.2                  | 52.2                   | 49.8 |
 | [Caffe2](Caffe2_CNN.ipynb)                     | 79                | 148                   |                       |                       |                        |
-| [Gluon 0.12.0](Gluon_CNN.ipynb)                | 76                | 152                   | 112                   | 71                    | 68                     |
+| [Gluon 0.12.0](Gluon_CNN.ipynb)                | 76                | 152                   | 112                   | 71                    | 68                     | 65   |
 | [Knet(Julia)](Knet_CNN.ipynb)                  | 78                | 159                   |                       |                       |                        |
 | [Chainer 3.1.0](Chainer_CNN.ipynb)             | 79                | 162                   | 106                   | 145                   | 123                    |
 | [CNTK 2.2](CNTK_CNN.ipynb)                     | 78                | 163                   | 116                   | 60                    | 54.4                   |
