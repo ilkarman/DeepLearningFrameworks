@@ -41,15 +41,15 @@ Since we are essentially comparing a series of deterministic mathematical operat
 
 ### Training CNN (VGG-style) on CIFAR-10 - Image Recognition
 
-| DL Library                                     | Test Accuracy (%) | Training Time K80 (s) | Training Time M60 (s) | Training Time P40 (s) | Training Time P100 (s) |
-| ---------------------------------------------- | :---------------: | :-------------------: | :-------------------: | :-------------------: | :--------------------: |
-| [MXNet 0.12.0](MXNet_CNN.ipynb)                | 77                | 145                   | 96                    | 57.2                  | 52.2                   |
+| DL Library                                     | Test Accuracy (%) | Training Time K80 (s) | Training Time M60 (s) | Training Time P40 (s) | Training Time P100 (s) | Training Time Tesla V (s) |
+| ---------------------------------------------- | :---------------: | :-------------------: | :-------------------: | :-------------------: | :--------------------: | :--:
+| [MXNet 0.12.0](MXNet_CNN.ipynb)                | 77                | 145                   | 96                    | 57.2                  | 52.2                   | 
 | [Caffe2](Caffe2_CNN.ipynb)                     | 79                | 148                   |                       |                       |                        |
 | [Gluon 0.12.0](Gluon_CNN.ipynb)                | 76                | 152                   | 112                   | 71                    | 68                     |
 | [Knet(Julia)](Knet_CNN.ipynb)                  | 78                | 159                   |                       |                       |                        |
 | [Chainer 3.1.0](Chainer_CNN.ipynb)             | 79                | 162                   | 106                   | 145                   | 123                    |
 | [CNTK 2.2](CNTK_CNN.ipynb)                     | 78                | 163                   | 116                   | 60                    | 54.4                   |
-| [PyTorch 0.3](PyTorch_CNN.ipynb)               | 78                | 169                   | 102                   | 56.7                  | 63                     |
+| [PyTorch 0.3](PyTorch_CNN.ipynb)               | 78                | 169                   | 102                   | 56.7                  | 63                     | 46.6 |
 | [Tensorflow 1.4](Tensorflow_CNN.ipynb)         | 78                | 173                   | 115                   | 66                    | 70                     |
 | [Keras 2.1.1(CNTK)](Keras_CNTK_CNN.ipynb)      | 77                | 194                   | 157                   | 79                    | 72                     |
 | [Keras 2.1.1(TF)](Keras_TF_CNN.ipynb)          | 77                | 241                   | 171                   | 100                   | 86                     |
