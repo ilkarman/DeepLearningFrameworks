@@ -52,7 +52,7 @@ Since we are essentially comparing a series of deterministic mathematical operat
 | [PyTorch 0.3](PyTorch_CNN.ipynb)               | 78                | 169                   | 102                   | 56.7                  | 63                     | 46.6 |
 | [Tensorflow 1.4](Tensorflow_CNN.ipynb)         | 78                | 173                   | 115                   | 66                    | 70                     | 57.4 |
 | [Keras 2.1.1(CNTK)](Keras_CNTK_CNN.ipynb)      | 77                | 194                   | 157                   | 79                    | 72                     |
-| [Keras 2.1.1(TF)](Keras_TF_CNN.ipynb)          | 77                | 241                   | 171                   | 100                   | 86                     |
+| [Keras 2.1.1(TF)](Keras_TF_CNN.ipynb)          | 77                | 241                   | 171                   | 100                   | 86                     | 84   |
 | [Lasagne 0.2(Theano)](Theano_Lasagne_CNN.ipynb)| 77                | 253                   |                       |                       |                        |
 | [Keras 2.1.1(Theano)](Keras_Theano_CNN.ipynb)  | 78                | 269                   |                       |                       |                        |
 
