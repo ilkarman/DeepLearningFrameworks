@@ -4,6 +4,7 @@ import tarfile
 import pickle
 import subprocess
 import sys
+import glob
 from sklearn.datasets import fetch_mldata
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.model_selection import train_test_split
