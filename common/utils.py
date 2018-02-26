@@ -1,9 +1,10 @@
-import numpy as np
 import os
+import sys
+import glob
 import tarfile
 import pickle
 import subprocess
-import sys
+import numpy as np
 from sklearn.datasets import fetch_mldata
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.model_selection import train_test_split
@@ -98,12 +99,35 @@ def shuffle_data(X, y):
 
 
 def yield_mb(X, y, batchsize=64, shuffle=False):
-    assert len(X) == len(y)
     if shuffle:
         X, y = shuffle_data(X, y)
     # Only complete batches are submitted
     for i in range(len(X) // batchsize):
         yield X[i * batchsize:(i + 1) * batchsize], y[i * batchsize:(i + 1) * batchsize]
+
+        
+def yield_mb_X(X, batchsize):
+    """ Function yield (complete) mini_batches of data"""
+    for i in range(len(X)//batchsize):
+        yield i, X[i*batchsize:(i+1)*batchsize]
+
+        
+def yield_mb_tn(X, y, batchsize=64, shuffle=False):
+    """ Function yields mini-batches for time-series, layout=TN """
+    if shuffle:
+        X, y = shuffle_data(X, y)
+    # Reshape
+    X = np.swapaxes(X, 0, 1)
+    # Only complete batches are submitted
+    for i in range(X.shape[-1] // batchsize):
+        yield X[..., i*batchsize:(i + 1)*batchsize], y[i * batchsize:(i + 1) * batchsize]
+    
+    
+def give_fake_data(batches):
+    """ Create an array of fake data to run inference on"""
+    np.random.seed(0)
+    dta = np.random.rand(batches, 224, 224, 3).astype(np.float32)
+    return dta, np.swapaxes(dta, 1, 3)
 
 
 def process_cifar():
