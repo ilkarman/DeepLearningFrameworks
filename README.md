@@ -2,11 +2,15 @@
 
 V1.0 - 27/02/2018
 
+Coming soon: [1] Inference on DenseNet201, [2] Multi-GPU, [3] Native Framework data-loader + augmentation comparison, [4] R-notebooks (MXNet + Keras)
+
 ## Goal
 
-1. Create a Rosetta Stone of deep-learning frameworks to allow data-scientists to easily leverage their expertise from one framework to another:
-2. Optimised code with minibal verbosity 
-3. Comparisons across GPUs (potentially CUDA versions and precision)
+1. Create a Rosetta Stone of deep-learning frameworks to allow data-scientists to easily leverage their expertise from one framework to another
+2. Optimised GPU code with minimal verbosity (simple examples)
+3. Common setup for comparisons across GPUs (potentially CUDA versions and precision)
+4. Common setup for comparisons across frameworks (Python, Julia, R)
+5. Comparison to benchmark own set-up 
 4. Collaboration between different open-source communities
 
 The notebooks are executed on an Azure [Deep Learning Virtual Machine](https://azuremarketplace.microsoft.com/en-us/marketplace/apps/microsoft-ads.dsvm-deep-learning) using both the K80 and the newer P100.
