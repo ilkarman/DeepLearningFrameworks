@@ -15,18 +15,18 @@ The notebooks are executed on an Azure [Deep Learning Virtual Machine](https://a
 
 | DL Library                                     | K80/CUDA 8/CuDNN 6    | P100/CUDA 8/CuDNN 6   |
 | ---------------------------------------------- | :-------------------: | :-------------------: |
-| [Caffe2](Caffe2_CNN.ipynb)                     | 148                   | 54                    |
-| [Chainer](Chainer_CNN.ipynb)                   | 162                   | 69                    |
-| [CNTK](CNTK_CNN.ipynb)                         | 163                   | 53                    |
-| [Gluon](Gluon_CNN.ipynb)                       | 152                   | 62                    |
-| [Keras(CNTK)](Keras_CNTK_CNN.ipynb)            | 194                   | 76                    |
-| [Keras(TF)](Keras_TF_CNN.ipynb)                | 241                   | 76                    |
-| [Keras(Theano)](Keras_Theano_CNN.ipynb)        | 269                   | 93                    |
-| [Knet(Julia)](Knet_CNN.ipynb)                  | 159                   | ??                    |
-| [Tensorflow](Tensorflow_CNN.ipynb)             | 173                   | 57                    |
-| [Lasagne(Theano)](Theano_Lasagne_CNN.ipynb)    | 253                   | 65                    |
-| [MXNet](MXNet_CNN.ipynb)                       | 145                   | 51                    |
-| [PyTorch](PyTorch_CNN.ipynb)                   | 169                   | 51                    |
+| [Caffe2](notebooks/Caffe2_CNN.ipynb)                     | 148                   | 54                    |
+| [Chainer](notebooks/Chainer_CNN.ipynb)                   | 162                   | 69                    |
+| [CNTK](notebooks/CNTK_CNN.ipynb)                         | 163                   | 53                    |
+| [Gluon](notebooks/Gluon_CNN.ipynb)                       | 152                   | 62                    |
+| [Keras(CNTK)](notebooks/Keras_CNTK_CNN.ipynb)            | 194                   | 76                    |
+| [Keras(TF)](notebooks/Keras_TF_CNN.ipynb)                | 241                   | 76                    |
+| [Keras(Theano)](notebooks/Keras_Theano_CNN.ipynb)        | 269                   | 93                    |
+| [Knet(Julia)](notebooks/Knet_CNN.ipynb)                  | 159                   | ??                    |
+| [Tensorflow](notebooks/Tensorflow_CNN.ipynb)             | 173                   | 57                    |
+| [Lasagne(Theano)](notebooks/Theano_Lasagne_CNN.ipynb)    | 253                   | 65                    |
+| [MXNet](notebooks/MXNet_CNN.ipynb)                       | 145                   | 51                    |
+| [PyTorch](notebooks/PyTorch_CNN.ipynb)                   | 169                   | 51                    |
 
 Input for this model is the standard [CIFAR-10 dataset](http://www.cs.toronto.edu/~kriz/cifar.html) containing 50k training images and 10k test images, uniformly split across 10 classes. Each 32 by 32 image is supplied as a tensor of shape (3, 32, 32) with pixel intensity re-scaled from 0-255 to 0-1. 
 
@@ -34,15 +34,15 @@ Input for this model is the standard [CIFAR-10 dataset](http://www.cs.toronto.ed
 
 | DL Library                                 | K80/CUDA 8/CuDNN 6 | P100/CUDA 8/CuDNN 6|
 | ----------------------------------------   | ------------------ | ------------------ |
-| [Caffe2](Caffe2_Inference.ipynb)           | 71                 | 127                |
-| [Chainer](Chainer_Inference.ipynb)         | 107                | 364                |
-| [CNTK](CNTK_Inference.ipynb)               | 117                | 624                |
-| [Keras(CNTK)](Keras_CNTK_Inference.ipynb)  | 46                 | 170                |
-| [Keras(TF)](Keras_TF_Inference.ipynb)      | 98                 | 350                |
-| [Knet(Julia)](Knet_Inference.ipynb)        | 160                | ???                |
-| [Tensorflow](Tensorflow_Inference.ipynb)   | 155                | 566                |
-| [MXNet](MXNet_Inference.ipynb)             | 130                | 502                |
-| [PyTorch](PyTorch_Inference.ipynb)         | 130                | 525                |
+| [Caffe2](notebooks/Caffe2_Inference.ipynb)           | 71                 | 127                |
+| [Chainer](notebooks/Chainer_Inference.ipynb)         | 107                | 364                |
+| [CNTK](notebooks/CNTK_Inference.ipynb)               | 117                | 624                |
+| [Keras(CNTK)](notebooks/Keras_CNTK_Inference.ipynb)  | 46                 | 170                |
+| [Keras(TF)](notebooks/Keras_TF_Inference.ipynb)      | 98                 | 350                |
+| [Knet(Julia)](notebooks/Knet_Inference.ipynb)        | 160                | ???                |
+| [Tensorflow](notebooks/Tensorflow_Inference.ipynb)   | 155                | 566                |
+| [MXNet](notebooks/MXNet_Inference.ipynb)             | 130                | 502                |
+| [PyTorch](notebooks/PyTorch_Inference.ipynb)         | 130                | 525                |
 
 
 A pre-trained ResNet50 model is loaded and chopped just after the avg_pooling at the end (7, 7), which outputs a 2048D dimensional vector. This can be plugged into a softmax layer or another classifier such as a boosted tree to perform transfer learning. Allowing for a warm start; this forward-only pass to the avg_pool layer is timed.
@@ -51,13 +51,13 @@ A pre-trained ResNet50 model is loaded and chopped just after the avg_pooling at
 
 | DL Library                               | K80/CUDA 8/CuDNN 6 | P100/CUDA 8/CuDNN 6 | Using CuDNN? |
 | ---------------------------------------- | :----------------: | :----------------:  | :----------: |
-| [CNTK](CNTK_RNN.ipynb)                   | 32                 | 15                  | Yes          |
-| [Keras(CNTK)](Keras_CNTK_RNN.ipynb)      | 86                 | 53                  | No           |
-| [Keras(TF)](Keras_TF_RNN.ipynb)          | 35                 | 26                  | Yes          |
-| [Knet(Julia)](Knet_RNN.ipynb)            | 29                 | ??                  | Yes          |
-| [MXNet](MXNet_RNN.ipynb)                 | 29                 | 24                  | Yes          |
-| [Pytorch](PyTorch_RNN.ipynb)             | 31                 | 16                  | Yes          |
-| [Tensorflow](Tensorflow_RNN.ipynb)       | 30                 | 22                  | Yes          |
+| [CNTK](notebooks/CNTK_RNN.ipynb)                   | 32                 | 15                  | Yes          |
+| [Keras(CNTK)](notebooks/Keras_CNTK_RNN.ipynb)      | 86                 | 53                  | No           |
+| [Keras(TF)](notebooks/Keras_TF_RNN.ipynb)          | 35                 | 26                  | Yes          |
+| [Knet(Julia)](notebooks/Knet_RNN.ipynb)            | 29                 | ??                  | Yes          |
+| [MXNet](notebooks/MXNet_RNN.ipynb)                 | 29                 | 24                  | Yes          |
+| [Pytorch](notebooks/PyTorch_RNN.ipynb)             | 31                 | 16                  | Yes          |
+| [Tensorflow](notebooks/Tensorflow_RNN.ipynb)       | 30                 | 22                  | Yes          |
 
 Input for this model is the standard [IMDB movie review dataset](http://ai.stanford.edu/~amaas/data/sentiment/) containing 25k training reviews and 25k test reviews, uniformly split across 2 classes (positive/negative). Processing follows [Keras](https://github.com/fchollet/keras/blob/master/keras/datasets/imdb.py) approach where start-character is set as 1, out-of-vocab (vocab size of 30k is used) represented as 2 and thus word-index starts from 3. Zero-padded / truncated to fixed axis of 150 words per review.
 
