@@ -39,7 +39,7 @@ Input for this model is the standard [CIFAR-10 dataset](http://www.cs.toronto.ed
 ### 2. Avg Time(s) for 1000 images: ResNet-50 - Feature Extraction
 
 | DL Library                                          | K80/CUDA 8/CuDNN 6 | P100/CUDA 8/CuDNN 6 |
-| --------------------------------------------------- | ------------------ | ------------------- |
+| --------------------------------------------------- | :----------------: | :-----------------: |
 | [Caffe2](notebooks/Caffe2_Inference.ipynb)          | 14.1               | 7.9                 |
 | [Chainer](notebooks/Chainer_Inference.ipynb)        | 9.3                | 2.7                 |
 | [CNTK](notebooks/CNTK_Inference.ipynb)              | 8.5                | 1.6                 |
