@@ -13,7 +13,9 @@ Coming soon: [1] Inference on DenseNet201, [2] Multi-GPU, [3] Native Framework d
 5. Possibility to verify own installation
 4. Collaboration between different open-source communities
 
-The notebooks are executed on an Azure [Deep Learning Virtual Machine](https://azuremarketplace.microsoft.com/en-us/marketplace/apps/microsoft-ads.dsvm-deep-learning) using both the K80 and the newer P100.
+The notebooks are executed on an Azure [Deep Learning Virtual Machine](https://azuremarketplace.microsoft.com/en-us/marketplace/apps/microsoft-ads.dsvm-deep-learning) using both the K80 and the newer P100. 
+
+*Accuracies are reported in notebooks, they should match to ensure we have common mode/code*
 
 ### 1. Training Time(s): CNN (VGG-style, 32bit) on CIFAR-10 - Image Recognition
 
