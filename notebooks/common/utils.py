@@ -1,10 +1,13 @@
 import os
+import pathlib
+import subprocess
 import sys
 import glob
 import tarfile
 import pickle
 import subprocess
 import numpy as np
+import pandas as pd
 from sklearn.datasets import fetch_mldata
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.model_selection import train_test_split
@@ -264,3 +267,40 @@ def imdb_for_library(seq_len=100, max_features=20000, one_hot=False):
     y_train = y_train.astype(np.int32)
     y_test = y_test.astype(np.int32)
     return x_train, x_test, y_train, y_test
+
+
+def download_data_chextxray(csv_dest, base_url = 'https://ikpublictutorial.blob.core.windows.net/'):
+                            
+    # Check whether files-exist
+    try:
+        df = pd.read_csv(os.path.join(csv_dest, "Data_Entry_2017.csv"))
+        img_dir = os.path.join(csv_dest, "images")
+        img_locs = df['Image Index'].map(lambda im: os.path.join(img_dir, im)).values
+        for im in img_locs:
+            assert os.path.isfile(im)
+        print("Data already exists")
+    except Exception as err:
+        print("Data does not exist")
+        
+        # Locations
+        CSV_URL = base_url + 'deeplearningframeworks/Data_Entry_2017.csv'
+        CONTAINER_URL  = base_url + 'chest'        
+        container_dest = os.path.join(csv_dest , 'images')
+        
+        # Create full directory recursively
+        print("Creating data directory")
+        pathlib.Path(container_dest).mkdir(parents=True, exist_ok=True) 
+        
+        # Download labels 
+        print("Downloading CSV file with labels ...")
+        subprocess.call(['wget', '-N', CSV_URL, '-P', csv_dest])
+        
+        # Download Images
+        print("Downloading Chext X-ray images ...")
+        print("This requires AzCopy:")
+        print("https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-linux")
+        print("This requires 45 GB of free-space, and may take at-least 10 minutes")
+        print("You may have to increase the size of your OS Disk in Azure Portal")
+        subprocess.call(['azcopy', '--source', CONTAINER_URL, 
+                         '--destination', container_dest, '--quiet', '--recursive'])
+        print("Data Download Complete")
