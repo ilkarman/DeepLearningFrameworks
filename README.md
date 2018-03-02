@@ -2,7 +2,8 @@
 
 V1.0 - 05/03/2018
 
-Coming soon: [1] More Multi-GPU examples, [2] R-notebooks (MXNet + Keras)
+Coming soon: R-notebooks (MXNet + Keras)
+Requesting from community: More Multi-GPU examples
 
 ## Goal
 
@@ -40,7 +41,7 @@ Input for this model is the standard [CIFAR-10 dataset](http://www.cs.toronto.ed
 
 ### 2. Training Time: DenseNet-121 on ChestXRay - Image Recognition (Multi-GPU)
 
-**This is a WIP but pushed to master to encourage open-source contribution**
+**This is a work in progress but pushed to master to encourage open-source contribution**
 
 | DL Library                                           | 2xK80/CUDA 8/CuDNN 6 | 2xP100/CUDA 8/CuDNN 6 |
 | ---------------------------------------------------  | :------------------: | :-------------------: |
