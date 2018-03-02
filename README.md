@@ -1,8 +1,8 @@
 # Deep Learning Frameworks Comparison
 
-V1.0 - 27/02/2018
+V1.0 - 05/03/2018
 
-Coming soon: [1] Inference on DenseNet201, [2] Multi-GPU, [3] Native Framework data-loader + augmentation comparison, [4] R-notebooks (MXNet + Keras)
+Coming soon: [1] More Multi-GPU examples, [2] R-notebooks (MXNet + Keras)
 
 ## Goal
 
@@ -15,7 +15,7 @@ Coming soon: [1] Inference on DenseNet201, [2] Multi-GPU, [3] Native Framework d
 
 The notebooks are executed on an Azure [Deep Learning Virtual Machine](https://azuremarketplace.microsoft.com/en-us/marketplace/apps/microsoft-ads.dsvm-deep-learning) using both the K80 and the newer P100. 
 
-*Accuracies are reported in notebooks, they should match to ensure we have common mode/code*
+*Accuracies are reported in notebooks, they should match to ensure we have common model-architecture/code*
 
 ### 1. Training Time(s): CNN (VGG-style, 32bit) on CIFAR-10 - Image Recognition
 
