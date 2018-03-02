@@ -17,7 +17,7 @@ The notebooks are executed on an Azure [Deep Learning Virtual Machine](https://a
 
 *Accuracies are reported in notebooks, they should match to ensure we have common model-architecture/code*
 
-### 1. Training Time(s): CNN (VGG-style, 32bit) on CIFAR-10 - Image Recognition
+### 1. Training Time(s): CNN (VGG-style) on CIFAR-10 - Image Recognition
 
 | DL Library                                            | K80/CUDA 8/CuDNN 6 | P100/CUDA 8/CuDNN 6 |
 | ----------------------------------------------------- | :----------------: | :-----------------: |
@@ -45,7 +45,7 @@ Input for this model is the standard [CIFAR-10 dataset](http://www.cs.toronto.ed
 | DL Library                                           | 2xK80/CUDA 8/CuDNN 6 | 2xP100/CUDA 8/CuDNN 6 |
 | ---------------------------------------------------  | :------------------: | :-------------------: |
 | [Pytorch](notebooks/PyTorch_MultiGPU_Large.ipynb)    | 1h32min18s           | 27min3s               |
-| [Keras(TF)](notebooks/?.ipynb)                       | ?                    | ?                     |
+| [Keras(TF)](notebooks/Keras_TF_MultiGPU_Large.ipynb) | ?                    | ?                     |
 
 
 Input for this model is 112,120 PNGs of chest X-rays. **Note for the notebook to automatically download the data you must install [Azcopy](https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-linux#download-and-install-azcopy) and increase the size of your OS-Disk in Azure Portal so that you have at-least 45GB of free-space (the Chest X-ray data is large!). The notebooks may take more than 10 minutes to first download the data.** These notebooks train DenseNet-121 and use native data-loaders to pre-process the data and perform data-augmentation.
