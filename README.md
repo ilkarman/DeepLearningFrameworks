@@ -3,6 +3,7 @@
 V1.0 - 05/03/2018
 
 Coming soon: R-notebooks (MXNet + Keras)
+
 Requesting from community: More Multi-GPU examples
 
 ## Goal
