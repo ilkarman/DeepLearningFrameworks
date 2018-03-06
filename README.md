@@ -47,7 +47,7 @@ Input for this model is the standard [CIFAR-10 dataset](http://www.cs.toronto.ed
 | DL Library                                        | 1xP100/CUDA 8/CuDNN 6 | 2xP100/CUDA 8/CuDNN 6 | 4xP100/CUDA 8/CuDNN 6 | 
 | -----------------------------------------------   | :------------------:  | :-------------------: | :------------------:  | 
 | [Pytorch-DN](notebooks/PyTorch_MultiGPU.ipynb)    | 41min46s              | 28min53s              | ?                     |
-| [Keras(TF)-DN](notebooks/Keras_TF_MultiGPU.ipynb) | ?                     | 32min1s               | ?                     |
+| [Keras(TF)-DN](notebooks/Keras_TF_MultiGPU.ipynb) | 52min37s              | 32min1s               | ?                     |
 | [Chainer-RS](notebooks/Chainer_MultiGPU.ipynb)    | 36min46s              | 41min9s               | ?                     |
 
 
