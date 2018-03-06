@@ -1,8 +1,10 @@
 # Deep Learning Frameworks Comparison
 
-V1.0 - 27/02/2018
+V1.0 - 05/03/2018
 
-Coming soon: [1] Inference on DenseNet201, [2] Multi-GPU, [3] Native Framework data-loader + augmentation comparison, [4] R-notebooks (MXNet + Keras)
+Coming soon: R-notebooks (MXNet + Keras)
+
+Requesting from community: More Multi-GPU examples
 
 ## Goal
 
@@ -15,9 +17,9 @@ Coming soon: [1] Inference on DenseNet201, [2] Multi-GPU, [3] Native Framework d
 
 The notebooks are executed on an Azure [Deep Learning Virtual Machine](https://azuremarketplace.microsoft.com/en-us/marketplace/apps/microsoft-ads.dsvm-deep-learning) using both the K80 and the newer P100. 
 
-*Accuracies are reported in notebooks, they should match to ensure we have common mode/code*
+*Accuracies are reported in notebooks, they should match to ensure we have common model-architecture/code*
 
-### 1. Training Time(s): CNN (VGG-style, 32bit) on CIFAR-10 - Image Recognition
+### 1. Training Time(s): CNN (VGG-style) on CIFAR-10 - Image Recognition
 
 | DL Library                                            | K80/CUDA 8/CuDNN 6 | P100/CUDA 8/CuDNN 6 |
 | ----------------------------------------------------- | :----------------: | :-----------------: |
@@ -38,7 +40,19 @@ The notebooks are executed on an Azure [Deep Learning Virtual Machine](https://a
 
 Input for this model is the standard [CIFAR-10 dataset](http://www.cs.toronto.edu/~kriz/cifar.html) containing 50k training images and 10k test images, uniformly split across 10 classes. Each 32 by 32 image is supplied as a tensor of shape (3, 32, 32) with pixel intensity re-scaled from 0-255 to 0-1. 
 
-### 2. Avg Time(s) for 1000 images: ResNet-50 - Feature Extraction
+### 2. Training Time: DenseNet-121 on ChestXRay - Image Recognition (Multi-GPU)
+
+**This is a work in progress but pushed to master to encourage open-source contribution**
+
+| DL Library                                           | 2xK80/CUDA 8/CuDNN 6 | 2xP100/CUDA 8/CuDNN 6 |
+| ---------------------------------------------------  | :------------------: | :-------------------: |
+| [Pytorch](notebooks/PyTorch_MultiGPU.ipynb)    | 1h32min18s           | 28min53s               |
+| [Keras(TF)](notebooks/Keras_TF_MultiGPU.ipynb) | ?                    | 32min1s              |
+
+
+Input for this model is 112,120 PNGs of chest X-rays. **Note for the notebook to automatically download the data you must install [Azcopy](https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-linux#download-and-install-azcopy) and increase the size of your OS-Disk in Azure Portal so that you have at-least 45GB of free-space (the Chest X-ray data is large!). The notebooks may take more than 10 minutes to first download the data.** These notebooks train DenseNet-121 and use native data-loaders to pre-process the data and perform data-augmentation.
+
+### 3. Avg Time(s) for 1000 images: ResNet-50 - Feature Extraction
 
 | DL Library                                          | K80/CUDA 8/CuDNN 6 | P100/CUDA 8/CuDNN 6 |
 | --------------------------------------------------- | :----------------: | :-----------------: |
@@ -57,7 +71,7 @@ Input for this model is the standard [CIFAR-10 dataset](http://www.cs.toronto.ed
 
 A pre-trained ResNet50 model is loaded and chopped just after the avg_pooling at the end (7, 7), which outputs a 2048D dimensional vector. This can be plugged into a softmax layer or another classifier such as a boosted tree to perform transfer learning. Allowing for a warm start; this forward-only pass to the avg_pool layer is timed. *Note: batch-size remains constant, however filling the RAM on a GPU would produce further performance boosts (greater for GPUs with more RAM).*
 
-### 3. Training Time(s): RNN (GRU) on IMDB - Sentiment Analysis
+### 4. Training Time(s): RNN (GRU) on IMDB - Sentiment Analysis
 
 | DL Library                               | K80/CUDA 8/CuDNN 6 | P100/CUDA 8/CuDNN 6 | Using CuDNN? |
 | ---------------------------------------- | :----------------: | :----------------:  | :----------: |
