@@ -304,3 +304,33 @@ def download_data_chextxray(csv_dest, base_url = 'https://ikpublictutorial.blob.
         subprocess.call(['azcopy', '--source', CONTAINER_URL, 
                          '--destination', container_dest, '--quiet', '--recursive'])
         print("Data Download Complete")
+        
+        
+def split_train_val_test(*arrays, val_size=0.2, test_size=0.2, random_seed=42):
+    """Split a dataset into train, validation and test sets.
+    Args:
+        *arrays (list, np.array, pd.DataFrame): Dataset to split, it can be one or two objects with the same number of
+                                                rows.
+        val_size (float): Percentage in the validation set.
+        test_size (float): Percentage in the test set.
+        random_seed (float): Seed.
+    Returns:
+        *arrays_out (list): List with the dataset splitted. If the input is one element `X`, the output will be
+                            `X_train, X_val, X_test`. If the input is two elements `X,y`, the output will be
+                            `X_train, X_val, X_test, y_train, y_val, y_test`.
+
+    """
+    n_arrays = len(arrays)
+    if n_arrays == 1:
+        X_train, X_test = train_test_split(*arrays, test_size=test_size, random_state=random_seed)
+        X_train, X_val = train_test_split(X_train, test_size=val_size/(1-test_size), random_state=random_seed)
+        return X_train, X_val, X_test
+    elif n_arrays == 2:
+        X, y = indexable(*arrays)
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=random_seed, stratify=y)
+        X_train, X_val, y_train, y_val = train_test_split(X_train, y_train, test_size=val_size/(1-test_size),
+                                                          random_state=random_seed, stratify=y_train)
+        return X_train, X_val, X_test, y_train, y_val, y_test
+    else:
+        raise ValueError("Wrong number of inputs")
+
