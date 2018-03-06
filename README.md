@@ -2,7 +2,9 @@
 
 V1.0 - 27/02/2018
 
-Coming soon: [1] Inference on DenseNet201, [2] Multi-GPU, [3] Native Framework data-loader + augmentation comparison, [4] R-notebooks (MXNet + Keras)
+R-notebooks are comming soon.
+
+We are finalising our multi-GPU (single-node) examples (DenseNet-121 + Data-augmentation + Logging + Data-loaders), which you can follow [here](https://github.com/ilkarman/DeepLearningFrameworks/tree/multi_gpu#2-training-time-densenet-121-on-chestxray---image-recognition-multi-gpu)
 
 ## Goal
 
