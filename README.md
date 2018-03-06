@@ -42,13 +42,17 @@ Input for this model is the standard [CIFAR-10 dataset](http://www.cs.toronto.ed
 
 ### 2. Training Time: DenseNet-121 on ChestXRay - Image Recognition (Multi-GPU)
 
-**This is a work in progress but pushed to master to encourage open-source contribution**
+**This is a work in progress**
 
-| DL Library                                           | 2xK80/CUDA 8/CuDNN 6 | 2xP100/CUDA 8/CuDNN 6 |
-| ---------------------------------------------------  | :------------------: | :-------------------: |
-| [Pytorch](notebooks/PyTorch_MultiGPU.ipynb)    | 1h32min18s           | 28min53s               |
-| [Keras(TF)](notebooks/Keras_TF_MultiGPU.ipynb) | ?                    | 32min1s              |
+| DL Library                                        | 1xP100/CUDA 8/CuDNN 6 | 2xP100/CUDA 8/CuDNN 6 | 4xP100/CUDA 8/CuDNN 6 | 
+| -----------------------------------------------   | :------------------:  | :-------------------: | :------------------:  | 
+| [Pytorch-DN](notebooks/PyTorch_MultiGPU.ipynb)    | ?                     | 28min53s              | ?                     |
+| [Keras(TF)-DN](notebooks/Keras_TF_MultiGPU.ipynb) | ?                     | 32min1s               | ?                     |
+| [Chainer-RS](notebooks/Chainer_MultiGPU.ipynb)    | 36min46s              | 41min9s               | ?                     |
 
+
+DN = DenseNet121
+RS = ResNet50 (If DenseNet121 not available)
 
 Input for this model is 112,120 PNGs of chest X-rays. **Note for the notebook to automatically download the data you must install [Azcopy](https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-linux#download-and-install-azcopy) and increase the size of your OS-Disk in Azure Portal so that you have at-least 45GB of free-space (the Chest X-ray data is large!). The notebooks may take more than 10 minutes to first download the data.** These notebooks train DenseNet-121 and use native data-loaders to pre-process the data and perform data-augmentation.
 
