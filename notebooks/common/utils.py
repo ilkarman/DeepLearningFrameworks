@@ -11,6 +11,8 @@ import pandas as pd
 from sklearn.datasets import fetch_mldata
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.model_selection import train_test_split
+from sklearn.metrics.ranking import roc_auc_score
+from sklearn.model_selection import train_test_split
 
 if sys.version_info.major == 2:
     # Backward compatibility with python 2.
@@ -304,3 +306,49 @@ def download_data_chextxray(csv_dest, base_url = 'https://ikpublictutorial.blob.
         subprocess.call(['azcopy', '--source', CONTAINER_URL, 
                          '--destination', container_dest, '--quiet', '--recursive'])
         print("Data Download Complete")
+        
+        
+def get_imgloc_labels(img_dir, lbl_file, patient_ids):
+    """ Function to process data into a list of img_locs containing string paths
+    and labels, which are one-hot encoded."""
+    # Read labels-csv
+    df = pd.read_csv(lbl_file)
+    # Process
+    # Split labels on unfiltered data
+    df_label = df['Finding Labels'].str.split(
+        '|', expand=False).str.join(sep='*').str.get_dummies(sep='*')
+    # Filter by patient-ids (both)
+    df_label['Patient ID'] = df['Patient ID']
+    df_label = df_label[df_label['Patient ID'].isin(patient_ids)]
+    df = df[df['Patient ID'].isin(patient_ids)]
+    # Remove unncessary columns
+    df_label.drop(['Patient ID','No Finding'], axis=1, inplace=True)  
+
+    # List of images (full-path)
+    img_locs =  df['Image Index'].map(lambda im: os.path.join(img_dir, im)).values
+    # One-hot encoded labels (float32 for BCE loss)
+    labels = df_label.values   
+    return img_locs, labels
+
+
+def compute_roc_auc(data_gt, data_pd, classes, full=True):
+    roc_auc = []
+    for i in range(classes):
+        roc_auc.append(roc_auc_score(data_gt[:, i], data_pd[:, i]))
+    print("Full AUC", roc_auc)
+    roc_auc = np.mean(roc_auc)
+    return roc_auc
+
+
+def get_train_valid_test_split(n, train=0.7, valid=0.1, test=0.2, shuffle=False):
+    other_split = valid+test
+    if train+other_split!=1:
+        raise ValueError("Train, Valid, Test splits should sum to 1")
+    train_set, other_set = train_test_split(range(1,n+1), 
+                                            train_size=train, test_size=other_split, shuffle=shuffle)
+    valid_set, test_set = train_test_split(other_set, 
+                                           train_size=valid/other_split, 
+                                           test_size=test/other_split,
+                                           shuffle=False)
+    print("train:{} valid:{} test:{}".format(len(train_set), len(valid_set), len(test_set)))
+    return train_set, valid_set, test_set
