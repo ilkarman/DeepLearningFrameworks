@@ -304,8 +304,18 @@ def download_data_chextxray(csv_dest, base_url = 'https://ikpublictutorial.blob.
         subprocess.call(['azcopy', '--source', CONTAINER_URL, 
                          '--destination', container_dest, '--quiet', '--recursive'])
         print("Data Download Complete")
+
         
+def get_mxnet_model(prefix, epoch):
+    """Download an MXNet model if it doesn't exist"""
+    def download(url):
+        filename = url.split("/")[-1]
+        if not os.path.exists(filename):
+            urlretrieve(url, filename)
+    download(prefix+'-symbol.json')
+    download(prefix+'-%04d.params' % (epoch,))
         
+
 def split_train_val_test(*arrays, val_size=0.2, test_size=0.2, random_seed=42):
     """Split a dataset into train, validation and test sets.
     Args:
