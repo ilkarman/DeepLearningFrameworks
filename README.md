@@ -37,6 +37,7 @@ The notebooks are executed on an Azure [Deep Learning Virtual Machine](https://a
 | [Julia - Knet](notebooks/Knet_CNN.ipynb)              |        159         |         ??          |
 | [R - MXNet](notebooks/.ipynb)                         |        ???         |         ??          |
 
+*Note: Tensorflow's higher level API tf.estimator.Estimator() is strongly recommended as shown [here](support/Tensorflow_CNN_highAPI.ipynb)*
 
 Input for this model is the standard [CIFAR-10 dataset](http://www.cs.toronto.edu/~kriz/cifar.html) containing 50k training images and 10k test images, uniformly split across 10 classes. Each 32 by 32 image is supplied as a tensor of shape (3, 32, 32) with pixel intensity re-scaled from 0-255 to 0-1. 
 
