@@ -1,6 +1,6 @@
 # Deep Learning Framework Examples
 
-![logo](support/logo.PNG)
+![logo](support/logo.png)
 
 *Note: We are finalising our multi-GPU (single-node) examples (DenseNet-121 + Data-augmentation + Logging + Data-loaders), which you can follow [here](https://github.com/ilkarman/DeepLearningFrameworks/tree/multi_gpu#2-training-time-densenet-121-on-chestxray---image-recognition-multi-gpu)*
 
