@@ -91,3 +91,22 @@ cifar_for_library <- function(channel_first = TRUE, one_hot = FALSE) {
   
 }
 
+# Load hyper-parameters for different scenarios:
+# cnn, lstm, or inference
+load_params <- function(params_for){
+    
+    require(rjson)
+    params <- fromJSON(file = "./common/params.json")
+
+    if (params_for == "cnn"){
+        return(params$params_cnn)
+    } else if (params_for == "lstm"){
+        return(params$params_lstm)
+    } else if (params_for == "inference"){
+        return(params$params_inf)
+    } else {
+        stop("params_for should be set to one of the following: cnn, lstm or inference.")
+    }
+}
+
+
