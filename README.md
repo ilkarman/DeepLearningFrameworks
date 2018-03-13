@@ -44,15 +44,19 @@ Input for this model is the standard [CIFAR-10 dataset](http://www.cs.toronto.ed
 
 **This is a work in progress**
 
+**DenseNet121**
+
 | DL Library                                        | 1xP100/CUDA 8/CuDNN 6 | 2xP100/CUDA 8/CuDNN 6 | 4xP100/CUDA 8/CuDNN 6 | 
 | -----------------------------------------------   | :------------------:  | :-------------------: | :------------------:  | 
-| [Pytorch-DN](notebooks/PyTorch_MultiGPU.ipynb)    | 41min46s              | 28min53s              | ?                     |
-| [Keras(TF)-DN](notebooks/Keras_TF_MultiGPU.ipynb) | 52min37s              | 32min1s               | ?                     |
-| [Chainer-RS](notebooks/Chainer_MultiGPU.ipynb)    | 36min46s              | 41min9s               | ?                     |
+| [Pytorch](notebooks/PyTorch_MultiGPU.ipynb)    | 41min46s              | 28min53s              | ?                     |
+| [Keras(TF)](notebooks/Keras_TF_MultiGPU.ipynb) | 52min37s              | 32min1s               | ?                     |
+| [Tensorflow](notebooks/Tensorflow_MultiGPU.ipynb) | 58min8s               | 46min14s              | ?                     |
 
+**ResNet50**
 
-DN = DenseNet121
-RS = ResNet50 (If DenseNet121 not available)
+| DL Library                                        | 1xP100/CUDA 8/CuDNN 6 | 2xP100/CUDA 8/CuDNN 6 | 4xP100/CUDA 8/CuDNN 6 | 
+| -----------------------------------------------   | :------------------:  | :-------------------: | :------------------:  | 
+| [Chainer](notebooks/Chainer_MultiGPU.ipynb)    | 36min46s              | 41min9s               | ?                     |
 
 Input for this model is 112,120 PNGs of chest X-rays. **Note for the notebook to automatically download the data you must install [Azcopy](https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-linux#download-and-install-azcopy) and increase the size of your OS-Disk in Azure Portal so that you have at-least 45GB of free-space (the Chest X-ray data is large!). The notebooks may take more than 10 minutes to first download the data.** These notebooks train DenseNet-121 and use native data-loaders to pre-process the data and perform data-augmentation.
 
