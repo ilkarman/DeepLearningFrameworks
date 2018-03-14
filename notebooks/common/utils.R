@@ -8,7 +8,7 @@ give_fake_data <- function(batches){
 
 
 # Function to download the cifar data, if not already downloaded
-maybe_download_cifar <- function(src = 'https://www.cs.toronto.edu/~kriz/cifar-10-matlab.tar.gz'){
+maybe_download_cifar <- function(src = 'https://ikpublictutorial.blob.core.windows.net/deeplearningframeworks/cifar-10-binary.tar.gz '){
   
   tryCatch(
     {
