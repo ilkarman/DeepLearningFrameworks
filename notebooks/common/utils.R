@@ -150,4 +150,12 @@ load_params <- function(params_for){
     }
 }
 
+# Plot a CIFAR10 image
+plot_image <- function(img) {
+  library(grid)
+  img.col.mat <- rgb(img[,,1], img[,,2], img[,,3], maxColorValue = 1)
+  dim(img.col.mat) <- dim(img[,,1])
+  grid.raster(img.col.mat, interpolate = FALSE)
+  rm(img.col.mat)
+}
 
