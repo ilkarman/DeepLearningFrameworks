@@ -12,7 +12,7 @@ maybe_download_cifar <- function(src = 'https://ikpublictutorial.blob.core.windo
   
   tryCatch(
     {
-      data <- suppressWarnings(process_cifar_mat())
+      data <- suppressWarnings(process_cifar_bin())
       return(data)
     },
     error = function(e)
@@ -22,12 +22,12 @@ maybe_download_cifar <- function(src = 'https://ikpublictutorial.blob.core.windo
       print('Extracting files ...')
       untar("tmp.tar.gz")
       file.remove('tmp.tar.gz')
-      return(process_cifar_mat())
+      return(process_cifar_bin())
     }
   )
 }
 
-# A function to process CIFAR10 dataset
+# A function to process CIFAR10 dataset in matlab format
 process_cifar_mat <- function(){
   
   require(R.matlab)
@@ -56,6 +56,47 @@ process_cifar_mat <- function(){
   
   list(x_train=x_train, x_test=x_test, y_train=y_train, y_test=y_test)
   
+}
+
+read_image <- function(i, to_read) {
+  label <- readBin(to_read, integer(), n = 1, size = 1)
+  image <- as.integer(readBin(to_read, raw(), size = 1, n = 32*32*3))
+  list(label = label, image = image)
+}
+
+read_file <- function(f) {
+  to_read <- file(f, "rb")
+  examples <- lapply(1:10000, read_image, to_read)
+  close(to_read)
+  examples
+}
+
+# A function to process CIFAR10 dataset in binary format
+process_cifar_bin <- function(colMajor = TRUE) {
+  
+  data_dir <- "cifar-10-batches-bin"
+  
+  train <- lapply(file.path(data_dir, paste0("data_batch_", 1:5, ".bin")), read_file)
+  train <- do.call(c, train)
+  
+  x_train <- unlist(lapply(train, function(x) x$image))
+  if (colMajor) {
+    perm <- c(2, 1, 3, 4)
+  } else {
+    perm <- c(4, 3, 2, 1)
+  }
+  
+  x_train <- aperm(array(x_train, c(32, 32, 3, 50000)), perm = perm)
+  x_train <- x_train / 255
+  y_train <- unlist(lapply(train, function(x) x$label))
+  
+  test <- read_file(file.path(data_dir, "test_batch.bin"))
+  x_test <- unlist(lapply(test, function(x) x$image))
+  x_test <- aperm(array(x_test, c(32, 32, 3, 10000)), perm = perm)
+  x_test <- x_test / 255
+  y_test <- unlist(lapply(test, function(x) x$label))
+  
+  list(x_train = x_train, x_test = x_test, y_train = y_train, y_test = y_test)
 }
 
 # A function to load CIFAR10 dataset
