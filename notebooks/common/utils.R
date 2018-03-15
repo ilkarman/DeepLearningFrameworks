@@ -1,9 +1,13 @@
 # Create an array of fake data to run inference on
-give_fake_data <- function(batches){
+give_fake_data <- function(batches, col_major = FALSE){
   set.seed(0)
-  dta <- array(runif(batches*224*224*3), dim = c(batches, 224, 224, 3))
-  dta_swapped <- aperm(dta, c(1, 4, 3, 2))
-  return(list(dta, dta_swapped))
+  if (col_major) {
+    shape <- c(224, 224, 3, batches)
+  } else {
+    shape <- c(batches, 224, 224, 3)
+  }
+  dat <- array(runif(batches*224*224*3), dim = shape)
+  return(dat)
 }
 
 
@@ -191,3 +195,22 @@ plot_image <- function(img) {
   rm(img.col.mat)
 }
 
+# Function to download the mxnet resnet50 model, if not already downloaded
+maybe_download_resnet50 <- function() {
+  src <- 'http://data.mxnet.io/models/imagenet/'
+  tryCatch(
+    {
+      model <- suppressWarnings(mx.model.load(prefix = "resnet-50", iteration = 0))
+      return(model)
+    },
+    error = function(e)
+    {
+      print(paste0('Model does not exist. Downloading ', src))
+      download.file(file.path(src, 'resnet/50-layers/resnet-50-symbol.json'), destfile="resnet-50-symbol.json")
+      download.file(file.path(src, 'resnet/50-layers/resnet-50-0000.params'), destfile="resnet-50-0000.params")
+      return(mx.model.load(prefix = "resnet-50", iteration = 0))
+    }
+  )
+}
+
+load_resnet50 <- function() maybe_download_resnet50()
