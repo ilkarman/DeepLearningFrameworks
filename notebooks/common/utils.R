@@ -6,6 +6,60 @@ give_fake_data <- function(batches){
   return(list(dta, dta_swapped))
 }
 
+# Get GPU name
+get_gpu_name <- function(){
+    tryCatch(
+        {
+            out_list <- system("nvidia-smi --query-gpu=gpu_name --format=csv", intern = TRUE)
+            out_list <- out_list[out_list != "name"]
+            return(out_list)
+        },
+        error = function(e)
+        {
+            print(e)
+        }
+        )
+}
+
+# Get CUDA version
+get_cuda_version <- function(){
+    tryCatch(
+        {
+            out <- system("cat /usr/local/cuda/version.txt", intern = TRUE)
+            return(out)
+        },
+        error = function(e)
+        {
+            print(e)
+        }
+        )
+}
+
+# Get CuDNN version
+get_cudnn_version <- function(){
+    tryCatch(
+        {
+            out <- system("cat /usr/include/cudnn.h | grep CUDNN_MAJOR", intern = TRUE)[1]
+            indx <- regexpr("(\\d+)", out)
+            major <- regmatches(out, indx)
+            
+            out <- system("cat /usr/include/cudnn.h | grep CUDNN_MINOR", intern = TRUE)[1]
+            indx <- regexpr("(\\d+)", out)
+            minor <- regmatches(out, indx)
+            
+            out <- system("cat /usr/include/cudnn.h | grep CUDNN_PATCHLEVEL", intern = TRUE)[1]
+            indx <- regexpr("(\\d+)", out)
+            patch <- regmatches(out, indx)
+            
+            version <- paste(major, minor, patch, sep = ".")
+            return(paste0("CuDNN Version ", version))
+        },
+        error = function(e)
+        {
+            print(e)
+        }
+        )
+}
 
 # Function to download the cifar data, if not already downloaded
 maybe_download_cifar <- function(src = 'https://www.cs.toronto.edu/~kriz/cifar-10-matlab.tar.gz'){
