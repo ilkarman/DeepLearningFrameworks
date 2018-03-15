@@ -8,11 +8,11 @@ give_fake_data <- function(batches){
 
 
 # Function to download the cifar data, if not already downloaded
-maybe_download_cifar <- function(src = 'https://ikpublictutorial.blob.core.windows.net/deeplearningframeworks/cifar-10-binary.tar.gz '){
+maybe_download_cifar <- function(col_major = TRUE, src = 'https://ikpublictutorial.blob.core.windows.net/deeplearningframeworks/cifar-10-binary.tar.gz '){
   
   tryCatch(
     {
-      data <- suppressWarnings(process_cifar_bin())
+      data <- suppressWarnings(process_cifar_bin(col_major))
       return(data)
     },
     error = function(e)
@@ -22,7 +22,7 @@ maybe_download_cifar <- function(src = 'https://ikpublictutorial.blob.core.windo
       print('Extracting files ...')
       untar("tmp.tar.gz")
       file.remove('tmp.tar.gz')
-      return(process_cifar_bin())
+      return(process_cifar_bin(col_major))
     }
   )
 }
@@ -72,7 +72,7 @@ read_file <- function(f) {
 }
 
 # A function to process CIFAR10 dataset in binary format
-process_cifar_bin <- function(colMajor = TRUE) {
+process_cifar_bin <- function(col_major) {
   
   data_dir <- "cifar-10-batches-bin"
   
@@ -80,7 +80,7 @@ process_cifar_bin <- function(colMajor = TRUE) {
   train <- do.call(c, train)
   
   x_train <- unlist(lapply(train, function(x) x$image))
-  if (colMajor) {
+  if (col_major) {
     perm <- c(2, 1, 3, 4)
   } else {
     perm <- c(4, 3, 2, 1)
@@ -99,28 +99,17 @@ process_cifar_bin <- function(colMajor = TRUE) {
   list(x_train = x_train, x_test = x_test, y_train = y_train, y_test = y_test)
 }
 
+
 # A function to load CIFAR10 dataset
-cifar_for_library <- function(channel_first = TRUE, one_hot = FALSE) {
+cifar_for_library <- function(one_hot = FALSE, col_major = TRUE) {
   
-  require(reticulate)
-  
-  cifar <- maybe_download_cifar()
+  cifar <- maybe_download_cifar(col_major)
   
   x_train <- cifar$x_train
   y_train <- cifar$y_train
   x_test <- cifar$x_test
   y_test <- cifar$y_test
   
-  # Channels first or last
-  if (channel_first){
-    x_train <- array_reshape(x_train, c(50000, 3, 32, 32))
-    x_test <- array_reshape(x_test, c(10000, 3, 32, 32))
-  } else {
-    x_train <- array_reshape(x_train, c(50000, 32, 32, 3))
-    x_test <- array_reshape(x_test, c(10000, 32, 32, 3))
-  }
-  
-  # One-hot encoding
   if(one_hot){
     Y = data.frame(label = factor(y_train))
     y_train = with(Y, model.matrix(~label+0))
@@ -131,6 +120,39 @@ cifar_for_library <- function(channel_first = TRUE, one_hot = FALSE) {
   list(x_train=x_train, x_test=x_test, y_train=y_train, y_test=y_test)
   
 }
+
+# A function to load CIFAR10 dataset
+# cifar_for_library <- function(channel_first = TRUE, one_hot = FALSE) {
+#   
+#   require(reticulate)
+#   
+#   cifar <- maybe_download_cifar()
+#   
+#   x_train <- cifar$x_train
+#   y_train <- cifar$y_train
+#   x_test <- cifar$x_test
+#   y_test <- cifar$y_test
+#   
+#   # Channels first or last
+#   if (channel_first){
+#     x_train <- array_reshape(x_train, c(50000, 3, 32, 32))
+#     x_test <- array_reshape(x_test, c(10000, 3, 32, 32))
+#   } else {
+#     x_train <- array_reshape(x_train, c(50000, 32, 32, 3))
+#     x_test <- array_reshape(x_test, c(10000, 32, 32, 3))
+#   }
+#   
+#   # One-hot encoding
+#   if(one_hot){
+#     Y = data.frame(label = factor(y_train))
+#     y_train = with(Y, model.matrix(~label+0))
+#     Y = data.frame(label = factor(y_test))
+#     y_test = with(Y, model.matrix(~label+0))
+#   }
+#   
+#   list(x_train=x_train, x_test=x_test, y_train=y_train, y_test=y_test)
+#   
+# }
 
 # Load hyper-parameters for different scenarios:
 # cnn, lstm, or inference
@@ -153,8 +175,18 @@ load_params <- function(params_for){
 # Plot a CIFAR10 image
 plot_image <- function(img) {
   library(grid)
-  img.col.mat <- rgb(img[,,1], img[,,2], img[,,3], maxColorValue = 1)
-  dim(img.col.mat) <- dim(img[,,1])
+  img_dim <- dim(img)
+  if (img_dim[1] < img_dim[3]) {
+    r <- img[1,,]
+    g <- img[2,,]
+    b <- img[3,,]
+  } else {
+    r <- img[,,1]
+    g <- img[,,2]
+    b <- img[,,3]
+  }
+  img.col.mat <- rgb(r, g, b, maxColorValue = 1)
+  dim(img.col.mat) <- dim(r)
   grid.raster(img.col.mat, interpolate = FALSE)
   rm(img.col.mat)
 }
