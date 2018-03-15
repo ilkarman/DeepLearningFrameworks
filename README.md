@@ -1,6 +1,8 @@
 # Deep Learning Framework Examples
 
-![logo](support/logo.png)
+<p align="center">
+<img src="support/logo.png" alt="logo" width="50%"/>
+</p>
 
 *Note: We have recently added multi-GPU (single-node) examples on fine-tuning DenseNet-121 on Chest X-rays aka [CheXnet](https://stanfordmlgroup.github.io/projects/chexnet/). This is still work-in-progress and contributions are highly welcome!*
 
