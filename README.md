@@ -2,7 +2,7 @@
 
 ![logo](support/logo.png)
 
-*Note: We have recently add multi-GPU (single-node) examples on fine-tuning DenseNet-121 on Chest X-rays aka [CheXnet](https://stanfordmlgroup.github.io/projects/chexnet/), which you can find [here](https://github.com/ilkarman/DeepLearningFrameworks/blob/master/README.md#2-training-time-densenet-121-on-chestxray---image-recognition-multi-gpu). This is still work-in-progress and contributions are highly welcome!*
+*Note: We have recently added multi-GPU (single-node) examples on fine-tuning DenseNet-121 on Chest X-rays aka [CheXnet](https://stanfordmlgroup.github.io/projects/chexnet/). This is still work-in-progress and contributions are highly welcome!*
 
 ## Goal
 
@@ -37,6 +37,7 @@ The notebooks are executed on an Azure [Deep Learning Virtual Machine](https://a
 | [Julia - Knet](notebooks/Knet_CNN.ipynb)              |        159         |         ??          |
 | [R - MXNet](notebooks/.ipynb)                         |        ???         |         ??          |
 
+
 *Note: It is recommended to use higher level APIs where possible; see these notebooks for examples with [Tensorflow](support/Tensorflow_CNN_highAPI.ipynb), [MXNet](support/MXNet_CNN_highAPI.ipynb) and [CNTK](support/CNTK_CNN_highAPI.ipynb). They are not linked in the table to keep the common-structure-for-all approach*
 
 Input for this model is the standard [CIFAR-10 dataset](http://www.cs.toronto.edu/~kriz/cifar.html) containing 50k training images and 10k test images, uniformly split across 10 classes. Each 32 by 32 image is supplied as a tensor of shape (3, 32, 32) with pixel intensity re-scaled from 0-255 to 0-1. 
@@ -45,17 +46,16 @@ Input for this model is the standard [CIFAR-10 dataset](http://www.cs.toronto.ed
 
 **This is a work in progress**
 
-**DenseNet121**
-
 | DL Library                                        | 1xP100/CUDA 9/CuDNN 7 | 2xP100/CUDA 9/CuDNN 7 | 4xP100/CUDA 9/CuDNN 7 | 
 | -----------------------------------------------   | :------------------:  | :-------------------: | :------------------:  | 
 | [Pytorch](notebooks/PyTorch_MultiGPU.ipynb)       | 41min46s              | 28min50s              | 23min31s                     |
 | [Keras(TF)](notebooks/Keras_TF_MultiGPU.ipynb)    | 51min27s              | 32min1s               | 23min3s                     |
 | [Tensorflow](notebooks/Tensorflow_MultiGPU.ipynb) | 62min8s               | 44min13s              | 33min                     |
 
+
 Input for this model is 112,120 PNGs of chest X-rays. **Note for the notebook to automatically download the data you must install [Azcopy](https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-linux#download-and-install-azcopy) and increase the size of your OS-Disk in Azure Portal so that you have at-least 45GB of free-space (the Chest X-ray data is large!). The notebooks may take more than 10 minutes to first download the data.** These notebooks train DenseNet-121 and use native data-loaders to pre-process the data and perform data-augmentation. We want to rewrite the data-loaders to use OpenCV instead of PIL to reduce IO-bottlenecking.
 
-### 2. Avg Time(s) for 1000 images: ResNet-50 - Feature Extraction
+### 3. Avg Time(s) for 1000 images: ResNet-50 - Feature Extraction
 
 | DL Library                                          | K80/CUDA 8/CuDNN 6 | P100/CUDA 8/CuDNN 6 |
 | --------------------------------------------------- | :----------------: | :-----------------: |
@@ -71,10 +71,9 @@ Input for this model is 112,120 PNGs of chest X-rays. **Note for the notebook to
 | [R - MXNet](notebooks/.ipynb)                       | ???                | ???                 |
 
 
-
 A pre-trained ResNet50 model is loaded and chopped just after the avg_pooling at the end (7, 7), which outputs a 2048D dimensional vector. This can be plugged into a softmax layer or another classifier such as a boosted tree to perform transfer learning. Allowing for a warm start; this forward-only pass to the avg_pool layer is timed. *Note: batch-size remains constant, however filling the RAM on a GPU would produce further performance boosts (greater for GPUs with more RAM).*
 
-### 3. Training Time(s): RNN (GRU) on IMDB - Sentiment Analysis
+### 4. Training Time(s): RNN (GRU) on IMDB - Sentiment Analysis
 
 | DL Library                               | K80/CUDA 8/CuDNN 6 | P100/CUDA 8/CuDNN 6 | Using CuDNN? |
 | ---------------------------------------- | :----------------: | :----------------:  | :----------: |
