@@ -156,7 +156,9 @@ The below offers some insights I gained after trying to match test-accuracy acro
    
 13. When using MXNet, you should avoid assigning outputs or data to numpy np.array in your training loop. This causes the data to be copied from the GPU to the CPU. You should use mx.nd.array instead, allocated in the right context at the beginning. This can dramatically increase performance.
 
-14. When using MXNet, operations are allocated on the queue of back-end engine and parallelized, try to avoid any blocking operations in your training loop. You can add a nd.waitall(), which will force waiting for all operations to complete at the end of each epoch to avoid filling up your memory.
+14. When using MXNet, operations are allocated on the queue of the back-end engine and parallelized, try to avoid any blocking operations in your training loop. You can add a nd.waitall(), which will force waiting for all operations to complete at the end of each epoch to avoid filling up your memory.
+
+15. With MXNet/Gluon, calling `.hybridize()` on your network will cache the computation graph and you will get performance gains. However that means that you won't be able to step through every calculations anymore. Use it once you are done debugging your network.
 
 #### RNN
 
