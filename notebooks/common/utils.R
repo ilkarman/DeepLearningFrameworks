@@ -1,3 +1,22 @@
+# Load hyper-parameters for different scenarios:
+# cnn, lstm, or inference
+load_params <- function(params_for){
+    
+    require(rjson)
+    params <- fromJSON(file = "./common/params.json")
+
+    if (params_for == "cnn"){
+        return(params$params_cnn)
+    } else if (params_for == "lstm"){
+        return(params$params_lstm)
+    } else if (params_for == "inference"){
+        return(params$params_inf)
+    } else {
+        stop("params_for should be set to one of the following: cnn, lstm or inference.")
+    }
+}
+
+
 # Create an array of fake data to run inference on
 give_fake_data <- function(batches, col_major = FALSE){
   set.seed(0)
@@ -9,6 +28,27 @@ give_fake_data <- function(batches, col_major = FALSE){
   dat <- array(runif(batches*224*224*3), dim = shape)
   return(dat)
 }
+
+
+# Function to download the mxnet resnet50 model, if not already downloaded
+maybe_download_resnet50 <- function() {
+  src <- 'http://data.mxnet.io/models/imagenet/'
+  tryCatch(
+    {
+      model <- suppressWarnings(mx.model.load(prefix = "resnet-50", iteration = 0))
+      return(model)
+    },
+    error = function(e)
+    {
+      print(paste0('Model does not exist. Downloading ', src))
+      download.file(file.path(src, 'resnet/50-layers/resnet-50-symbol.json'), destfile="resnet-50-symbol.json")
+      download.file(file.path(src, 'resnet/50-layers/resnet-50-0000.params'), destfile="resnet-50-0000.params")
+      return(mx.model.load(prefix = "resnet-50", iteration = 0))
+    }
+  )
+}
+
+load_resnet50 <- function() maybe_download_resnet50()
 
 
 # Function to download the cifar data, if not already downloaded
@@ -31,11 +71,13 @@ maybe_download_cifar <- function(col_major = TRUE, src = 'https://ikpublictutori
   )
 }
 
+
 read_image <- function(i, to_read) {
   label <- readBin(to_read, integer(), n = 1, size = 1)
   image <- as.integer(readBin(to_read, raw(), size = 1, n = 32*32*3))
   list(label = label, image = image)
 }
+
 
 read_file <- function(f) {
   to_read <- file(f, "rb")
@@ -43,6 +85,7 @@ read_file <- function(f) {
   close(to_read)
   examples
 }
+
 
 # A function to process CIFAR10 dataset in binary format
 process_cifar_bin <- function(col_major) {
@@ -127,23 +170,6 @@ cifar_for_library <- function(one_hot = FALSE, col_major = TRUE) {
 #   
 # }
 
-# Load hyper-parameters for different scenarios:
-# cnn, lstm, or inference
-load_params <- function(params_for){
-    
-    require(rjson)
-    params <- fromJSON(file = "./common/params.json")
-
-    if (params_for == "cnn"){
-        return(params$params_cnn)
-    } else if (params_for == "lstm"){
-        return(params$params_lstm)
-    } else if (params_for == "inference"){
-        return(params$params_inf)
-    } else {
-        stop("params_for should be set to one of the following: cnn, lstm or inference.")
-    }
-}
 
 # Plot a CIFAR10 image
 plot_image <- function(img) {
@@ -164,25 +190,6 @@ plot_image <- function(img) {
   rm(img.col.mat)
 }
 
-# Function to download the mxnet resnet50 model, if not already downloaded
-maybe_download_resnet50 <- function() {
-  src <- 'http://data.mxnet.io/models/imagenet/'
-  tryCatch(
-    {
-      model <- suppressWarnings(mx.model.load(prefix = "resnet-50", iteration = 0))
-      return(model)
-    },
-    error = function(e)
-    {
-      print(paste0('Model does not exist. Downloading ', src))
-      download.file(file.path(src, 'resnet/50-layers/resnet-50-symbol.json'), destfile="resnet-50-symbol.json")
-      download.file(file.path(src, 'resnet/50-layers/resnet-50-0000.params'), destfile="resnet-50-0000.params")
-      return(mx.model.load(prefix = "resnet-50", iteration = 0))
-    }
-  )
-}
-
-load_resnet50 <- function() maybe_download_resnet50()
 
 maybe_download_imdb <- function(src = 'https://ikpublictutorial.blob.core.windows.net/deeplearningframeworks/imdb.Rds'){
   
@@ -199,5 +206,6 @@ maybe_download_imdb <- function(src = 'https://ikpublictutorial.blob.core.window
     }
   )
 }
+
 
 imdb_for_library <- function() maybe_download_imdb()
