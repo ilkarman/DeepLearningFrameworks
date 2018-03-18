@@ -214,3 +214,21 @@ maybe_download_resnet50 <- function() {
 }
 
 load_resnet50 <- function() maybe_download_resnet50()
+
+maybe_download_imdb <- function(src = 'https://ikpublictutorial.blob.core.windows.net/deeplearningframeworks/imdb.Rds'){
+  
+  tryCatch(
+    {
+      data <- suppressWarnings(readRDS("imdb.Rds"))
+      return(data)
+    },
+    error = function(e)
+    {
+      print(paste0('Data does not exist. Downloading ', src))
+      download.file(src, destfile="imdb.Rds")
+      return(readRDS("imdb.Rds"))
+    }
+  )
+}
+
+imdb_for_library <- function() maybe_download_imdb()
