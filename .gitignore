@@ -3,6 +3,13 @@
 *.swp
 .ipynb_checkpoints/
 cifar-10-batches-py/
+cifar-10-batches-bin/
+.Rhistory
+imdb.npz
+imdb.Rds
+imdb_processed.npz
+resnet-50-0000.params
+resnet-50-symbol.json
 __pycache__
 .DS_Store
 
