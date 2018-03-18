@@ -31,37 +31,6 @@ maybe_download_cifar <- function(col_major = TRUE, src = 'https://ikpublictutori
   )
 }
 
-# A function to process CIFAR10 dataset in matlab format
-process_cifar_mat <- function(){
-  
-  require(R.matlab)
-  
-  train_labels <- list()
-  train_data <- list()
-  
-  print('Preparing train set ...')
-  for (i in seq(5)) {
-    train <- readMat(paste0('./cifar-10-batches-mat/data_batch_', i, '.mat'))
-    train_data[[i]] <- train$data
-    train_labels[[i]] <- train$labels
-  }
-  
-  x_train <- do.call(rbind, train_data)
-  x_train <- x_train / 255
-  y_train <- do.call(rbind, train_labels)
-  
-  
-  print('Preparing test set ...')
-  test <- readMat('./cifar-10-batches-mat/test_batch.mat')
-  
-  x_test <- test$data
-  x_test <- x_test / 255
-  y_test <- test$labels
-  
-  list(x_train=x_train, x_test=x_test, y_train=y_train, y_test=y_test)
-  
-}
-
 read_image <- function(i, to_read) {
   label <- readBin(to_read, integer(), n = 1, size = 1)
   image <- as.integer(readBin(to_read, raw(), size = 1, n = 32*32*3))
