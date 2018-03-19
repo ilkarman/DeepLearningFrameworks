@@ -36,8 +36,8 @@ The notebooks are executed on an Azure [Deep Learning Virtual Machine](https://a
 | [Keras(Theano)](notebooks/Keras_Theano_CNN.ipynb)     |        269         |         93          |
 | [Tensorflow](notebooks/Tensorflow_CNN.ipynb)          |        173         |         57          |
 | [Lasagne(Theano)](notebooks/Theano_Lasagne_CNN.ipynb) |        253         |         65          |
-| [MXNet](notebooks/MXNet_CNN.ipynb)                    |        145         |         51          |
-| [PyTorch](notebooks/PyTorch_CNN.ipynb)                |        169         |         51          |
+| [MXNet](notebooks/MXNet_CNN.ipynb)                    |        **145**     |         **51**      |
+| [PyTorch](notebooks/PyTorch_CNN.ipynb)                |        169         |         **51**      |
 | [Julia - Knet](notebooks/Knet_CNN.ipynb)              |        159         |         ??          |
 | [R - MXNet](notebooks/.ipynb)                         |        ???         |         ??          |
 
@@ -65,13 +65,13 @@ Input for this model is 112,120 PNGs of chest X-rays. **Note for the notebook to
 | --------------------------------------------------- | :----------------: | :-----------------: |
 | [Caffe2](notebooks/Caffe2_Inference.ipynb)          | 14.1               | 7.9                 |
 | [Chainer](notebooks/Chainer_Inference.ipynb)        | 9.3                | 2.7                 |
-| [CNTK](notebooks/CNTK_Inference.ipynb)              | 8.5                | 1.6                 |
+| [CNTK](notebooks/CNTK_Inference.ipynb)              | 8.5                | **1.6**             |
 | [Keras(CNTK)](notebooks/Keras_CNTK_Inference.ipynb) | 21.7               | 5.9                 |
 | [Keras(TF)](notebooks/Keras_TF_Inference.ipynb)     | 10.2               | 2.9                 |
 | [Tensorflow](notebooks/Tensorflow_Inference.ipynb)  | 6.5                | 1.8                 |
 | [MXNet](notebooks/MXNet_Inference.ipynb)            | 7.7                | 2.0                 |
 | [PyTorch](notebooks/PyTorch_Inference.ipynb)        | 7.7                | 1.9                 |
-| [Julia - Knet](notebooks/Knet_Inference.ipynb)      | 6.3                | ???                 |
+| [Julia - Knet](notebooks/Knet_Inference.ipynb)      | **6.3**            | ???                 |
 | [R - MXNet](notebooks/.ipynb)                       | ???                | ???                 |
 
 
@@ -81,13 +81,13 @@ A pre-trained ResNet50 model is loaded and chopped just after the avg_pooling at
 
 | DL Library                               | K80/CUDA 8/CuDNN 6 | P100/CUDA 8/CuDNN 6 | Using CuDNN? |
 | ---------------------------------------- | :----------------: | :----------------:  | :----------: |
-| [CNTK](notebooks/CNTK_RNN.ipynb)                   | 32                 | 15                  | Yes          |
+| [CNTK](notebooks/CNTK_RNN.ipynb)                   | 32                 | **15**              | Yes          |
 | [Keras(CNTK)](notebooks/Keras_CNTK_RNN.ipynb)      | 86                 | 53                  | No           |
 | [Keras(TF)](notebooks/Keras_TF_RNN.ipynb)          | 35                 | 26                  | Yes          |
-| [MXNet](notebooks/MXNet_RNN.ipynb)                 | 29                 | 24                  | Yes          |
+| [MXNet](notebooks/MXNet_RNN.ipynb)                 | **29**             | 24                  | Yes          |
 | [Pytorch](notebooks/PyTorch_RNN.ipynb)             | 31                 | 16                  | Yes          |
 | [Tensorflow](notebooks/Tensorflow_RNN.ipynb)       | 30                 | 22                  | Yes          |
-| [Julia - Knet](notebooks/Knet_RNN.ipynb)           | 29                 | ??                  | Yes          |
+| [Julia - Knet](notebooks/Knet_RNN.ipynb)           | **29**             | ??                  | Yes          |
 | [R - MXNet](notebooks/.ipynb)                      | ??                 | ??                  | ???          |
 
 
