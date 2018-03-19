@@ -6,6 +6,8 @@
 
 *Note: We have recently added multi-GPU (single-node) examples on fine-tuning DenseNet-121 on Chest X-rays aka [CheXnet](https://stanfordmlgroup.github.io/projects/chexnet/). This is still work-in-progress and contributions are highly welcome!*
 
+**For more details check out our [blog-post](https://blogs.technet.microsoft.com/machinelearning/2018/03/14/comparing-deep-learning-frameworks-a-rosetta-stone-approach/)**
+
 ## Goal
 
 1. Create a Rosetta Stone of deep-learning frameworks to allow data-scientists to easily leverage their expertise from one framework to another
@@ -48,11 +50,11 @@ Input for this model is the standard [CIFAR-10 dataset](http://www.cs.toronto.ed
 
 **This is a work in progress**
 
-| DL Library                                        | 1xP100/CUDA 9/CuDNN 7 | 2xP100/CUDA 9/CuDNN 7 | 4xP100/CUDA 9/CuDNN 7 | 
-| -----------------------------------------------   | :------------------:  | :-------------------: | :------------------:  | 
-| [Pytorch](notebooks/PyTorch_MultiGPU.ipynb)       | 41min46s              | 28min50s              | 23min31s              |
-| [Keras(TF)](notebooks/Keras_TF_MultiGPU.ipynb)    | 51min27s              | 32min1s               | 23min3s               |
-| [Tensorflow](notebooks/Tensorflow_MultiGPU.ipynb) | 62min8s               | 44min13s              | 33min                 |
+| DL Library                                        | 1xP100/CUDA 9/CuDNN 7 | 2xP100/CUDA 9/CuDNN 7 | 4xP100/CUDA 9/CuDNN 7 |
+| -----------------------------------------------   | :------------------:  | :-------------------: | :------------------:  |
+| [Pytorch](notebooks/PyTorch_MultiGPU.ipynb)       | 41min46s              | 28min50s              | 23min31s                     |
+| [Keras(TF)](notebooks/Keras_TF_MultiGPU.ipynb)    | 51min27s              | 32min1s               | 23min3s                     |
+| [Tensorflow](notebooks/Tensorflow_MultiGPU.ipynb) | 62min8s               | 44min13s              | 33min                     |
 
 
 Input for this model is 112,120 PNGs of chest X-rays. **Note for the notebook to automatically download the data you must install [Azcopy](https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-linux#download-and-install-azcopy) and increase the size of your OS-Disk in Azure Portal so that you have at-least 45GB of free-space (the Chest X-ray data is large!). The notebooks may take more than 10 minutes to first download the data.** These notebooks train DenseNet-121 and use native data-loaders to pre-process the data and perform data-augmentation. We want to rewrite the data-loaders to use OpenCV instead of PIL to reduce IO-bottlenecking.
@@ -97,6 +99,31 @@ Where possible I try to use the cudnn-optimised RNN (noted by the CUDNN=True swi
 *Note: CNTK  supports [dynamic axes](https://cntk.ai/pythondocs/sequence.html) which means we don't need to pad the input to 150 words and can consume as-is, however since I could not find a way to do this with other frameworks I have fallen back to padding - which is a bit unfair on CNTK and understates its capabilities*
 
 The classification model creates an embedding matrix of size (150x125) and then applies 100 gated recurrent units and takes as output the final output (not sequence of outputs and not hidden state). Any suggestions on alterations to this are welcome.
+
+## Benchmarks 
+
+We want to emphasize that these are not benchmarks but just examples of translating code from one framework to another - and timings are reported to just be useful for that **particular** task. Once the multi-GPU example is finalized - that has potential to be benchmark since it examines multiple levels: availability of SOTA models like DenseNet, training-time of a proper SOTA CNN, data-loaders to handle OOM datasets, live data-augmentation, multi-GPU capabilities, etc. We want to highlight this [post](https://www.reddit.com/r/MachineLearning/comments/7v3ibo/discussion_stop_benchmark_stupidity_and_improve_it/dtp9hng/) from Reddit:
+
+>
+> Amateur benchmarks are hard, and more often than not they are quite wrong.
+>
+> In recent times I dont think I've seen a single amateur benchmark that didn't screw up in it's first couple of iterations. As a framework author, one usually has to go and painfully spend a weekend to fix the scripts because if the benchmark (however amateur) gets onto reddit / hackernews, then people will believe what they see (regardless of flaws in the benchmark).
+>
+> Even professionally done benchmarks are often wrong because the benchmark authors are only experts in one particular framework. I've had to fix speed comparisons done by world-class engineers at another company, because they didn't know my framework like they knew theirs.
+>
+> In recent times, there are contexts in which benchmarks seem useful. They are:
+>
+> new hardware
+> quantized training
+> multinode benchmarks
+> non-convnets, like non-standard RNNs, recursive nets (stuff that isn't exactly CuDNN compatible)
+> Contexts in which benchmarks are no longer useful -- yet most benchmark repos are based on this:
+>
+> single-GPU, single-node 32-bit convnets
+> LSTM-RNNs that exactly fit what CuDNN provides
+> micro-benchmarks (single-layer, single forward-backward, without data-loading)
+>
+
 
 ## Lessons Learned
 
