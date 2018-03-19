@@ -30,13 +30,13 @@ The notebooks are executed on an Azure [Deep Learning Virtual Machine](https://a
 | [Caffe2](notebooks/Caffe2_CNN.ipynb)                  |        148         |         54          |
 | [Chainer](notebooks/Chainer_CNN.ipynb)                |        162         |         69          |
 | [CNTK](notebooks/CNTK_CNN.ipynb)                      |        163         |         53          |
-| [Gluon](notebooks/Gluon_CNN.ipynb)                    |        152         |         62          |
 | [Keras(CNTK)](notebooks/Keras_CNTK_CNN.ipynb)         |        194         |         76          |
 | [Keras(TF)](notebooks/Keras_TF_CNN.ipynb)             |        241         |         76          |
 | [Keras(Theano)](notebooks/Keras_Theano_CNN.ipynb)     |        269         |         93          |
 | [Tensorflow](notebooks/Tensorflow_CNN.ipynb)          |        173         |         57          |
 | [Lasagne(Theano)](notebooks/Theano_Lasagne_CNN.ipynb) |        253         |         65          |
-| [MXNet](notebooks/MXNet_CNN.ipynb)                    |        145         |         51          |
+| [MXNet(Gluon)](notebooks/Gluon_CNN.ipynb)             |        152         |         62          |
+| [MXNet(Module API)](notebooks/MXNet_CNN.ipynb)        |        145         |         51          |
 | [PyTorch](notebooks/PyTorch_CNN.ipynb)                |        169         |         51          |
 | [Julia - Knet](notebooks/Knet_CNN.ipynb)              |        159         |         ??          |
 | [R - MXNet](notebooks/.ipynb)                         |        ???         |         ??          |
@@ -69,7 +69,8 @@ Input for this model is 112,120 PNGs of chest X-rays. **Note for the notebook to
 | [Keras(CNTK)](notebooks/Keras_CNTK_Inference.ipynb) | 21.7               | 5.9                 |
 | [Keras(TF)](notebooks/Keras_TF_Inference.ipynb)     | 10.2               | 2.9                 |
 | [Tensorflow](notebooks/Tensorflow_Inference.ipynb)  | 6.5                | 1.8                 |
-| [MXNet](notebooks/MXNet_Inference.ipynb)            | 7.7                | 2.0                 |
+| [MXNet(Gluon)](notebooks/Gluon_Inference.ipynb)     | TBA                | TBA                 |
+| [MXNet(Module API)](notebooks/MXNet_Inference.ipynb)| 7.7                | 2.0                 |
 | [PyTorch](notebooks/PyTorch_Inference.ipynb)        | 7.7                | 1.9                 |
 | [Julia - Knet](notebooks/Knet_Inference.ipynb)      | 6.3                | ???                 |
 | [R - MXNet](notebooks/.ipynb)                       | ???                | ???                 |
@@ -84,7 +85,7 @@ A pre-trained ResNet50 model is loaded and chopped just after the avg_pooling at
 | [CNTK](notebooks/CNTK_RNN.ipynb)                   | 32                 | 15                  | Yes          |
 | [Keras(CNTK)](notebooks/Keras_CNTK_RNN.ipynb)      | 86                 | 53                  | No           |
 | [Keras(TF)](notebooks/Keras_TF_RNN.ipynb)          | 35                 | 26                  | Yes          |
-| [MXNet](notebooks/MXNet_RNN.ipynb)                 | 29                 | 24                  | Yes          |
+| [MXNet(Module API)](notebooks/MXNet_RNN.ipynb)     | 29                 | 24                  | Yes          |
 | [Pytorch](notebooks/PyTorch_RNN.ipynb)             | 31                 | 16                  | Yes          |
 | [Tensorflow](notebooks/Tensorflow_RNN.ipynb)       | 30                 | 22                  | Yes          |
 | [Julia - Knet](notebooks/Knet_RNN.ipynb)           | 29                 | ??                  | Yes          |
@@ -179,6 +180,12 @@ The below offers some insights I gained after trying to match test-accuracy acro
    make -j$(nproc)
    make install
    ```
+   
+13. When using MXNet, you should avoid assigning outputs or data to numpy np.array in your training loop. This causes the data to be copied from the GPU to the CPU. You should use mx.nd.array instead, allocated in the right context at the beginning. This can dramatically increase performance.
+
+14. When using MXNet, operations are allocated on the queue of the back-end engine and parallelized, try to avoid any blocking operations in your training loop. You can add a nd.waitall(), which will force waiting for all operations to complete at the end of each epoch to avoid filling up your memory.
+
+15. With MXNet/Gluon, calling `.hybridize()` on your network will cache the computation graph and you will get performance gains. However that means that you won't be able to step through every calculations anymore. Use it once you are done debugging your network.
 
 #### RNN
 
