@@ -36,23 +36,39 @@ test_iter <- mx.io.bucket.iter(buckets = test_buckets,
                                 data.mask.element = 0, shuffle = FALSE)
 
 
+# mxnet 1.1.0 version
+# sym <- rnn.graph(
+#   num_rnn_layer = 1,
+#   input_size = params$MAXFEATURES, 
+#   num_embed = 2,# params$EMBEDSIZE, 
+#   num_hidden = 4,# params$NUMHIDDEN,
+#   num_decode = 2,
+#   dropout = 0,
+#   ignore_label = -1,
+#   bidirectional = FALSE, 
+#   loss_output = "softmax",
+#   config = "seq-to-one",
+#   cell_type = "gru",
+#   masking = TRUE, 
+#   output_last_state = FALSE, 
+#   rnn.state = NULL, 
+#   rnn.state.cell = NULL
+#   )
+
+# mxnet 1.0.0 version
 sym <- rnn.graph(
-  num_rnn_layer = 1,
-  input_size = params$MAXFEATURES, 
-  num_embed = 2,# params$EMBEDSIZE, 
-  num_hidden = 4,# params$NUMHIDDEN,
-  num_decode = 2,
+  num.rnn.layer = 1,
+  input.size = params$MAXFEATURES,
+  num.embed = params$EMBEDSIZE,
+  num.hidden = params$NUMHIDDEN,
+  num.decode = 2,
   dropout = 0,
-  ignore_label = -1,
-  bidirectional = FALSE, 
   loss_output = "softmax",
   config = "seq-to-one",
-  cell_type = "gru",
-  masking = TRUE, 
-  output_last_state = FALSE, 
-  rnn.state = NULL, 
-  rnn.state.cell = NULL
+  cell.type = "gru",
+  output_last_state = FALSE
   )
+
 
 # mx.opt.adam in docs but not in pacakge
 optimizer <- mx.opt.create(name = "adam", learning.rate = params$LR, beta1 = params$BETA_1, beta2 = params$BETA_2, epsilon = params$EPS)
@@ -62,21 +78,36 @@ initializer <- mx.init.Xavier(rnd_type = "uniform")
 logger <- mx.metric.logger()
 epoch.end.callback <- mx.callback.log.train.metric(period = 1, logger = logger)
 
+model <- mx.model.buckets(symbol = sym,
+                          train.data = train_iter,
+                          num.round = params$EPOCHS, 
+                          ctx = mx.gpu(0),
+                          verbose = TRUE,
+                          metric = mx.metric.accuracy,
+                          optimizer = optimizer,  
+                          initializer = initializer,
+                          epoch.end.callback = epoch.end.callback)
+
 system.time(
   model <- mx.model.buckets(symbol = sym,
                             train.data = train_iter,
-                            num.round = params$EPOCHS, 
+                            num.round = params$EPOCHS,
                             ctx = mx.gpu(0),
                             verbose = TRUE,
                             metric = mx.metric.accuracy,
-                            optimizer = optimizer,  
+                            optimizer = optimizer,
                             initializer = initializer,
                             epoch.end.callback = epoch.end.callback)
 )
 
-system.time(
-  infer <- mx.infer.rnn(infer.data = test_iter, model = model, ctx = mx.gpu(0))
-)
+# mxnet 1.1.0 version
+# system.time(
+#   infer <- mx.infer.rnn(infer.data = test_iter, model = model, ctx = mx.gpu(0))
+#)
+
+# mxnet 1.0.0 version
+infer <- mx.infer.buckets(infer.data = test_iter, model = model, ctx = mx.gpu(0))
+
 
 pred_raw <- t(as.array(infer))
 y_guess <- max.col(pred_raw, tie = "first") - 1
