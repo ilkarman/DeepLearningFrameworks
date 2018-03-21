@@ -50,14 +50,20 @@ Input for this model is the standard [CIFAR-10 dataset](http://www.cs.toronto.ed
 
 **This is a work in progress**
 
-| DL Library                                        | 1xP100/CUDA 9/CuDNN 7 | 2xP100/CUDA 9/CuDNN 7 | 4xP100/CUDA 9/CuDNN 7 | 
-| -----------------------------------------------   | :------------------:  | :-------------------: | :------------------:  | 
-| [Pytorch](notebooks/PyTorch_MultiGPU.ipynb)       | 41min46s              | 28min50s              | 23min31s                     |
-| [Keras(TF)](notebooks/Keras_TF_MultiGPU.ipynb)    | 51min27s              | 32min1s               | 23min3s                     |
-| [Tensorflow](notebooks/Tensorflow_MultiGPU.ipynb) | 62min8s               | 44min13s              | 33min                     |
+**CUDA 9/CuDNN 7.0**
+
+| DL Library                                        | 1xP100                | 2xP100                | 4xP100                | **4xP100 Synthetic Data** | 
+| -----------------------------------------------   | :------------------:  | :-------------------: | :------------------:  | :------------------:  | 
+| [Pytorch](notebooks/PyTorch_MultiGPU.ipynb)       | 41min46s              | 28min50s              | 23min7s               | 11min48s              |
+| [Keras(TF)](notebooks/Keras_TF_MultiGPU.ipynb)    | 51min27s              | 32min1s               | 22min49s              | 18min30s              |
+| [Tensorflow](notebooks/Tensorflow_MultiGPU.ipynb) | 62min8s               | 44min13s              | 31min4s               | 17min10s              |
+| [Chainer]()                                       | ?                     | ?                     | ?                     | ?                     |
+| [MXNet]()                                         | ?                     | ?                     | ?                     | ?                     |
 
 
-Input for this model is 112,120 PNGs of chest X-rays. **Note for the notebook to automatically download the data you must install [Azcopy](https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-linux#download-and-install-azcopy) and increase the size of your OS-Disk in Azure Portal so that you have at-least 45GB of free-space (the Chest X-ray data is large!). The notebooks may take more than 10 minutes to first download the data.** These notebooks train DenseNet-121 and use native data-loaders to pre-process the data and perform data-augmentation. We want to rewrite the data-loaders to use OpenCV instead of PIL to reduce IO-bottlenecking.
+Input for this model is 112,120 PNGs of chest X-rays. **Note for the notebook to automatically download the data you must install [Azcopy](https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-linux#download-and-install-azcopy) and increase the size of your OS-Disk in Azure Portal so that you have at-least 45GB of free-space (the Chest X-ray data is large!). The notebooks may take more than 10 minutes to first download the data.** These notebooks train DenseNet-121 and use native data-loaders to pre-process the data and perform data-augmentation. 
+
+Comparing synthetic data to actual PNG files we can estimate the IO lag for **PyTorch (~11min), Keras(TF) (~4min), Tensorflow (~13min)!** We need to investigate this to establish the most performant data-loading pipeline and any **help is appreciated**. The current plan is to write functions in OpenCV (or perhaps use ChainerCV) and share between all frameworks.
 
 ### 3. Avg Time(s) for 1000 images: ResNet-50 - Feature Extraction
 
