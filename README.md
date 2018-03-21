@@ -1,25 +1,29 @@
-# Deep Learning Frameworks Comparison
+# Deep Learning Framework Examples
 
-V1.0 - 05/03/2018
+<p align="center">
+<img src="support/logo.png" alt="logo" width="50%"/>
+</p>
 
-Coming soon: R-notebooks (MXNet + Keras)
+*Note: We have recently added multi-GPU (single-node) examples on fine-tuning DenseNet-121 on Chest X-rays aka [CheXnet](https://stanfordmlgroup.github.io/projects/chexnet/). This is still work-in-progress and contributions are highly welcome!*
 
-Requesting from community: More Multi-GPU examples
+**For more details check out our [blog-post](https://blogs.technet.microsoft.com/machinelearning/2018/03/14/comparing-deep-learning-frameworks-a-rosetta-stone-approach/)**
 
 ## Goal
 
 1. Create a Rosetta Stone of deep-learning frameworks to allow data-scientists to easily leverage their expertise from one framework to another
-2. Optimised GPU code with minimal verbosity (simple examples)
+2. Optimised GPU code with using the most up-to-date highest-level APIs.
 3. Common setup for comparisons across GPUs (potentially CUDA versions and precision)
 4. Common setup for comparisons across languages (Python, Julia, R)
-5. Possibility to verify own installation
+5. Possibility to verify expected performance of own installation
 4. Collaboration between different open-source communities
 
 The notebooks are executed on an Azure [Deep Learning Virtual Machine](https://azuremarketplace.microsoft.com/en-us/marketplace/apps/microsoft-ads.dsvm-deep-learning) using both the K80 and the newer P100. 
 
-*Accuracies are reported in notebooks, they should match to ensure we have common model-architecture/code*
+*Accuracies are reported in notebooks, they should match to ensure we have common mode/code*
 
-### 1. Training Time(s): CNN (VGG-style) on CIFAR-10 - Image Recognition
+## Results
+
+### 1. Training Time(s): CNN (VGG-style, 32bit) on CIFAR-10 - Image Recognition
 
 | DL Library                                            | K80/CUDA 8/CuDNN 6 | P100/CUDA 8/CuDNN 6 |
 | ----------------------------------------------------- | :----------------: | :-----------------: |
@@ -38,19 +42,28 @@ The notebooks are executed on an Azure [Deep Learning Virtual Machine](https://a
 | [R - MXNet](notebooks/.ipynb)                         |        ???         |         ??          |
 
 
+*Note: It is recommended to use higher level APIs where possible; see these notebooks for examples with [Tensorflow](support/Tensorflow_CNN_highAPI.ipynb), [MXNet](support/MXNet_CNN_highAPI.ipynb) and [CNTK](support/CNTK_CNN_highAPI.ipynb). They are not linked in the table to keep the common-structure-for-all approach*
+
 Input for this model is the standard [CIFAR-10 dataset](http://www.cs.toronto.edu/~kriz/cifar.html) containing 50k training images and 10k test images, uniformly split across 10 classes. Each 32 by 32 image is supplied as a tensor of shape (3, 32, 32) with pixel intensity re-scaled from 0-255 to 0-1. 
 
 ### 2. Training Time: DenseNet-121 on ChestXRay - Image Recognition (Multi-GPU)
 
-**This is a work in progress but pushed to master to encourage open-source contribution**
+**This is a work in progress**
 
-| DL Library                                           | 2xK80/CUDA 8/CuDNN 6 | 2xP100/CUDA 8/CuDNN 6 |
-| ---------------------------------------------------  | :------------------: | :-------------------: |
-| [Pytorch](notebooks/PyTorch_MultiGPU.ipynb)    | 1h32min18s           | 28min53s               |
-| [Keras(TF)](notebooks/Keras_TF_MultiGPU.ipynb) | ?                    | 32min1s              |
+**CUDA 9/CuDNN 7.0**
+
+| DL Library                                        | 1xP100                | 2xP100                | 4xP100                | **4xP100 Synthetic Data** | 
+| -----------------------------------------------   | :------------------:  | :-------------------: | :------------------:  | :------------------:  | 
+| [Pytorch](notebooks/PyTorch_MultiGPU.ipynb)       | 41min46s              | 28min50s              | 23min7s               | 11min48s              |
+| [Keras(TF)](notebooks/Keras_TF_MultiGPU.ipynb)    | 51min27s              | 32min1s               | 22min49s              | 18min30s              |
+| [Tensorflow](notebooks/Tensorflow_MultiGPU.ipynb) | 62min8s               | 44min13s              | 31min4s               | 17min10s              |
+| [Chainer]()                                       | ?                     | ?                     | ?                     | ?                     |
+| [MXNet]()                                         | ?                     | ?                     | ?                     | ?                     |
 
 
-Input for this model is 112,120 PNGs of chest X-rays. **Note for the notebook to automatically download the data you must install [Azcopy](https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-linux#download-and-install-azcopy) and increase the size of your OS-Disk in Azure Portal so that you have at-least 45GB of free-space (the Chest X-ray data is large!). The notebooks may take more than 10 minutes to first download the data.** These notebooks train DenseNet-121 and use native data-loaders to pre-process the data and perform data-augmentation.
+Input for this model is 112,120 PNGs of chest X-rays. **Note for the notebook to automatically download the data you must install [Azcopy](https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-linux#download-and-install-azcopy) and increase the size of your OS-Disk in Azure Portal so that you have at-least 45GB of free-space (the Chest X-ray data is large!). The notebooks may take more than 10 minutes to first download the data.** These notebooks train DenseNet-121 and use native data-loaders to pre-process the data and perform data-augmentation. 
+
+Comparing synthetic data to actual PNG files we can estimate the IO lag for **PyTorch (~11min), Keras(TF) (~4min), Tensorflow (~13min)!** We need to investigate this to establish the most performant data-loading pipeline and any **help is appreciated**. The current plan is to write functions in OpenCV (or perhaps use ChainerCV) and share between all frameworks.
 
 ### 3. Avg Time(s) for 1000 images: ResNet-50 - Feature Extraction
 
@@ -66,7 +79,6 @@ Input for this model is 112,120 PNGs of chest X-rays. **Note for the notebook to
 | [PyTorch](notebooks/PyTorch_Inference.ipynb)        | 7.7                | 1.9                 |
 | [Julia - Knet](notebooks/Knet_Inference.ipynb)      | 6.3                | ???                 |
 | [R - MXNet](notebooks/.ipynb)                       | ???                | ???                 |
-
 
 
 A pre-trained ResNet50 model is loaded and chopped just after the avg_pooling at the end (7, 7), which outputs a 2048D dimensional vector. This can be plugged into a softmax layer or another classifier such as a boosted tree to perform transfer learning. Allowing for a warm start; this forward-only pass to the avg_pool layer is timed. *Note: batch-size remains constant, however filling the RAM on a GPU would produce further performance boosts (greater for GPUs with more RAM).*
@@ -93,13 +105,13 @@ Where possible I try to use the cudnn-optimised RNN (noted by the CUDNN=True swi
 
 The classification model creates an embedding matrix of size (150x125) and then applies 100 gated recurrent units and takes as output the final output (not sequence of outputs and not hidden state). Any suggestions on alterations to this are welcome.
 
-### Lessons Learned
+## Lessons Learned
 
 #### CNN
 
 The below offers some insights I gained after trying to match test-accuracy across frameworks and from all the GitHub issues/PRs raised.
 
-1. The above examples (except for Keras), for ease of comparison, try to use the same level of API and so all use the same generator-function. For [MXNet](support/MXNet_CNN_highAPI.ipynb) and [CNTK](support/CNTK_CNN_highAPI.ipynb) I have experimented with a higher-level API, where I use the framework's training generator function. The speed improvement is negligible in this example because the whole dataset is loaded as NumPy array in RAM and the only processing done each epoch is a shuffle. I suspect the framework's generators perform the shuffle asynchronously. Curiously, it seems that the frameworks shuffle on a batch-level, rather than on an observation level, and thus ever so slightly decreases the test-accuracy (at least after 10 epochs). For scenarios where we have IO activity and perhaps pre-processing and data-augmentation on the fly, custom generators would have a much bigger impact on performance.
+1. The above examples (except for Keras), for ease of comparison, try to use the same level of API and so all use the same generator-function. For [MXNet](support/MXNet_CNN_highAPI.ipynb), [Tensorflow](support/Tensorflow_CNN_highAPI.ipynb), and [CNTK](support/CNTK_CNN_highAPI.ipynb) I have experimented with a higher-level API, where I use the framework's training generator function. The speed improvement is negligible in this example because the whole dataset is loaded as NumPy array in RAM and the only processing done each epoch is a shuffle. I suspect the framework's generators perform the shuffle asynchronously. Curiously, it seems that the frameworks shuffle on a batch-level, rather than on an observation level, and thus ever so slightly decreases the test-accuracy (at least after 10 epochs). For scenarios where we have IO activity and perhaps pre-processing and data-augmentation on the fly, custom generators would have a much bigger impact on performance.
 
 2. Running on CuDNN we want to use [NCHW] instead of channels-last. Keras finally supports this for Tensorflow (previously it had NHWC hard-coded and would auto-reshape after every batch)
 
