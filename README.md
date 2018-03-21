@@ -50,7 +50,9 @@ Input for this model is the standard [CIFAR-10 dataset](http://www.cs.toronto.ed
 
 **This is a work in progress**
 
-| DL Library                                        | 1xP100/CUDA 9/CuDNN 7 | 2xP100/CUDA 9/CuDNN 7 | 4xP100/CUDA 9/CuDNN 7 | **4xP100 Synthetic Data** | 
+**CUDA 9/CuDNN 7.0**
+
+| DL Library                                        | 1xP100                | 2xP100                | 4xP100                | **4xP100 Synthetic Data** | 
 | -----------------------------------------------   | :------------------:  | :-------------------: | :------------------:  | :------------------:  | 
 | [Pytorch](notebooks/PyTorch_MultiGPU.ipynb)       | 41min46s              | 28min50s              | 23min7s               | 11min48s              |
 | [Keras(TF)](notebooks/Keras_TF_MultiGPU.ipynb)    | 51min27s              | 32min1s               | 22min49s              | 18min30s              |
