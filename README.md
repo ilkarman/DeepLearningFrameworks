@@ -30,13 +30,13 @@ The notebooks are executed on an Azure [Deep Learning Virtual Machine](https://a
 | [Caffe2](notebooks/Caffe2_CNN.ipynb)                  |        148         |         54          |
 | [Chainer](notebooks/Chainer_CNN.ipynb)                |        162         |         69          |
 | [CNTK](notebooks/CNTK_CNN.ipynb)                      |        163         |         53          |
+| [Gluon](notebooks/Gluon_CNN.ipynb)                    |        152         |         62          |
 | [Keras(CNTK)](notebooks/Keras_CNTK_CNN.ipynb)         |        194         |         76          |
 | [Keras(TF)](notebooks/Keras_TF_CNN.ipynb)             |        241         |         76          |
 | [Keras(Theano)](notebooks/Keras_Theano_CNN.ipynb)     |        269         |         93          |
 | [Tensorflow](notebooks/Tensorflow_CNN.ipynb)          |        173         |         57          |
 | [Lasagne(Theano)](notebooks/Theano_Lasagne_CNN.ipynb) |        253         |         65          |
-| [MXNet(Gluon)](notebooks/Gluon_CNN.ipynb)             |        152         |         62          |
-| [MXNet(Module API)](notebooks/MXNet_CNN.ipynb)        |        145         |         51          |
+| [MXNet](notebooks/MXNet_CNN.ipynb)                    |        145         |         51          |
 | [PyTorch](notebooks/PyTorch_CNN.ipynb)                |        169         |         51          |
 | [Julia - Knet](notebooks/Knet_CNN.ipynb)              |        159         |         ??          |
 | [R - MXNet](notebooks/.ipynb)                         |        ???         |         ??          |
@@ -50,14 +50,20 @@ Input for this model is the standard [CIFAR-10 dataset](http://www.cs.toronto.ed
 
 **This is a work in progress**
 
-| DL Library                                        | 1xP100/CUDA 9/CuDNN 7 | 2xP100/CUDA 9/CuDNN 7 | 4xP100/CUDA 9/CuDNN 7 |
-| -----------------------------------------------   | :------------------:  | :-------------------: | :------------------:  |
-| [Pytorch](notebooks/PyTorch_MultiGPU.ipynb)       | 41min46s              | 28min50s              | 23min31s                     |
-| [Keras(TF)](notebooks/Keras_TF_MultiGPU.ipynb)    | 51min27s              | 32min1s               | 23min3s                     |
-| [Tensorflow](notebooks/Tensorflow_MultiGPU.ipynb) | 62min8s               | 44min13s              | 33min                     |
+**CUDA 9/CuDNN 7.0**
+
+| DL Library                                        | 1xP100                | 2xP100                | 4xP100                | **4xP100 Synthetic Data** | 
+| -----------------------------------------------   | :------------------:  | :-------------------: | :------------------:  | :------------------:  | 
+| [Pytorch](notebooks/PyTorch_MultiGPU.ipynb)       | 41min46s              | 28min50s              | 23min7s               | 11min48s              |
+| [Keras(TF)](notebooks/Keras_TF_MultiGPU.ipynb)    | 51min27s              | 32min1s               | 22min49s              | 18min30s              |
+| [Tensorflow](notebooks/Tensorflow_MultiGPU.ipynb) | 62min8s               | 44min13s              | 31min4s               | 17min10s              |
+| [Chainer]()                                       | ?                     | ?                     | ?                     | ?                     |
+| [MXNet]()                                         | ?                     | ?                     | ?                     | ?                     |
 
 
-Input for this model is 112,120 PNGs of chest X-rays. **Note for the notebook to automatically download the data you must install [Azcopy](https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-linux#download-and-install-azcopy) and increase the size of your OS-Disk in Azure Portal so that you have at-least 45GB of free-space (the Chest X-ray data is large!). The notebooks may take more than 10 minutes to first download the data.** These notebooks train DenseNet-121 and use native data-loaders to pre-process the data and perform data-augmentation. We want to rewrite the data-loaders to use OpenCV instead of PIL to reduce IO-bottlenecking.
+Input for this model is 112,120 PNGs of chest X-rays. **Note for the notebook to automatically download the data you must install [Azcopy](https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-linux#download-and-install-azcopy) and increase the size of your OS-Disk in Azure Portal so that you have at-least 45GB of free-space (the Chest X-ray data is large!). The notebooks may take more than 10 minutes to first download the data.** These notebooks train DenseNet-121 and use native data-loaders to pre-process the data and perform data-augmentation. 
+
+Comparing synthetic data to actual PNG files we can estimate the IO lag for **PyTorch (~11min), Keras(TF) (~4min), Tensorflow (~13min)!** We need to investigate this to establish the most performant data-loading pipeline and any **help is appreciated**. The current plan is to write functions in OpenCV (or perhaps use ChainerCV) and share between all frameworks.
 
 ### 3. Avg Time(s) for 1000 images: ResNet-50 - Feature Extraction
 
@@ -69,8 +75,7 @@ Input for this model is 112,120 PNGs of chest X-rays. **Note for the notebook to
 | [Keras(CNTK)](notebooks/Keras_CNTK_Inference.ipynb) | 21.7               | 5.9                 |
 | [Keras(TF)](notebooks/Keras_TF_Inference.ipynb)     | 10.2               | 2.9                 |
 | [Tensorflow](notebooks/Tensorflow_Inference.ipynb)  | 6.5                | 1.8                 |
-| [MXNet(Gluon)](notebooks/Gluon_Inference.ipynb)     | TBA                | TBA                 |
-| [MXNet(Module API)](notebooks/MXNet_Inference.ipynb)| 7.7                | 2.0                 |
+| [MXNet](notebooks/MXNet_Inference.ipynb)            | 7.7                | 2.0                 |
 | [PyTorch](notebooks/PyTorch_Inference.ipynb)        | 7.7                | 1.9                 |
 | [Julia - Knet](notebooks/Knet_Inference.ipynb)      | 6.3                | ???                 |
 | [R - MXNet](notebooks/.ipynb)                       | ???                | ???                 |
@@ -85,7 +90,7 @@ A pre-trained ResNet50 model is loaded and chopped just after the avg_pooling at
 | [CNTK](notebooks/CNTK_RNN.ipynb)                   | 32                 | 15                  | Yes          |
 | [Keras(CNTK)](notebooks/Keras_CNTK_RNN.ipynb)      | 86                 | 53                  | No           |
 | [Keras(TF)](notebooks/Keras_TF_RNN.ipynb)          | 35                 | 26                  | Yes          |
-| [MXNet(Module API)](notebooks/MXNet_RNN.ipynb)     | 29                 | 24                  | Yes          |
+| [MXNet](notebooks/MXNet_RNN.ipynb)                 | 29                 | 24                  | Yes          |
 | [Pytorch](notebooks/PyTorch_RNN.ipynb)             | 31                 | 16                  | Yes          |
 | [Tensorflow](notebooks/Tensorflow_RNN.ipynb)       | 30                 | 22                  | Yes          |
 | [Julia - Knet](notebooks/Knet_RNN.ipynb)           | 29                 | ??                  | Yes          |
@@ -99,31 +104,6 @@ Where possible I try to use the cudnn-optimised RNN (noted by the CUDNN=True swi
 *Note: CNTK  supports [dynamic axes](https://cntk.ai/pythondocs/sequence.html) which means we don't need to pad the input to 150 words and can consume as-is, however since I could not find a way to do this with other frameworks I have fallen back to padding - which is a bit unfair on CNTK and understates its capabilities*
 
 The classification model creates an embedding matrix of size (150x125) and then applies 100 gated recurrent units and takes as output the final output (not sequence of outputs and not hidden state). Any suggestions on alterations to this are welcome.
-
-## Benchmarks 
-
-We want to emphasize that these are not benchmarks but just examples of translating code from one framework to another - and timings are reported to just be useful for that **particular** task. Once the multi-GPU example is finalized - that has potential to be benchmark since it examines multiple levels: availability of SOTA models like DenseNet, training-time of a proper SOTA CNN, data-loaders to handle OOM datasets, live data-augmentation, multi-GPU capabilities, etc. We want to highlight this [post](https://www.reddit.com/r/MachineLearning/comments/7v3ibo/discussion_stop_benchmark_stupidity_and_improve_it/dtp9hng/) from Reddit:
-
->
-> Amateur benchmarks are hard, and more often than not they are quite wrong.
->
-> In recent times I dont think I've seen a single amateur benchmark that didn't screw up in it's first couple of iterations. As a framework author, one usually has to go and painfully spend a weekend to fix the scripts because if the benchmark (however amateur) gets onto reddit / hackernews, then people will believe what they see (regardless of flaws in the benchmark).
->
-> Even professionally done benchmarks are often wrong because the benchmark authors are only experts in one particular framework. I've had to fix speed comparisons done by world-class engineers at another company, because they didn't know my framework like they knew theirs.
->
-> In recent times, there are contexts in which benchmarks seem useful. They are:
->
-> new hardware
-> quantized training
-> multinode benchmarks
-> non-convnets, like non-standard RNNs, recursive nets (stuff that isn't exactly CuDNN compatible)
-> Contexts in which benchmarks are no longer useful -- yet most benchmark repos are based on this:
->
-> single-GPU, single-node 32-bit convnets
-> LSTM-RNNs that exactly fit what CuDNN provides
-> micro-benchmarks (single-layer, single forward-backward, without data-loading)
->
-
 
 ## Lessons Learned
 
@@ -180,12 +160,6 @@ The below offers some insights I gained after trying to match test-accuracy acro
    make -j$(nproc)
    make install
    ```
-   
-13. When using MXNet, you should avoid assigning outputs or data to numpy np.array in your training loop. This causes the data to be copied from the GPU to the CPU. You should use mx.nd.array instead, allocated in the right context at the beginning. This can dramatically increase performance.
-
-14. When using MXNet, operations are allocated on the queue of the back-end engine and parallelized, try to avoid any blocking operations in your training loop. You can add a nd.waitall(), which will force waiting for all operations to complete at the end of each epoch to avoid filling up your memory.
-
-15. With MXNet/Gluon, calling `.hybridize()` on your network will cache the computation graph and you will get performance gains. However that means that you won't be able to step through every calculations anymore. Use it once you are done debugging your network.
 
 #### RNN
 
