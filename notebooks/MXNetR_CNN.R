@@ -1,3 +1,5 @@
+.libPaths(c(.libPaths(), "/data/mlserver/9.2.1/libraries/RServer"))
+
 library(mxnet)
 
 # Import util functions
