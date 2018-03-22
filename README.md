@@ -8,6 +8,8 @@
 
 **For more details check out our [blog-post](https://blogs.technet.microsoft.com/machinelearning/2018/03/14/comparing-deep-learning-frameworks-a-rosetta-stone-approach/)**
 
+We want to extend our gratitude to the CNTK, Pytorch, Chainer, Caffe2, MXNet and Knet teams, and everyone else from the open-source community who contributed to the repo over the past few months.
+
 ## Goal
 
 1. Create a Rosetta Stone of deep-learning frameworks to allow data-scientists to easily leverage their expertise from one framework to another
@@ -19,6 +21,8 @@
 
 The notebooks are executed on an Azure [Deep Learning Virtual Machine](https://azuremarketplace.microsoft.com/en-us/marketplace/apps/microsoft-ads.dsvm-deep-learning) using both the K80 and the newer P100. 
 
+Please see these notebooks as examples rather than any formal benchmark (only the multi-GPU examples have potential to be that at some point) - for further details check this [post](https://www.reddit.com/r/MachineLearning/comments/7v3ibo/discussion_stop_benchmark_stupidity_and_improve_it/dtp9hng/).
+
 *Accuracies are reported in notebooks, they should match to ensure we have common mode/code*
 
 ## Results
@@ -29,20 +33,20 @@ The notebooks are executed on an Azure [Deep Learning Virtual Machine](https://a
 | ----------------------------------------------------- | :----------------: | :-----------------: |
 | [Caffe2](notebooks/Caffe2_CNN.ipynb)                  |        148         |         54          |
 | [Chainer](notebooks/Chainer_CNN.ipynb)                |        162         |         69          |
-| [CNTK](notebooks/CNTK_CNN.ipynb)                      |        163         |         53          |
-| [Gluon](notebooks/Gluon_CNN.ipynb)                    |        152         |         62          |
+| [CNTK](notebooks/CNTK_CNN.ipynb)  [HighAPI](notebooks/CNTK_CNN_highAPI.ipynb)                    |        163         |         53          |
+| [MXNet(Gluon)](notebooks/Gluon_CNN.ipynb)             |        152         |         57          |
 | [Keras(CNTK)](notebooks/Keras_CNTK_CNN.ipynb)         |        194         |         76          |
 | [Keras(TF)](notebooks/Keras_TF_CNN.ipynb)             |        241         |         76          |
 | [Keras(Theano)](notebooks/Keras_Theano_CNN.ipynb)     |        269         |         93          |
-| [Tensorflow](notebooks/Tensorflow_CNN.ipynb)          |        173         |         57          |
+| [Tensorflow](notebooks/Tensorflow_CNN.ipynb)  [HighAPI](notebooks/Tensorflow_CNN_highAPI.ipynb)  |        173         |         57          |
 | [Lasagne(Theano)](notebooks/Theano_Lasagne_CNN.ipynb) |        253         |         65          |
-| [MXNet](notebooks/MXNet_CNN.ipynb)                    |        145         |         51          |
+| [MXNet(Module API)](notebooks/MXNet_CNN.ipynb)  [HighAPI](notebooks/MXNet_CNN_highAPI.ipynb)     |        145         |         52          |
 | [PyTorch](notebooks/PyTorch_CNN.ipynb)                |        169         |         51          |
 | [Julia - Knet](notebooks/Knet_CNN.ipynb)              |        159         |         ??          |
 | [R - MXNet](notebooks/.ipynb)                         |        ???         |         ??          |
 
 
-*Note: It is recommended to use higher level APIs where possible; see these notebooks for examples with [Tensorflow](support/Tensorflow_CNN_highAPI.ipynb), [MXNet](support/MXNet_CNN_highAPI.ipynb) and [CNTK](support/CNTK_CNN_highAPI.ipynb). They are not linked in the table to keep the common-structure-for-all approach*
+*Note: It is recommended to use higher level APIs where possible; see these notebooks for examples with [Tensorflow](notebooks/Tensorflow_CNN_highAPI.ipynb), [MXNet](notebooks/MXNet_CNN_highAPI.ipynb) and [CNTK](notebooks/CNTK_CNN_highAPI.ipynb). They are not linked in the table to keep the common-structure-for-all approach*
 
 Input for this model is the standard [CIFAR-10 dataset](http://www.cs.toronto.edu/~kriz/cifar.html) containing 50k training images and 10k test images, uniformly split across 10 classes. Each 32 by 32 image is supplied as a tensor of shape (3, 32, 32) with pixel intensity re-scaled from 0-255 to 0-1. 
 
@@ -58,7 +62,7 @@ Input for this model is the standard [CIFAR-10 dataset](http://www.cs.toronto.ed
 | [Keras(TF)](notebooks/Keras_TF_MultiGPU.ipynb)    | 51min27s              | 32min1s               | 22min49s              | 18min30s              |
 | [Tensorflow](notebooks/Tensorflow_MultiGPU.ipynb) | 62min8s               | 44min13s              | 31min4s               | 17min10s              |
 | [Chainer]()                                       | ?                     | ?                     | ?                     | ?                     |
-| [MXNet]()                                         | ?                     | ?                     | ?                     | ?                     |
+| [MXNet(Module API)]()                             | ?                     | ?                     | ?                     | ?                     |
 
 
 Input for this model is 112,120 PNGs of chest X-rays. **Note for the notebook to automatically download the data you must install [Azcopy](https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-linux#download-and-install-azcopy) and increase the size of your OS-Disk in Azure Portal so that you have at-least 45GB of free-space (the Chest X-ray data is large!). The notebooks may take more than 10 minutes to first download the data.** These notebooks train DenseNet-121 and use native data-loaders to pre-process the data and perform data-augmentation. 
@@ -72,10 +76,11 @@ Comparing synthetic data to actual PNG files we can estimate the IO lag for **Py
 | [Caffe2](notebooks/Caffe2_Inference.ipynb)          | 14.1               | 7.9                 |
 | [Chainer](notebooks/Chainer_Inference.ipynb)        | 9.3                | 2.7                 |
 | [CNTK](notebooks/CNTK_Inference.ipynb)              | 8.5                | 1.6                 |
+| [MXNet(Gluon)](notebooks/Gluon_Inference.ipynb)     |                    | 1.7                 |
 | [Keras(CNTK)](notebooks/Keras_CNTK_Inference.ipynb) | 21.7               | 5.9                 |
 | [Keras(TF)](notebooks/Keras_TF_Inference.ipynb)     | 10.2               | 2.9                 |
 | [Tensorflow](notebooks/Tensorflow_Inference.ipynb)  | 6.5                | 1.8                 |
-| [MXNet](notebooks/MXNet_Inference.ipynb)            | 7.7                | 2.0                 |
+| [MXNet(Module API)](notebooks/MXNet_Inference.ipynb)| 7.7                | 1.6                 |
 | [PyTorch](notebooks/PyTorch_Inference.ipynb)        | 7.7                | 1.9                 |
 | [Julia - Knet](notebooks/Knet_Inference.ipynb)      | 6.3                | ???                 |
 | [R - MXNet](notebooks/.ipynb)                       | ???                | ???                 |
@@ -90,7 +95,7 @@ A pre-trained ResNet50 model is loaded and chopped just after the avg_pooling at
 | [CNTK](notebooks/CNTK_RNN.ipynb)                   | 32                 | 15                  | Yes          |
 | [Keras(CNTK)](notebooks/Keras_CNTK_RNN.ipynb)      | 86                 | 53                  | No           |
 | [Keras(TF)](notebooks/Keras_TF_RNN.ipynb)          | 35                 | 26                  | Yes          |
-| [MXNet](notebooks/MXNet_RNN.ipynb)                 | 29                 | 24                  | Yes          |
+| [MXNet(Module API)](notebooks/MXNet_RNN.ipynb)     | 29                 | 24                  | Yes          |
 | [Pytorch](notebooks/PyTorch_RNN.ipynb)             | 31                 | 16                  | Yes          |
 | [Tensorflow](notebooks/Tensorflow_RNN.ipynb)       | 30                 | 22                  | Yes          |
 | [Julia - Knet](notebooks/Knet_RNN.ipynb)           | 29                 | ??                  | Yes          |
@@ -107,9 +112,13 @@ The classification model creates an embedding matrix of size (150x125) and then 
 
 ## Lessons Learned
 
-#### CNN
+The below offer some insights we gained after trying to match test-accuracy across frameworks and from all the GitHub issues/PRs raised.
 
-The below offers some insights I gained after trying to match test-accuracy across frameworks and from all the GitHub issues/PRs raised.
+#### Multi-GPU DenseNet
+
+1. Data loading and augmentation has the potential to flip the results around and curiously from all of the frameworks it seems by default Keras is most efficient at this. We will try to create openCV-based common data-loading and data-augmentation functions to help standardise the results and let forward+backward training take centre stage
+
+#### CNN
 
 1. The above examples (except for Keras), for ease of comparison, try to use the same level of API and so all use the same generator-function. For [MXNet](support/MXNet_CNN_highAPI.ipynb), [Tensorflow](support/Tensorflow_CNN_highAPI.ipynb), and [CNTK](support/CNTK_CNN_highAPI.ipynb) I have experimented with a higher-level API, where I use the framework's training generator function. The speed improvement is negligible in this example because the whole dataset is loaded as NumPy array in RAM and the only processing done each epoch is a shuffle. I suspect the framework's generators perform the shuffle asynchronously. Curiously, it seems that the frameworks shuffle on a batch-level, rather than on an observation level, and thus ever so slightly decreases the test-accuracy (at least after 10 epochs). For scenarios where we have IO activity and perhaps pre-processing and data-augmentation on the fly, custom generators would have a much bigger impact on performance.
 
@@ -160,6 +169,12 @@ The below offers some insights I gained after trying to match test-accuracy acro
    make -j$(nproc)
    make install
    ```
+
+13. When using MXNet, you should avoid assigning outputs or data to numpy np.array in your training loop. This causes the data to be copied from the GPU to the CPU. You should use mx.nd.array instead, allocated in the right context at the beginning. This can dramatically increase performance.
+
+14. When using MXNet, operations are allocated on the queue of the back-end engine and parallelized, try to avoid any blocking operations in your training loop. You can add a nd.waitall(), which will force waiting for all operations to complete at the end of each epoch to avoid filling up your memory.
+
+15. With MXNet/Gluon, calling `.hybridize()` on your network will cache the computation graph and you will get performance gains. However that means that you won't be able to step through every calculations anymore. Use it once you are done debugging your network.
 
 #### RNN
 
