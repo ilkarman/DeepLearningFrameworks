@@ -50,7 +50,7 @@ Input for this model is the standard [CIFAR-10 dataset](http://www.cs.toronto.ed
 
 **This is a work in progress**
 
-Most [deep learning practitioners](https://blogs.technet.microsoft.com/machinelearning/2018/03/21/training-state-of-the-art-neural-networks-in-the-microsoft-azure-cloud/) are familiar with the "Hello, World" equivalents to SqueezeNet and single-GPU. This example aims to extend that DenseNet and 4 P100s
+Most [deep learning practitioners](https://blogs.technet.microsoft.com/machinelearning/2018/03/21/training-state-of-the-art-neural-networks-in-the-microsoft-azure-cloud/) are familiar with the "Hello, World" equivalents to SqueezeNet and single-GPU. This example aims to extend that to DenseNet-121 and 4 P100s
 
 **CUDA 9/CuDNN 7.0**
 
