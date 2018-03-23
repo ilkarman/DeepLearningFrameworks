@@ -29,14 +29,14 @@ The notebooks are executed on an Azure [Deep Learning Virtual Machine](https://a
 | ----------------------------------------------------- | :----------------: | :-----------------: |
 | [Caffe2](notebooks/Caffe2_CNN.ipynb)                  |        148         |         54          |
 | [Chainer](notebooks/Chainer_CNN.ipynb)                |        162         |         69          |
-| [CNTK](notebooks/CNTK_CNN.ipynb)                      |        163         |         53          |
+| [CNTK](notebooks/CNTK_CNN.ipynb)  ([HighAPI](notebooks/CNTK_CNN_highAPI.ipynb))                    |        163         |         53          |
 | [MXNet(Gluon)](notebooks/Gluon_CNN.ipynb)             |        152         |         57          |
 | [Keras(CNTK)](notebooks/Keras_CNTK_CNN.ipynb)         |        194         |         76          |
 | [Keras(TF)](notebooks/Keras_TF_CNN.ipynb)             |        241         |         76          |
 | [Keras(Theano)](notebooks/Keras_Theano_CNN.ipynb)     |        269         |         93          |
-| [Tensorflow](notebooks/Tensorflow_CNN.ipynb)          |        173         |         57          |
+| [Tensorflow](notebooks/Tensorflow_CNN.ipynb)  ([HighAPI](notebooks/Tensorflow_CNN_highAPI.ipynb))  |        173         |         57          |
 | [Lasagne(Theano)](notebooks/Theano_Lasagne_CNN.ipynb) |        253         |         65          |
-| [MXNet(Module API)](notebooks/MXNet_CNN.ipynb)        |        145         |         52          |
+| [MXNet(Module API)](notebooks/MXNet_CNN.ipynb)  ([HighAPI](notebooks/MXNet_CNN_highAPI.ipynb))     |        145         |         52          |
 | [PyTorch](notebooks/PyTorch_CNN.ipynb)                |        169         |         51          |
 | [Julia - Knet](notebooks/Knet_CNN.ipynb)              |        159         |         ??          |
 | [R - MXNet](notebooks/.ipynb)                         |        ???         |         ??          |
