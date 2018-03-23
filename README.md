@@ -40,6 +40,8 @@ The notebooks are executed on an Azure [Deep Learning Virtual Machine](https://a
 | [PyTorch](notebooks/PyTorch_CNN.ipynb)                |        169         |         51          |
 | [Julia - Knet](notebooks/Knet_CNN.ipynb)              |        159         |         ??          |
 | [R - MXNet](notebooks/.ipynb)                         |        ???         |         ??          |
+| [R - Keras (TF)](notebooks/KerasR_TF_CNN.ipynb)       |        211         |         75          |
+
 
 
 *Note: It is recommended to use higher level APIs where possible; see these notebooks for examples with [Tensorflow](support/Tensorflow_CNN_highAPI.ipynb), [MXNet](support/MXNet_CNN_highAPI.ipynb) and [CNTK](support/CNTK_CNN_highAPI.ipynb). They are not linked in the table to keep the common-structure-for-all approach*
@@ -67,18 +69,19 @@ Comparing synthetic data to actual PNG files we can estimate the IO lag for **Py
 
 ### 3. Avg Time(s) for 1000 images: ResNet-50 - Feature Extraction
 
-| DL Library                                          | K80/CUDA 8/CuDNN 6 | P100/CUDA 8/CuDNN 6 |
-| --------------------------------------------------- | :----------------: | :-----------------: |
-| [Caffe2](notebooks/Caffe2_Inference.ipynb)          | 14.1               | 7.9                 |
-| [Chainer](notebooks/Chainer_Inference.ipynb)        | 9.3                | 2.7                 |
-| [CNTK](notebooks/CNTK_Inference.ipynb)              | 8.5                | 1.6                 |
-| [Keras(CNTK)](notebooks/Keras_CNTK_Inference.ipynb) | 21.7               | 5.9                 |
-| [Keras(TF)](notebooks/Keras_TF_Inference.ipynb)     | 10.2               | 2.9                 |
-| [Tensorflow](notebooks/Tensorflow_Inference.ipynb)  | 6.5                | 1.8                 |
-| [MXNet](notebooks/MXNet_Inference.ipynb)            | 7.7                | 2.0                 |
-| [PyTorch](notebooks/PyTorch_Inference.ipynb)        | 7.7                | 1.9                 |
-| [Julia - Knet](notebooks/Knet_Inference.ipynb)      | 6.3                | ???                 |
-| [R - MXNet](notebooks/.ipynb)                       | ???                | ???                 |
+| DL Library                                           | K80/CUDA 8/CuDNN 6 | P100/CUDA 8/CuDNN 6 |
+| ---------------------------------------------------- | :----------------: | :-----------------: |
+| [Caffe2](notebooks/Caffe2_Inference.ipynb)           | 14.1               | 7.9                 |
+| [Chainer](notebooks/Chainer_Inference.ipynb)         | 9.3                | 2.7                 |
+| [CNTK](notebooks/CNTK_Inference.ipynb)               | 8.5                | 1.6                 |
+| [Keras(CNTK)](notebooks/Keras_CNTK_Inference.ipynb)  | 21.7               | 5.9                 |
+| [Keras(TF)](notebooks/Keras_TF_Inference.ipynb)      | 10.2               | 2.9                 |
+| [Tensorflow](notebooks/Tensorflow_Inference.ipynb)   | 6.5                | 1.8                 |
+| [MXNet](notebooks/MXNet_Inference.ipynb)             | 7.7                | 2.0                 |
+| [PyTorch](notebooks/PyTorch_Inference.ipynb)         | 7.7                | 1.9                 |
+| [Julia - Knet](notebooks/Knet_Inference.ipynb)       | 6.3                | ???                 |
+| [R - MXNet](notebooks/.ipynb)                        | ???                | ???                 |
+| [R - Keras (TF)](notebooks/KerasR_TF_Inference.ipynb)| 16                 | 7.5                 |
 
 
 A pre-trained ResNet50 model is loaded and chopped just after the avg_pooling at the end (7, 7), which outputs a 2048D dimensional vector. This can be plugged into a softmax layer or another classifier such as a boosted tree to perform transfer learning. Allowing for a warm start; this forward-only pass to the avg_pool layer is timed. *Note: batch-size remains constant, however filling the RAM on a GPU would produce further performance boosts (greater for GPUs with more RAM).*
@@ -95,6 +98,7 @@ A pre-trained ResNet50 model is loaded and chopped just after the avg_pooling at
 | [Tensorflow](notebooks/Tensorflow_RNN.ipynb)       | 30                 | 22                  | Yes          |
 | [Julia - Knet](notebooks/Knet_RNN.ipynb)           | 29                 | ??                  | Yes          |
 | [R - MXNet](notebooks/.ipynb)                      | ??                 | ??                  | ???          |
+| [R - Keras (TF)](notebooks/KerasR_TF_RNN.ipynb)    | 238                | 209                 | No           |
 
 
 Input for this model is the standard [IMDB movie review dataset](http://ai.stanford.edu/~amaas/data/sentiment/) containing 25k training reviews and 25k test reviews, uniformly split across 2 classes (positive/negative). Processing follows [Keras](https://github.com/fchollet/keras/blob/master/keras/datasets/imdb.py) approach where start-character is set as 1, out-of-vocab (vocab size of 30k is used) represented as 2 and thus word-index starts from 3. Zero-padded / truncated to fixed axis of 150 words per review.
