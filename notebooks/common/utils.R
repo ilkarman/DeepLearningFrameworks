@@ -18,6 +18,17 @@ give_fake_data <- function(batches, col_major = FALSE){
   return(dat)
 }
 
+# Return features from classifier (OLD)
+predict_fn <- function(classifier, data, batchsize){
+    out <- array(0, dim = c(dim(data)[1], params$RESNET_FEATURES))
+    idx <- 0:(dim(data)[1] %/% batchsize - 1)
+    for (i in idx){
+        dta <- data[(i*batchsize + 1):((i+1)*batchsize),,,]
+        out[(i*batchsize + 1):((i+1)*batchsize), ] <- predict_on_batch(classifier, dta)
+    }
+    return(out)
+}
+
 
 # Get GPU name
 get_gpu_name <- function(){
