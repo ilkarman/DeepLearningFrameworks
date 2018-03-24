@@ -50,11 +50,11 @@ Input for this model is the standard [CIFAR-10 dataset](http://www.cs.toronto.ed
 
 ### 2. Training Time: DenseNet-121 on ChestXRay - Image Recognition (Multi-GPU)
 
-**This is a work in progress**
+This is a work in progress
 
-**CUDA 9/CuDNN 7.0** - Train+Val 5 w/ data-loader + data-augmentation
+**Train+Val w/ data-loader + data-augmentation**
 
-| DL Library                                        | 1xP100                | 4xP100                |
+| DL Library                                        | 1xP100/CUDA 9/CuDNN 7.0* | 4xP100/CUDA 9/CuDNN 7.0* |
 | -----------------------------------------------   | :------------------:  | :------------------:  |
 | [Pytorch](notebooks/PyTorch_MultiGPU.ipynb)       | 41min                 | 17min                 |
 | [Keras(TF)](notebooks/Keras_TF_MultiGPU.ipynb)    | 51min                 | 22min                 |
@@ -62,9 +62,9 @@ Input for this model is the standard [CIFAR-10 dataset](http://www.cs.toronto.ed
 | [Chainer](notebooks/Chainer_MultiGPU.ipynb)       | 65min                 | ?                     |
 | [MXNet]()                                         | ?                     | ?                     |
 
-**CUDA 9/CuDNN 7.0** - Train w/ synthetic-data
+**Train w/ synthetic-data**
 
-| DL Library                                        | 4xP100                | 
+| DL Library                                        | 4xP100/CUDA 9/CuDNN 7.0* | 
 | -----------------------------------------------   | :------------------:  | 
 | [Pytorch](notebooks/PyTorch_MultiGPU.ipynb)       | 11min37s              |
 | [Keras(TF)](notebooks/Keras_TF_MultiGPU.ipynb)    | 18min25s              |
