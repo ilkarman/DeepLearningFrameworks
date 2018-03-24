@@ -50,22 +50,35 @@ Input for this model is the standard [CIFAR-10 dataset](http://www.cs.toronto.ed
 
 ### 2. Training Time: DenseNet-121 on ChestXRay - Image Recognition (Multi-GPU)
 
-**This is a work in progress**
+This is a work in progress
 
-**CUDA 9/CuDNN 7.0**
+**Train+Val w/ data-loader + data-augmentation**
 
-| DL Library                                        | 1xP100                | 2xP100                | 4xP100                | **4xP100 Synthetic Data** | 
-| -----------------------------------------------   | :------------------:  | :-------------------: | :------------------:  | :------------------:  | 
-| [Pytorch](notebooks/PyTorch_MultiGPU.ipynb)       | 41min46s              | 28min50s              | 23min7s               | 11min48s              |
-| [Keras(TF)](notebooks/Keras_TF_MultiGPU.ipynb)    | 51min27s              | 32min1s               | 22min49s              | 18min30s              |
-| [Tensorflow](notebooks/Tensorflow_MultiGPU.ipynb) | 62min8s               | 44min13s              | 31min4s               | 17min10s              |
-| [Chainer]()                                       | ?                     | ?                     | ?                     | ?                     |
-| [MXNet]()                                         | ?                     | ?                     | ?                     | ?                     |
+| DL Library                                        | 1xP100/CUDA 9/CuDNN 7 | 4xP100/CUDA 9/CuDNN 7 |
+| -----------------------------------------------   | :------------------:  | :------------------:  |
+| [Pytorch](notebooks/PyTorch_MultiGPU.ipynb)       | 41min                 | 17min                 |
+| [Keras(TF)](notebooks/Keras_TF_MultiGPU.ipynb)    | 51min                 | 22min                 |
+| [Tensorflow](notebooks/Tensorflow_MultiGPU.ipynb) | 50min                 | 25min                 |
+| [Chainer](notebooks/Chainer_MultiGPU.ipynb)       | 65min                 | ?                     |
+| [MXNet]()                                         | ?                     | ?                     |
+
+**Train w/ synthetic-data**
+
+| DL Library                                        | 4xP100/CUDA 9/CuDNN 7 | 
+| -----------------------------------------------   | :------------------:  | 
+| [Pytorch](notebooks/PyTorch_MultiGPU.ipynb)       | 11min37s              |
+| [Keras(TF)](notebooks/Keras_TF_MultiGPU.ipynb)    | 18min25s              |
+| [Tensorflow](notebooks/Tensorflow_MultiGPU.ipynb) | 17min6s               |
+| [Chainer]()                                       | ?                     |
+| [MXNet]()                                         | ?                     |
 
 
-Input for this model is 112,120 PNGs of chest X-rays. **Note for the notebook to automatically download the data you must install [Azcopy](https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-linux#download-and-install-azcopy) and increase the size of your OS-Disk in Azure Portal so that you have at-least 45GB of free-space (the Chest X-ray data is large!). The notebooks may take more than 10 minutes to first download the data.** These notebooks train DenseNet-121 and use native data-loaders to pre-process the data and perform data-augmentation. 
+Input for this model is 112,120 PNGs of chest X-rays resized to (264, 264). **Note for the notebook to automatically download the data you must install [Azcopy](https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-linux#download-and-install-azcopy) and increase the size of your OS-Disk in Azure Portal so that you have at-least 45GB of free-space (the Chest X-ray data is large!). The notebooks may take more than 10 minutes to first download the data.** These notebooks train DenseNet-121 and use native data-loaders to pre-process the data and perform the following data-augmentation:  
 
-Comparing synthetic data to actual PNG files we can estimate the IO lag for **PyTorch (~11min), Keras(TF) (~4min), Tensorflow (~13min)!** We need to investigate this to establish the most performant data-loading pipeline and any **help is appreciated**. The current plan is to write functions in OpenCV (or perhaps use ChainerCV) and share between all frameworks.
+1. Random crop to from (264, 264) to (224, 224) 
+2. Randon horizontal flip
+
+**The Chainer example is currently a bit broken and help is greatly appreciated & TF Estimator API wastes a lot of time saving/loading between training/validation**
 
 ### 3. Avg Time(s) for 1000 images: ResNet-50 - Feature Extraction
 

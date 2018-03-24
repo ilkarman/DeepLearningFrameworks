@@ -6,8 +6,10 @@ import glob
 import tarfile
 import pickle
 import subprocess
+import multiprocessing
 import numpy as np
 import pandas as pd
+from PIL import Image
 from sklearn.datasets import fetch_mldata
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.model_selection import train_test_split
@@ -289,6 +291,19 @@ def imdb_for_library(seq_len=100, max_features=20000, one_hot=False):
     return x_train, x_test, y_train, y_test
 
 
+def resize_im(im_loc, size=(264, 264)):
+    # Size 264 allows centre-crop of 224 for image-augmentation
+    im = Image.open(im_loc).resize(size, Image.BILINEAR).convert('RGB')
+    im.save(im_loc)
+
+
+def resize_chestxray_mp(im_list):
+    print("{} images will be resized to (264,264)".format(len(im_list)))
+    print("Images will be overwritten to save disk-space")
+    pool = multiprocessing.pool.ThreadPool(multiprocessing.cpu_count())
+    pool.map(resize_im, im_list)
+
+    
 def download_data_chextxray(csv_dest, base_url = 'https://ikpublictutorial.blob.core.windows.net/'):
                             
     # Check whether files-exist
@@ -324,7 +339,13 @@ def download_data_chextxray(csv_dest, base_url = 'https://ikpublictutorial.blob.
         subprocess.call(['azcopy', '--source', CONTAINER_URL, 
                          '--destination', container_dest, '--quiet', '--recursive'])
         print("Data Download Complete")
-        
+        print("About to overwrite images: Image.open(loc).resize((264, 264), Image.BILINEAR).convert('RGB')")
+        # Get image locations for resize
+        df = pd.read_csv(os.path.join(csv_dest, "Data_Entry_2017.csv"))
+        img_dir = os.path.join(csv_dest, "images")
+        img_locs = df['Image Index'].map(lambda im: os.path.join(img_dir, im)).values
+        resize_chestxray_mp(img_locs)
+        print("Finished resizing")  
         
 def get_imgloc_labels(img_dir, lbl_file, patient_ids):
     """ Function to process data into a list of img_locs containing string paths
