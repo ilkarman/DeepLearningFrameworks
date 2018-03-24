@@ -54,7 +54,7 @@ This is a work in progress
 
 **Train+Val w/ data-loader + data-augmentation**
 
-| DL Library                                        | 1xP100/CUDA 9/CuDNN 7.0* | 4xP100/CUDA 9/CuDNN 7.0* |
+| DL Library                                        | 1xP100/CUDA 9/CuDNN 7 | 4xP100/CUDA 9/CuDNN 7 |
 | -----------------------------------------------   | :------------------:  | :------------------:  |
 | [Pytorch](notebooks/PyTorch_MultiGPU.ipynb)       | 41min                 | 17min                 |
 | [Keras(TF)](notebooks/Keras_TF_MultiGPU.ipynb)    | 51min                 | 22min                 |
@@ -64,7 +64,7 @@ This is a work in progress
 
 **Train w/ synthetic-data**
 
-| DL Library                                        | 4xP100/CUDA 9/CuDNN 7.0* | 
+| DL Library                                        | 4xP100/CUDA 9/CuDNN 7 | 
 | -----------------------------------------------   | :------------------:  | 
 | [Pytorch](notebooks/PyTorch_MultiGPU.ipynb)       | 11min37s              |
 | [Keras(TF)](notebooks/Keras_TF_MultiGPU.ipynb)    | 18min25s              |
