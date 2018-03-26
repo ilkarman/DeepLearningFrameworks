@@ -30,21 +30,20 @@ The notebooks are executed on an Azure [Deep Learning Virtual Machine](https://a
 | [Caffe2](notebooks/Caffe2_CNN.ipynb)                  |        148         |         54          |
 | [Chainer](notebooks/Chainer_CNN.ipynb)                |        162         |         69          |
 | [CNTK](notebooks/CNTK_CNN.ipynb)                      |        163         |         53          |
-| [Gluon](notebooks/Gluon_CNN.ipynb)                    |        152         |         62          |
+| [MXNet(Gluon)](notebooks/Gluon_CNN.ipynb)             |        152         |         57          |
 | [Keras(CNTK)](notebooks/Keras_CNTK_CNN.ipynb)         |        194         |         76          |
 | [Keras(TF)](notebooks/Keras_TF_CNN.ipynb)             |        241         |         76          |
 | [Keras(Theano)](notebooks/Keras_Theano_CNN.ipynb)     |        269         |         93          |
 | [Tensorflow](notebooks/Tensorflow_CNN.ipynb)          |        173         |         57          |
 | [Lasagne(Theano)](notebooks/Theano_Lasagne_CNN.ipynb) |        253         |         65          |
-| [MXNet](notebooks/MXNet_CNN.ipynb)                    |        145         |         51          |
+| [MXNet(Module API)](notebooks/MXNet_CNN.ipynb)        |        145         |         52          |
 | [PyTorch](notebooks/PyTorch_CNN.ipynb)                |        169         |         51          |
 | [Julia - Knet](notebooks/Knet_CNN.ipynb)              |        159         |         ??          |
 | [R - MXNet](notebooks/.ipynb)                         |        ???         |         ??          |
 | [R - Keras (TF)](notebooks/KerasR_TF_CNN.ipynb)       |        211         |         75          |
 
 
-
-*Note: It is recommended to use higher level APIs where possible; see these notebooks for examples with [Tensorflow](support/Tensorflow_CNN_highAPI.ipynb), [MXNet](support/MXNet_CNN_highAPI.ipynb) and [CNTK](support/CNTK_CNN_highAPI.ipynb). They are not linked in the table to keep the common-structure-for-all approach*
+*Note: It is recommended to use higher level APIs where possible; see these notebooks for examples with [Tensorflow](notebooks/Tensorflow_CNN_highAPI.ipynb), [MXNet](notebooks/MXNet_CNN_highAPI.ipynb) and [CNTK](notebooks/CNTK_CNN_highAPI.ipynb). They are not linked in the table to keep the common-structure-for-all approach*
 
 Input for this model is the standard [CIFAR-10 dataset](http://www.cs.toronto.edu/~kriz/cifar.html) containing 50k training images and 10k test images, uniformly split across 10 classes. Each 32 by 32 image is supplied as a tensor of shape (3, 32, 32) with pixel intensity re-scaled from 0-255 to 0-1. 
 
@@ -60,7 +59,7 @@ This is a work in progress
 | [Keras(TF)](notebooks/Keras_TF_MultiGPU.ipynb)    | 51min                 | 22min                 |
 | [Tensorflow](notebooks/Tensorflow_MultiGPU.ipynb) | 50min                 | 25min                 |
 | [Chainer](notebooks/Chainer_MultiGPU.ipynb)       | 65min                 | ?                     |
-| [MXNet]()                                         | ?                     | ?                     |
+| [MXNet(Gluon)]()                                  | ?                     | ?                     |
 
 **Train w/ synthetic-data**
 
@@ -70,7 +69,7 @@ This is a work in progress
 | [Keras(TF)](notebooks/Keras_TF_MultiGPU.ipynb)    | 18min25s              |
 | [Tensorflow](notebooks/Tensorflow_MultiGPU.ipynb) | 17min6s               |
 | [Chainer]()                                       | ?                     |
-| [MXNet]()                                         | ?                     |
+| [MXNet(Gluon)]()                                  | ?                     |
 
 
 Input for this model is 112,120 PNGs of chest X-rays resized to (264, 264). **Note for the notebook to automatically download the data you must install [Azcopy](https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-linux#download-and-install-azcopy) and increase the size of your OS-Disk in Azure Portal so that you have at-least 45GB of free-space (the Chest X-ray data is large!). The notebooks may take more than 10 minutes to first download the data.** These notebooks train DenseNet-121 and use native data-loaders to pre-process the data and perform the following data-augmentation:  
@@ -82,18 +81,19 @@ Input for this model is 112,120 PNGs of chest X-rays resized to (264, 264). **No
 
 ### 3. Avg Time(s) for 1000 images: ResNet-50 - Feature Extraction
 
-| DL Library                                           | K80/CUDA 8/CuDNN 6 | P100/CUDA 8/CuDNN 6 |
-| ---------------------------------------------------- | :----------------: | :-----------------: |
-| [Caffe2](notebooks/Caffe2_Inference.ipynb)           | 14.1               | 7.9                 |
-| [Chainer](notebooks/Chainer_Inference.ipynb)         | 9.3                | 2.7                 |
-| [CNTK](notebooks/CNTK_Inference.ipynb)               | 8.5                | 1.6                 |
-| [Keras(CNTK)](notebooks/Keras_CNTK_Inference.ipynb)  | 21.7               | 5.9                 |
-| [Keras(TF)](notebooks/Keras_TF_Inference.ipynb)      | 10.2               | 2.9                 |
-| [Tensorflow](notebooks/Tensorflow_Inference.ipynb)   | 6.5                | 1.8                 |
-| [MXNet](notebooks/MXNet_Inference.ipynb)             | 7.7                | 2.0                 |
-| [PyTorch](notebooks/PyTorch_Inference.ipynb)         | 7.7                | 1.9                 |
-| [Julia - Knet](notebooks/Knet_Inference.ipynb)       | 6.3                | ???                 |
-| [R - MXNet](notebooks/.ipynb)                        | ???                | ???                 |
+| DL Library                                          | K80/CUDA 8/CuDNN 6 | P100/CUDA 8/CuDNN 6 |
+| --------------------------------------------------- | :----------------: | :-----------------: |
+| [Caffe2](notebooks/Caffe2_Inference.ipynb)          | 14.1               | 7.9                 |
+| [Chainer](notebooks/Chainer_Inference.ipynb)        | 9.3                | 2.7                 |
+| [CNTK](notebooks/CNTK_Inference.ipynb)              | 8.5                | 1.6                 |
+| [MXNet(Gluon)](notebooks/Gluon_Inference.ipynb)     |                    | 1.7                 |
+| [Keras(CNTK)](notebooks/Keras_CNTK_Inference.ipynb) | 21.7               | 5.9                 |
+| [Keras(TF)](notebooks/Keras_TF_Inference.ipynb)     | 10.2               | 2.9                 |
+| [Tensorflow](notebooks/Tensorflow_Inference.ipynb)  | 6.5                | 1.8                 |
+| [MXNet(Module API)](notebooks/MXNet_Inference.ipynb)| 7.7                | 1.6                 |
+| [PyTorch](notebooks/PyTorch_Inference.ipynb)        | 7.7                | 1.9                 |
+| [Julia - Knet](notebooks/Knet_Inference.ipynb)      | 6.3                | ???                 |
+| [R - MXNet](notebooks/.ipynb)                       | ???                | ???                 |
 | [R - Keras (TF)](notebooks/KerasR_TF_Inference.ipynb)| 16                 | 7.5                 |
 
 
@@ -106,7 +106,7 @@ A pre-trained ResNet50 model is loaded and chopped just after the avg_pooling at
 | [CNTK](notebooks/CNTK_RNN.ipynb)                   | 32                 | 15                  | Yes          |
 | [Keras(CNTK)](notebooks/Keras_CNTK_RNN.ipynb)      | 86                 | 53                  | No           |
 | [Keras(TF)](notebooks/Keras_TF_RNN.ipynb)          | 35                 | 26                  | Yes          |
-| [MXNet](notebooks/MXNet_RNN.ipynb)                 | 29                 | 24                  | Yes          |
+| [MXNet(Module API)](notebooks/MXNet_RNN.ipynb)     | 29                 | 24                  | Yes          |
 | [Pytorch](notebooks/PyTorch_RNN.ipynb)             | 31                 | 16                  | Yes          |
 | [Tensorflow](notebooks/Tensorflow_RNN.ipynb)       | 30                 | 22                  | Yes          |
 | [Julia - Knet](notebooks/Knet_RNN.ipynb)           | 29                 | ??                  | Yes          |
@@ -116,7 +116,7 @@ A pre-trained ResNet50 model is loaded and chopped just after the avg_pooling at
 
 Input for this model is the standard [IMDB movie review dataset](http://ai.stanford.edu/~amaas/data/sentiment/) containing 25k training reviews and 25k test reviews, uniformly split across 2 classes (positive/negative). Processing follows [Keras](https://github.com/fchollet/keras/blob/master/keras/datasets/imdb.py) approach where start-character is set as 1, out-of-vocab (vocab size of 30k is used) represented as 2 and thus word-index starts from 3. Zero-padded / truncated to fixed axis of 150 words per review.
 
-Where possible I try to use the cudnn-optimised RNN (noted by the CUDNN=True switch), since we have a vanilla RNN that can be easily reduced to the CuDNN level. For example with CNTK we use optimized_rnnstack instead of Recurrence(LSTM()). This is much faster but less flexible and, for example, with CNTK we can no longer use more complicated variants like Layer Normalisation, etc. It appears in PyTorch this is enabled by default. For MXNet I could not find this and instead use the slightly slower Fused RNN. Keras has just very recently received [cudnn support](https://twitter.com/fchollet/status/918170264608817152), however only for the Tensorflow backend (not CNTK). Tensorflow has many RNN variants (including their own custom kernel) and there is a nice benchmark [here](http://returnn.readthedocs.io/en/latest/tf_lstm_benchmark.html), I will try to update the example to use CudnnLSTM instead of the current method.
+Where possible we try to use the cudnn-optimised RNN (noted by the CUDNN=True switch), since we have a vanilla RNN that can be easily reduced to the CuDNN level. For example with CNTK we use optimized_rnnstack instead of Recurrence(LSTM()). This is much faster but less flexible and, for example, with CNTK we can no longer use more complicated variants like Layer Normalisation, etc. It appears in PyTorch this is enabled by default. For MXNet I could not find this and instead use the slightly slower Fused RNN. Keras has just very recently received [cudnn support](https://twitter.com/fchollet/status/918170264608817152), however only for the Tensorflow backend (not CNTK). Tensorflow has many RNN variants (including their own custom kernel) and there is a nice benchmark [here](http://returnn.readthedocs.io/en/latest/tf_lstm_benchmark.html), I will try to update the example to use CudnnLSTM instead of the current method.
 
 *Note: CNTK  supports [dynamic axes](https://cntk.ai/pythondocs/sequence.html) which means we don't need to pad the input to 150 words and can consume as-is, however since I could not find a way to do this with other frameworks I have fallen back to padding - which is a bit unfair on CNTK and understates its capabilities*
 
@@ -126,9 +126,9 @@ The classification model creates an embedding matrix of size (150x125) and then 
 
 #### CNN
 
-The below offers some insights I gained after trying to match test-accuracy across frameworks and from all the GitHub issues/PRs raised.
+The below offers some insights we gained after trying to match test-accuracy across frameworks and from all the GitHub issues/PRs raised.
 
-1. The above examples (except for Keras), for ease of comparison, try to use the same level of API and so all use the same generator-function. For [MXNet](support/MXNet_CNN_highAPI.ipynb), [Tensorflow](support/Tensorflow_CNN_highAPI.ipynb), and [CNTK](support/CNTK_CNN_highAPI.ipynb) I have experimented with a higher-level API, where I use the framework's training generator function. The speed improvement is negligible in this example because the whole dataset is loaded as NumPy array in RAM and the only processing done each epoch is a shuffle. I suspect the framework's generators perform the shuffle asynchronously. Curiously, it seems that the frameworks shuffle on a batch-level, rather than on an observation level, and thus ever so slightly decreases the test-accuracy (at least after 10 epochs). For scenarios where we have IO activity and perhaps pre-processing and data-augmentation on the fly, custom generators would have a much bigger impact on performance.
+1. The above examples (except for Keras), for ease of comparison, try to use the same level of API and so all use the same generator-function. For [MXNet](notebooks/MXNet_CNN_highAPI.ipynb), [Tensorflow](notebooks/Tensorflow_CNN_highAPI.ipynb), and [CNTK](notebooks/CNTK_CNN_highAPI.ipynb) I have experimented with a higher-level API, where I use the framework's training generator function. The speed improvement is negligible in this example because the whole dataset is loaded as NumPy array in RAM and the only processing done each epoch is a shuffle. I suspect the framework's generators perform the shuffle asynchronously. Curiously, it seems that the frameworks shuffle on a batch-level, rather than on an observation level, and thus ever so slightly decreases the test-accuracy (at least after 10 epochs). For scenarios where we have IO activity and perhaps pre-processing and data-augmentation on the fly, custom generators would have a much bigger impact on performance.
 
 2. Running on CuDNN we want to use [NCHW] instead of channels-last. Keras finally supports this for Tensorflow (previously it had NHWC hard-coded and would auto-reshape after every batch)
 
@@ -178,8 +178,14 @@ The below offers some insights I gained after trying to match test-accuracy acro
    make install
    ```
 
+13. When using MXNet, you should avoid assigning outputs or data to numpy np.array in your training loop. This causes the data to be copied from the GPU to the CPU. You should use mx.nd.array instead, allocated in the right context at the beginning. This can dramatically increase performance.
+
+14. When using MXNet, operations are allocated on the queue of the back-end engine and parallelized, try to avoid any blocking operations in your training loop. You can add a nd.waitall(), which will force waiting for all operations to complete at the end of each epoch to avoid filling up your memory.
+
+15. With MXNet/Gluon, calling `.hybridize()` on your network will cache the computation graph and you will get performance gains. However that means that you won't be able to step through every calculations anymore. Use it once you are done debugging your network.
+
 #### RNN
 
 1. There are multiple RNN implementations/kernels available for most frameworks (for example [Tensorflow](http://returnn.readthedocs.io/en/latest/tf_lstm_benchmark.html)); once reduced down to the cudnnLSTM/GRU level the execution is the fastest, however this implementation is less flexible (e.g. maybe you want layer normalisation) and may become problematic if inference is run on the CPU at a later stage. At the cudDNN level most of the frameworks' runtimes are very similar. [This](https://devblogs.nvidia.com/parallelforall/optimizing-recurrent-neural-networks-cudnn-5/) Nvidia blog-post goes through several interesting cuDNN optimisations for recurrent neural nets e.g. fusing - "combining the computation of many small matrices into that of larger ones and streaming the computation whenever possible, the ratio of computation to memory I/O can be increased, which results in better performance on GPU".
 
-2. It seems that the fastest data-shape for RNNs is TNC - implementing this in [MXNet](support/MXNet_RNN_TNC.ipynb) only gave an improvement of 0.5s so I have chosen to use the sligthly slower shape to remain consistent with other frameworks and to keep the code less complicated
+2. It seems that the fastest data-shape for RNNs is TNC - implementing this in [MXNet](notebooks/MXNet_RNN_TNC.ipynb) only gave an improvement of 0.5s so I have chosen to use the sligthly slower shape to remain consistent with other frameworks and to keep the code less complicated
