@@ -1,5 +1,5 @@
 # Deep Learning Framework Examples
-
+   
 <p align="center">
 <img src="support/logo.png" alt="logo" width="50%"/>
 </p>
@@ -59,7 +59,7 @@ This is a work in progress
 | [Keras(TF)](notebooks/Keras_TF_MultiGPU.ipynb)    | 51min                 | 22min                 |
 | [Tensorflow](notebooks/Tensorflow_MultiGPU.ipynb) | 50min                 | 25min                 |
 | [Chainer](notebooks/Chainer_MultiGPU.ipynb)       | 65min                 | ?                     |
-| [MXNet(Gluon)]()                                  | ?                     | ?                     |
+| [MXNet(Gluon)](notebooks/Gluon_MultiGPU.ipynb)    | TBA                   | TBA                   |
 
 **Train w/ synthetic-data**
 
@@ -69,7 +69,7 @@ This is a work in progress
 | [Keras(TF)](notebooks/Keras_TF_MultiGPU.ipynb)    | 18min25s              |
 | [Tensorflow](notebooks/Tensorflow_MultiGPU.ipynb) | 17min6s               |
 | [Chainer]()                                       | ?                     |
-| [MXNet(Gluon)]()                                  | ?                     |
+| [MXNet(Gluon)](notebooks/Gluon_MultiGPU.ipynb)    | TBA                   |
 
 
 Input for this model is 112,120 PNGs of chest X-rays resized to (264, 264). **Note for the notebook to automatically download the data you must install [Azcopy](https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-linux#download-and-install-azcopy) and increase the size of your OS-Disk in Azure Portal so that you have at-least 45GB of free-space (the Chest X-ray data is large!). The notebooks may take more than 10 minutes to first download the data.** These notebooks train DenseNet-121 and use native data-loaders to pre-process the data and perform the following data-augmentation:  

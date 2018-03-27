@@ -378,6 +378,14 @@ def compute_roc_auc(data_gt, data_pd, classes, full=True):
     roc_auc = np.mean(roc_auc)
     return roc_auc
 
+def get_mxnet_model(prefix, epoch):
+    """Download an MXNet model if it doesn't exist"""
+    def download(url):
+        filename = url.split("/")[-1]
+        if not os.path.exists(filename):
+            urlretrieve(url, filename)
+    download(prefix+'-symbol.json')
+    download(prefix+'-%04d.params' % (epoch,))
 
 def get_train_valid_test_split(n, train=0.7, valid=0.1, test=0.2, shuffle=False):
     other_split = valid+test
