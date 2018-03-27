@@ -5,4 +5,6 @@
 cifar-10-batches-py/
 __pycache__
 .DS_Store
-
+notebooks/chestxray
+notebooks/*-0000.params
+notebooks/*-symbol.json
