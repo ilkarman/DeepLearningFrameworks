@@ -4,7 +4,6 @@
 <img src="support/logo.png" alt="logo" width="50%"/>
 </p>
 
-*Note: We have recently added multi-GPU (single-node) examples on fine-tuning DenseNet-121 on Chest X-rays aka [CheXnet](https://stanfordmlgroup.github.io/projects/chexnet/). This is still work-in-progress and contributions are highly welcome!*
 
 **For more details check out our [blog-post](https://blogs.technet.microsoft.com/machinelearning/2018/03/14/comparing-deep-learning-frameworks-a-rosetta-stone-approach/)**
 
@@ -17,9 +16,9 @@
 5. Possibility to verify expected performance of own installation
 4. Collaboration between different open-source communities
 
-The notebooks are executed on an Azure [Deep Learning Virtual Machine](https://azuremarketplace.microsoft.com/en-us/marketplace/apps/microsoft-ads.dsvm-deep-learning) using both the K80 and the newer P100. 
+The notebooks are executed on an Azure [Deep Learning Virtual Machine](https://azuremarketplace.microsoft.com/en-us/marketplace/apps/microsoft-ads.dsvm-deep-learning). 
 
-*Accuracies are reported in notebooks, they should match to ensure we have common mode/code*
+*Accuracies (and other metrics) are reported in notebooks*
 
 ## Results
 
@@ -39,7 +38,6 @@ The notebooks are executed on an Azure [Deep Learning Virtual Machine](https://a
 | [MXNet(Module API)](notebooks/MXNet_CNN.ipynb)        |        145         |         52          |
 | [PyTorch](notebooks/PyTorch_CNN.ipynb)                |        169         |         51          |
 | [Julia - Knet](notebooks/Knet_CNN.ipynb)              |        159         |         ??          |
-| [R - MXNet](notebooks/.ipynb)                         |        ???         |         ??          |
 | [R - Keras(TF)](notebooks/KerasR_TF_CNN.ipynb)        |        205         |         72          |
 
 
@@ -49,35 +47,33 @@ Input for this model is the standard [CIFAR-10 dataset](http://www.cs.toronto.ed
 
 ### 2. Training Time: DenseNet-121 on ChestXRay - Image Recognition (Multi-GPU)
 
-This is a work in progress
+**Train+Val w/ data-loader + data-augmentation on real-data on SSD**
 
-**Train+Val w/ data-loader + data-augmentation**
-
-| DL Library                                        | 1xP100/CUDA 9/CuDNN 7 | 4xP100/CUDA 9/CuDNN 7 |
+| DL Library                                        | 1xV100/CUDA 9/CuDNN 7 | 4xV100/CUDA 9/CuDNN 7 |
 | -----------------------------------------------   | :------------------:  | :------------------:  |
-| [Pytorch](notebooks/PyTorch_MultiGPU.ipynb)       | 41min                 | 17min                 |
-| [Keras(TF)](notebooks/Keras_TF_MultiGPU.ipynb)    | 51min                 | 22min                 |
-| [Tensorflow](notebooks/Tensorflow_MultiGPU.ipynb) | 50min                 | 25min                 |
-| [Chainer](notebooks/Chainer_MultiGPU.ipynb)       | 65min                 | ?                     |
-| [MXNet(Gluon)](notebooks/Gluon_MultiGPU.ipynb)    | TBA                   | TBA                   |
+| [Pytorch](notebooks/PyTorch_MultiGPU.ipynb)       | 27min                 | 12min                 |
+| [Keras(TF)](notebooks/Keras_TF_MultiGPU.ipynb)    | 38min                 | 20min                 |
+| [Tensorflow](notebooks/Tensorflow_MultiGPU.ipynb) | 33min                 | 22min                 |
+| [Chainer](notebooks/Chainer_MultiGPU.ipynb)       | 49min                 | 14min                 |
+| [MXNet(Gluon)](notebooks/Gluon_MultiGPU.ipynb)    | 27min                 | 10min                 |
 
-**Train w/ synthetic-data**
+**Train w/ synthetic-data in RAM**
 
-| DL Library                                        | 4xP100/CUDA 9/CuDNN 7 | 
-| -----------------------------------------------   | :------------------:  | 
-| [Pytorch](notebooks/PyTorch_MultiGPU.ipynb)       | 11min37s              |
-| [Keras(TF)](notebooks/Keras_TF_MultiGPU.ipynb)    | 18min25s              |
-| [Tensorflow](notebooks/Tensorflow_MultiGPU.ipynb) | 17min6s               |
-| [Chainer]()                                       | ?                     |
-| [MXNet(Gluon)](notebooks/Gluon_MultiGPU.ipynb)    | TBA                   |
+| DL Library                                        | 1xV100/CUDA 9/CuDNN 7 | 4xV100/CUDA 9/CuDNN 7 |
+| -----------------------------------------------   | :------------------:  | :------------------:  |
+| [Pytorch](notebooks/PyTorch_MultiGPU.ipynb)       | 25min                 | 8min                  |
+| [Keras(TF)](notebooks/Keras_TF_MultiGPU.ipynb)    | 36min                 | 15min                 |
+| [Tensorflow](notebooks/Tensorflow_MultiGPU.ipynb) | 25min                 | 14min                 |
+| [Chainer](notebooks/Chainer_MultiGPU.ipynb)       | 47min                 | 12min                 |
+| [MXNet(Gluon)](notebooks/Gluon_MultiGPU.ipynb)    | TBA                   | 8min                  |
 
+Notes:
 
-Input for this model is 112,120 PNGs of chest X-rays resized to (264, 264). **Note for the notebook to automatically download the data you must install [Azcopy](https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-linux#download-and-install-azcopy) and increase the size of your OS-Disk in Azure Portal so that you have at-least 45GB of free-space (the Chest X-ray data is large!). The notebooks may take more than 10 minutes to first download the data.** These notebooks train DenseNet-121 and use native data-loaders to pre-process the data and perform the following data-augmentation:  
+1. Chainer did not manage to fit a batch of 64 and thus 56 is used which naturally reduces the speed
+2. Chainer suffered an AUC drop relative to all other frameworks when going from single to multi-GPU
+3. Gluon example at time of writing does not seem to work on Azure VMs and the notebook is provided kindly by Thomas who has run it on AWS
 
-1. Random crop to from (264, 264) to (224, 224) 
-2. Randon horizontal flip
-
-**The Chainer example is currently a bit broken and help is greatly appreciated & TF Estimator API wastes a lot of time saving/loading between training/validation**
+Input for this model is 112,120 PNGs of chest X-rays resized to (264, 264). **Note for the notebook to automatically download the data you must install [Azcopy](https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-linux#download-and-install-azcopy) and increase the size of your OS-Disk in Azure Portal so that you have at-least 45GB of free-space (the Chest X-ray data is large!). The notebooks may take more than 10 minutes to first download the data.** These notebooks train DenseNet-121 and use native data-loaders to pre-process the data perform some augmentations (random horizontal flip and random crop to 224px).
 
 ### 3. Avg Time(s) for 1000 images: ResNet-50 - Feature Extraction
 
