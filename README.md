@@ -55,7 +55,7 @@ Input for this model is the standard [CIFAR-10 dataset](http://www.cs.toronto.ed
 | [Keras(TF)](notebooks/Keras_TF_MultiGPU.ipynb)    | 38min                 | 18min                 |
 | [Tensorflow](notebooks/Tensorflow_MultiGPU.ipynb) | 33min                 | 22min                 |
 | [Chainer](notebooks/Chainer_MultiGPU.ipynb)       | 49min                 | 14min                 |
-| [MXNet(Gluon)](notebooks/Gluon_MultiGPU.ipynb)    | 27min                 | 10min                 |
+| [MXNet(Gluon)](notebooks/Gluon_MultiGPU.ipynb)    | 27min                 | 8min                 |
 
 **Train w/ synthetic-data in RAM**
 
@@ -65,7 +65,7 @@ Input for this model is the standard [CIFAR-10 dataset](http://www.cs.toronto.ed
 | [Keras(TF)](notebooks/Keras_TF_MultiGPU.ipynb)    | 36min                 | 15min                 |
 | [Tensorflow](notebooks/Tensorflow_MultiGPU.ipynb) | 25min                 | 14min                 |
 | [Chainer](notebooks/Chainer_MultiGPU.ipynb)       | 47min                 | 12min                 |
-| [MXNet(Gluon)](notebooks/Gluon_MultiGPU.ipynb)    | 26min                 | 8min                  |
+| [MXNet(Gluon)](notebooks/Gluon_MultiGPU.ipynb)    | 26min                 | 7min                  |
 
 Notes:
 
