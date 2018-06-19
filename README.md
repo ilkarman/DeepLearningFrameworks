@@ -103,6 +103,7 @@ A pre-trained ResNet50 model is loaded and chopped just after the avg_pooling at
 | [Keras(CNTK)](notebooks/Keras_CNTK_RNN.ipynb)      | 86                 | 53                  | No           |
 | [Keras(TF)](notebooks/Keras_TF_RNN.ipynb)          | 35                 | 26                  | Yes          |
 | [MXNet(Module API)](notebooks/MXNet_RNN.ipynb)     | 29                 | 24                  | Yes          |
+| [MXNet(Gluon API)](notebooks/Gluon_RNN.ipynb)      | TBA                | TBA                 | Yes          |
 | [Pytorch](notebooks/PyTorch_RNN.ipynb)             | 31                 | 16                  | Yes          |
 | [Tensorflow](notebooks/Tensorflow_RNN.ipynb)       | 30                 | 22                  | Yes          |
 | [Julia - Knet](notebooks/Knet_RNN.ipynb)           | 29                 | ??                  | Yes          |
