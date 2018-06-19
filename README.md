@@ -54,7 +54,7 @@ Input for this model is the standard [CIFAR-10 dataset](http://www.cs.toronto.ed
 | [Pytorch](notebooks/PyTorch_MultiGPU.ipynb)       | 27min                 | 10min                 |
 | [Keras(TF)](notebooks/Keras_TF_MultiGPU.ipynb)    | 38min                 | 18min                 |
 | [Tensorflow](notebooks/Tensorflow_MultiGPU.ipynb) | 33min                 | 22min                 |
-| [Chainer](notebooks/Chainer_MultiGPU.ipynb)       | 49min                 | 14min                 |
+| [Chainer](notebooks/Chainer_MultiGPU.ipynb)       | 29min                 | 8min                  |
 | [MXNet(Gluon)](notebooks/Gluon_MultiGPU.ipynb)    | 27min                 | 8min                  |
 
 **Train w/ synthetic-data in RAM**
@@ -64,14 +64,13 @@ Input for this model is the standard [CIFAR-10 dataset](http://www.cs.toronto.ed
 | [Pytorch](notebooks/PyTorch_MultiGPU.ipynb)       | 25min                 | 8min                  |
 | [Keras(TF)](notebooks/Keras_TF_MultiGPU.ipynb)    | 36min                 | 15min                 |
 | [Tensorflow](notebooks/Tensorflow_MultiGPU.ipynb) | 25min                 | 14min                 |
-| [Chainer](notebooks/Chainer_MultiGPU.ipynb)       | 47min                 | 12min                 |
+| [Chainer](notebooks/Chainer_MultiGPU.ipynb)       | 27min                 | 7min                  |
 | [MXNet(Gluon)](notebooks/Gluon_MultiGPU.ipynb)    | 26min                 | 7min                  |
 
 Notes:
 
-1. Chainer did not manage to fit a batch of 64 and thus 56 is used which naturally reduces the speed
-2. Chainer suffered an AUC drop relative to all other frameworks when going from single to multi-GPU
-3. Gluon example at time of writing does not seem to work on Azure VMs and the notebook is provided kindly by Thomas who has run it on AWS
+1. Chainer suffered an AUC drop relative to all other frameworks when going from single to multi-GPU
+2. Gluon example at time of writing does not seem to work on Azure VMs and the notebook is provided kindly by Thomas who has run it on AWS
 
 Input for this model is 112,120 PNGs of chest X-rays resized to (264, 264). **Note for the notebook to automatically download the data you must install [Azcopy](https://docs.microsoft.com/en-us/azure/storage/common/storage-use-azcopy-linux#download-and-install-azcopy) and increase the size of your OS-Disk in Azure Portal so that you have at-least 45GB of free-space (the Chest X-ray data is large!). The notebooks may take more than 10 minutes to first download the data.** These notebooks train DenseNet-121 and use native data-loaders to pre-process the data perform some augmentations (random horizontal flip and random crop to 224px).
 
