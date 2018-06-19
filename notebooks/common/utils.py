@@ -37,8 +37,10 @@ def get_gpu_name():
 def get_cuda_version():
     """Get CUDA version"""
     if sys.platform == 'win32':
-        cuda=!ls "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA"
-        path = "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\" + str(cuda[0]) +"\\version.txt"
+        raise NotImplementedError("Implement this!")
+        # This breaks on linux:
+        #cuda=!ls "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA"
+        #path = "C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\" + str(cuda[0]) +"\\version.txt"
     elif sys.platform == 'linux' or sys.platform == 'darwin':
         path = '/usr/local/cuda/version.txt'
     else:
@@ -53,8 +55,10 @@ def get_cuda_version():
 def get_cudnn_version():
     """Get CUDNN version"""
     if sys.platform == 'win32':
-        cuda=!ls "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA"
-        candidates = ["C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\" + str(cuda[0]) +"\\include\\cudnn.h"]
+        raise NotImplementedError("Implement this!")
+        # This breaks on linux:
+        #cuda=!ls "C:\Program Files\NVIDIA GPU Computing Toolkit\CUDA"
+        #candidates = ["C:\\Program Files\\NVIDIA GPU Computing Toolkit\\CUDA\\" + str(cuda[0]) +"\\include\\cudnn.h"]
     elif sys.platform == 'linux':
         candidates = ['/usr/include/x86_64-linux-gnu/cudnn_v[0-99].h',
                       '/usr/local/cuda/include/cudnn.h',
